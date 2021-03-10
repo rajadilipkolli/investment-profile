@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Birla",
+        "investmentType": "Stock",
+        "currentPrice": 145.0,
+        "anticipatedGrowth": 15.0,
+        "term": 2
+    },
+    {
+        "name": "DSP",
+        "investmentType": "Mutual Fund",
+        "currentPrice": 220.0,
+        "anticipatedGrowth": 10.0,
+        "term": 4
+    },
+    {
+        "name": "Maruti",
+        "investmentType": "Stock",
+        "currentPrice": 86.0,
+        "anticipatedGrowth": 5.0,
+        "term": 1
+    },
+    {
+        "name": "SBI",
+        "investmentType": "Fix Deposit",
+        "currentPrice": 130.0,
+        "anticipatedGrowth": 17.0,
+        "term": 7
+    }
+]

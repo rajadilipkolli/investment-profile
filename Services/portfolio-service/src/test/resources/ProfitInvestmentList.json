@@ -1,0 +1,32 @@
+[
+    {
+        "userName": "ssp191919@gmail.com",
+        "name": "Sensex",
+        "type": "Stock",
+        "quantity": 100,
+        "costPrice": 500.0,
+        "currentPrice": 625.0,
+        "profitLossPercent": 25.0,
+        "profit": true
+    },
+    {
+        "userName": "ssp191919@gmail.com",
+        "name": "Reliance",
+        "type": "Mutual Fund",
+        "quantity": 25,
+        "costPrice": 350.0,
+        "currentPrice": 375.0,
+        "profitLossPercent": 24.5,
+        "profit": true
+    },
+    {
+        "userName": "ssp191919@gmail.com",
+        "name": "Mrf",
+        "type": "Fix Deposit",
+        "quantity": 4,
+        "costPrice": 1,
+        "currentPrice": 30,
+        "profitLossPercent": 1.0,
+        "profit": true
+    }
+]

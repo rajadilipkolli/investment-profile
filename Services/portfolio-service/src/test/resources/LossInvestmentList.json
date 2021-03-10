@@ -1,0 +1,12 @@
+[
+    {
+        "userName": "ssp191919@gmail.com",
+        "name": "Nifty",
+        "type": "Stock",
+        "quantity": 10,
+        "costPrice": 50.0,
+        "currentPrice": 44.0,
+        "profitLossPercent": 12.0,
+        "profit": false
+    }
+]

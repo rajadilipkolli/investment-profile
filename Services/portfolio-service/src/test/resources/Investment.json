@@ -1,0 +1,9 @@
+{
+  "costPrice": 1,
+  "currentPrice": 30,
+  "name": "Mrf",
+  "profit": true,
+  "profitLossPercent": 1,
+  "quantity": 4,
+  "type": "Fix Deposit"
+}

@@ -1,0 +1,27 @@
+<div class="table" style="width: 40rem; align-self: auto;">
+  <div class="col-md-12">
+    <div class="container">
+      <table class="table table-stripped">
+        <thead style="background-color: chartreuse; color: black;">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Cost Price</th>
+            <th>Anticipated Growth</th>
+            <th>Term(In Years)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let stockEl of stocks; let i = index">
+            <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
+                {{ stockEl.name }} </a></td>
+            <td>{{ stockEl.investmentType }}</td>
+            <td>{{ stockEl.currentPrice }}</td>
+            <td>{{ stockEl.anticipatedGrowth }}</td>
+            <td>{{ stockEl.term }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

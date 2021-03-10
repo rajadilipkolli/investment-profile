@@ -1,0 +1,60 @@
+<div class="card" style="width: 40rem; align-self: auto;">
+  <div class="card-header" style="font-style: italic;">Registration</div>
+  <div class="card-body">
+    <div class="alert alert-danger" *ngIf="error">
+      <p>{{ error }}</p>
+    </div>
+    <div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading"
+      [mustMatch]="['password','confirmPassword']">
+      <div class="form-group">
+        <label for="firstName">First name*</label>
+        <input type="text" id="firstName" class="form-control" ngModel name="firstName" required minlength="2"
+          maxlength="20" />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last name*</label>
+        <input type="text" id="lastName" class="form-control" ngModel name="lastName" required minlength="2"
+          maxlength="20" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email ID*</label>
+        <input type="email" id="email" class="form-control" ngModel name="email" required email #email="ngModel" />
+        <span class="help-block" *ngIf="!email.valid && email.touched">Please Enter Valid Email</span>
+      </div>
+      <div class="form-group">
+        <label for="pan">PAN#*</label>
+        <input type="pan" id="pan" class="form-control" ngModel name="pan" required minlength="10" maxlength="10" />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number*</label>
+        <input type="text" id="phone" class="form-control" ngModel name="phone" required pattern="\d*" minlength="10"
+          maxlength="10" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password*</label>
+        <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6"
+          #password="ngModel" />
+        <span class="help-block" *ngIf="!password.valid && password.touched">Minimum length for password is 6</span>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password*</label>
+        <input type="password" id="confirmPassword" class="form-control" ngModel name="confirmPassword" required
+          minlength="6" #confirmPassword="ngModel"
+          [ngClass]="{ 'isValid': confirmPassword.touched && confirmPassword.invalid }" />
+        <span class="help-block"
+          *ngIf="confirmPassword.value != password.value && (confirmPassword.touched || password.touched)">Password does
+          not match</span>
+      </div>
+      <div>
+        <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
+          {{'Register'}}
+        </button> |
+        <button class="btn btn-secondary" type="reset">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <div class="card-footer" style="font-style: italic;">*Mandatory fields</div>
+</div>
