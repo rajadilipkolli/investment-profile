@@ -18,7 +18,7 @@ public interface PortfolioServiceClient {
 
 	@GetMapping("/portfolio-service/investments/all/{userId}")
 	@CrossOrigin
-	public ArrayList<Investment> getAllInvestments(@PathVariable("userId") String userId);
+	ArrayList<Investment> getAllInvestments(@PathVariable("userId") String userId);
 
 	@GetMapping("/portfolio-service/investments/profit/{userId}")
 	@CrossOrigin

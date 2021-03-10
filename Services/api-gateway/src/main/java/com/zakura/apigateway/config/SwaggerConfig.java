@@ -1,4 +1,4 @@
-package com.zakura.apigateway;
+package com.zakura.apigateway.config;
 
 import java.util.Collections;
 

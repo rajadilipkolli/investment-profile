@@ -1,11 +1,9 @@
 package com.zakura.stockservice.service;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.FileNotFoundException;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -17,8 +15,11 @@ import com.zakura.stockservice.client.PortfolioServiceClient;
 import com.zakura.stockservice.repository.StockRepository;
 
 import data.TestData;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ExtendWith(MockitoExtension.class)
 public class StockServiceTest {
 
 	@InjectMocks
@@ -35,7 +36,7 @@ public class StockServiceTest {
 		Mockito.when(portfolioServiceClient.addUserInvestment(Mockito.any(), Mockito.anyString()))
 				.thenReturn(TestData.getInvestment());
 		String response = stockService.saveUserStock(TestData.getStockRequest(), TestData.USER_ID);
-		assertNotNull(response);
+		assertThat(response).isNotNull();
 
 	}
 

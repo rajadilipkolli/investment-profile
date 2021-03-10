@@ -1,4 +1,4 @@
-package com.zakura.apigateway;
+package com.zakura.apigateway.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
