@@ -27,7 +27,7 @@ public class StockController {
     private final StockServiceClient stockServiceClient;
     private final JwtUtils jwtUtils;
 
-    private ArrayList<Stock> fallback(String authorizationToken) {
+    private List<Stock> fallback(String authorizationToken) {
         return new ArrayList<>();
     }
 

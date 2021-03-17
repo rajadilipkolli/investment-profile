@@ -1,6 +1,6 @@
 package com.zakura.stockservice.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -32,7 +32,7 @@ public class StockController {
 
 	@LogMethodInvocation
 	@GetMapping("/view/all")
-	public ArrayList<Stock> getAvailableStocks() {
+	public List<Stock> getAvailableStocks() {
 		return stockRepository.findAll();
 	}
 
