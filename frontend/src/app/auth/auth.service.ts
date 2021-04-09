@@ -34,7 +34,7 @@ export class AuthService {
 
   signup(email: string, password: string, firstName: string, lastName: string, pan: string, phone: number) {
     return this.http.post<SignInResponseData>(
-      'http://localhost:8081/api-gateway/auth/signup',
+      'http://localhost:8085/api-gateway/auth/signup',
       {
         email: email,
         password: password,

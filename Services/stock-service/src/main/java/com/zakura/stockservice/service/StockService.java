@@ -2,8 +2,12 @@ package com.zakura.stockservice.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
+import com.zakura.stockservice.models.Stock;
+import com.zakura.stockservice.repository.StockRepository;
 import org.springframework.stereotype.Component;
 
 import com.zakura.stockservice.aspect.LogMethodInvocation;
@@ -22,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 public class StockService {
 
 	private final PortfolioServiceClient portfolioServiceClient;
+	private final StockRepository stockRepository;
 
 	/**
 	 * Method to save stock for a user(Buy Stock)
@@ -52,5 +57,13 @@ public class StockService {
 			log.info("User transaction to buy stock is incomplete!");
 			return null;
 		}
+	}
+
+    public List<Stock> findAll() {
+		return this.stockRepository.findAll();
+    }
+
+	public Optional<Stock> findByNameAndInvestmentType(String name, String investmentType) {
+		return this.stockRepository.findByNameAndInvestmentType(name, investmentType);
 	}
 }

@@ -1,6 +1,6 @@
 Technology Stack: -
 ===================
-1. Java jdk 1.8
+1. Java jdk 11
 2. Apache Maven 3.6.3
 
 Build all the projects with below command: -
@@ -23,7 +23,7 @@ http://localhost:8761/
 
 SwaggerUI Urls: -
 ================================================
-http://localhost:8081/api-gateway/swagger-ui/
+http://localhost:8085/api-gateway/swagger-ui/
 http://localhost:8082/portfolio-service/swagger-ui/
 http://localhost:8083/stock-service/swagger-ui/
 http://localhost:8084/sip-service/swagger-ui/
@@ -32,7 +32,6 @@ Note:-
 ================================================
 1. Please check the Postman collections shared along to setup the uri's in postman. While hitting any post request from postman, please ensure that the mediatype of the body should be 'application/json'. While exporting the collection, that might have changed to 'raw' type
 2. All the requests are being passed from api-gateway and being authorized.
-
 
 ## Mongo DB
 

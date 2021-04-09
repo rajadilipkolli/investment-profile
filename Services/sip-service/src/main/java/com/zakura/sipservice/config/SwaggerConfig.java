@@ -36,7 +36,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfo("SIP Manager", "App to manage SIP", null, null, null, null, null,
-				Collections.EMPTY_LIST);
+				Collections.emptyList());
 	}
 
 }

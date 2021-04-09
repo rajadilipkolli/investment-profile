@@ -37,7 +37,7 @@ public class PortfolioController {
 	@GetMapping("/profit/{userId}")
 	public ArrayList<Investment> getProfitInvestments(@PathVariable("userId") String userId) {
 		ArrayList<Investment> investments = portfolioRepository.findByUserName(userId).orElse(new ArrayList<>());
-		return (ArrayList<Investment>) investments.stream().filter(p -> p.isProfit()).collect(Collectors.toList());
+		return (ArrayList<Investment>) investments.stream().filter(Investment::isProfit).collect(Collectors.toList());
 	}
 
 	@LogMethodInvocationAndParams

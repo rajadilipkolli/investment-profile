@@ -1,4 +1,4 @@
-package com.zakura.portfolioservice;
+package com.zakura.portfolioservice.config;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

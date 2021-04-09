@@ -1,50 +1,38 @@
 package com.zakura.stockservice.controller;
 
+import com.zakura.stockservice.repository.StockRepository;
+import com.zakura.stockservice.service.StockService;
+import com.zakura.stockservice.util.Constants;
+import data.TestData;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import com.zakura.stockservice.repository.StockRepository;
-import com.zakura.stockservice.service.StockService;
-import com.zakura.stockservice.util.Constants;
-
-import data.TestData;
-
-@ExtendWith(MockitoExtension.class)
+@WebMvcTest(controllers = StockController.class)
 public class StockControllerTest {
 
-	@InjectMocks
-	private StockController stockController;
-
-	@Mock
-	private StockRepository stockRepository;
-
-	@Mock
+	@MockBean
 	private StockService stockService;
 
-	private MockMvc mockMvc;
+	@MockBean
+	private StockRepository stockRepository;
 
-	@BeforeAll
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(stockController).build();
-	}
+	@Autowired
+	private MockMvc mockMvc;
 
 	@Test
 	public void testGetAvailableStocks() throws Exception {
-		Mockito.when(stockRepository.findAll()).thenReturn(TestData.getStockList());
+		given(stockService.findAll()).willReturn(TestData.getStockList());
 		mockMvc.perform(get("/view/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
 	}
@@ -52,11 +40,11 @@ public class StockControllerTest {
 	@Test
 	public void testSaveUserStock() throws Exception {
 		final String body = TestData.getStockRequestString();
-		Mockito.when(stockRepository.findByNameAndInvestmentType(Mockito.anyString(), Mockito.anyString()))
-				.thenReturn(TestData.getOptionalStock());
-		Mockito.when(stockService.saveUserStock(Mockito.any(), Mockito.anyString()))
-				.thenReturn(Constants.TRANSACTION_SUCCESFUL);
-		mockMvc.perform(post("/add/{userId}", TestData.USER_ID).content(body).param("request", body)
+		given(stockService.findByNameAndInvestmentType(Mockito.anyString(), Mockito.anyString()))
+				.willReturn(TestData.getOptionalStock());
+		given(stockService.saveUserStock(Mockito.any(), Mockito.anyString()))
+				.willReturn(Constants.TRANSACTION_SUCCESFUL);
+		mockMvc.perform(post("/add/{userId}", TestData.USER_ID).content(body)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)).andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk()).andReturn();
 	}

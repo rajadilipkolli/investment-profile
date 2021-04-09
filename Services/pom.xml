@@ -5,16 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example.learning</groupId>
-    <artifactId>investment-profile</artifactId>
+    <artifactId>investment-profile-services</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
-    <name>investment-profile</name>
+    <name>investment-profile-services</name>
     <description>Demo project for Spring Boot Microservices</description>
 
     <modules>
-        <module>services</module>
+        <module>discovery-service</module>
+        <module>api-gateway</module>
+        <module>portfolio-service</module>
+        <module>sip-service</module>
+        <module>stock-service</module>
     </modules>
 
 </project>

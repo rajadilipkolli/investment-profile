@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.zakura</groupId>
 	<artifactId>api-gateway</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>api-gateway</name>
 	<description>Spring Boot API Gateway with Spring Security,
 		JWT, MongoDB</description>

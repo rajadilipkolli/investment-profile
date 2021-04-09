@@ -13,8 +13,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import java.math.BigDecimal;
 
 @EnableFeignClients
-@EnableCircuitBreaker
-@EnableDiscoveryClient
 @SpringBootApplication
 public class StockServiceApplication implements CommandLineRunner {
 

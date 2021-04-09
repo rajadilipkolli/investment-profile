@@ -1,6 +1,7 @@
 package com.zakura.stockservice.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -17,5 +18,5 @@ public interface StockRepository extends MongoRepository<Stock, String> {
 	Optional<Stock> findByNameAndInvestmentType(String name, String investmentType);
 
 	@LogProcessTime
-	ArrayList<Stock> findAll();
+	List<Stock> findAll();
 }

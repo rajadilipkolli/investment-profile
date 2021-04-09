@@ -1,28 +1,22 @@
 package com.zakura.sipservice.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import data.TestData;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
-import data.TestData;
-
-@RunWith(MockitoJUnitRunner.class)
 public class SipServiceTest {
 
-	@InjectMocks
-	private SipService sipService;
+	private final SipService sipService = new SipService();
 
 	@Test
-	public void testCalculateSIP() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
+	public void testCalculateSIP() throws FileNotFoundException {
 		BigDecimal response = sipService.calculateSIP(TestData.getSipVo());
 		assertEquals(BigDecimal.valueOf(36993.51), response);
 	}

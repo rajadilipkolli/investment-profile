@@ -12,7 +12,7 @@ import com.zakura.sipservice.models.SipVO;
 
 public class TestData {
 
-	private static ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper mapper = new ObjectMapper();
 	private static final String SIPVO_REQUEST = "./src/test/resources/SipVo.json";
 
 	public static SipVO getSipVo() throws JsonSyntaxException, JsonIOException, FileNotFoundException {
