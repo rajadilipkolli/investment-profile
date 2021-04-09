@@ -34,7 +34,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfo("API Gateway", "All request to other microservices goes through this API", null, null, null,
-				null, null, Collections.EMPTY_LIST);
+				null, null, Collections.emptyList());
 	}
 
 }

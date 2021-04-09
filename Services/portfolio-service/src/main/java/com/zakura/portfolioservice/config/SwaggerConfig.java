@@ -8,8 +8,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import static springfox.documentation.builders.PathSelectors.regex;
 
 import java.util.Collections;
 
@@ -36,7 +34,7 @@ public class SwaggerConfig {
 
 	private ApiInfo apiInfo() {
 		return new ApiInfo("Portfolio Manager", "App to manage Portfolio", null, null, null, null, null,
-				Collections.EMPTY_LIST);
+				Collections.emptyList());
 	}
 
 }

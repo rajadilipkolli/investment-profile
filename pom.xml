@@ -14,7 +14,7 @@
     <description>Demo project for Spring Boot Microservices</description>
 
     <modules>
-        <module>services</module>
+        <module>Services</module>
     </modules>
 
 </project>

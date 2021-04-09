@@ -24,8 +24,11 @@ http://localhost:8761/
 SwaggerUI Urls: -
 ================================================
 http://localhost:8085/api-gateway/swagger-ui/
+
 http://localhost:8082/portfolio-service/swagger-ui/
+
 http://localhost:8083/stock-service/swagger-ui/
+
 http://localhost:8084/sip-service/swagger-ui/
 
 Note:- 
@@ -39,13 +42,13 @@ Connect to MongoDB Server using MongoDB compass or you can use command prompt to
 ======================================================================================
 1. Using command prompt: -
    Run below commands to run mongo server: -
-   >> mongod
+   > mongod
 
 Note:
 1. If you have specified your own DB path, start mongodb server using your dbpath. For example if your dbpath is "D:\Mongo\server\data" Run below commands to start mongo server: -
->> mongod --dbpath "D:\Mongo\server\data"
+> mongod --dbpath "D:\Mongo\server\data"
 2. Open Mongo CLI in new command prompt window: -
->> mongo
+> mongo
 
 Run below commands in Mongo CLI: -
 -------------------------------
@@ -53,8 +56,8 @@ Run below commands in Mongo CLI: -
 For login-service: -
 =================================
 1. create DB: -
-   >> use auth_db
-2. >> db.users.insertOne(
+   > use auth_db
+2. > db.users.insertOne(
    {"firstName":"firstName",
    "lastName":"lastName",
    "email":"test@mail.com",
@@ -62,7 +65,7 @@ For login-service: -
    "pan":"ABCD234567",
    "phone":1234323432})
 
-3. >> db.roles.insertMany([
+3. > db.roles.insertMany([
    { name: "ROLE_USER" },
    { name: "ROLE_MODERATOR" },
    { name: "ROLE_ADMIN" }])
@@ -71,15 +74,15 @@ For login-service: -
 For Stock Service: -
 ================================
 1. create DB: -
-   >> use stock_db
+   > use stock_db
 2. Insert data in 'stocks' collection: -
-   >> db.stocks.insertMany([
+   > db.stocks.insertMany([
    {name: 'Birla', investmentType: 'Stock', currentPrice: 145, anticipatedGrowth: 15, term: 2},
    {name: 'DSP', investmentType: 'Mutual Fund', currentPrice: 220, anticipatedGrowth: 10, term: 4},
    {name: 'Maruti', investmentType: 'Stock', currentPrice: 86, anticipatedGrowth: 5, term: 1},
    {name: 'SBI',  investmentType: 'Fix Deposit', currentPrice: 130, anticipatedGrowth: 17, term: 7}])
 3. Insert data in 'types' collection: -
-   >> db.types.insertMany([
+   > db.types.insertMany([
    { name: "STOCK" },
    { name: "MUTUAL_FUND" },
    { name: "FIXED_DEPOSIT" }])
@@ -87,10 +90,10 @@ For Stock Service: -
 For portfolio service: -
 ===============================
 1. create DB: -
-   >>use portfolio_db
+   >use portfolio_db
 
 2. Insert data in investments collection: -
-   >> db.investments.insertMany([
+   > db.investments.insertMany([
    {userName: "test@mail.com", name: 'Sensex', type: 'Stock', quantity:100, costPrice: 500, currentPrice: 625, profitLossPercent: 25, profit: true},
    {userName: "test@mail.com", name: 'Nifty', type: 'Stock', quantity:10, costPrice: 50, currentPrice: 44, profitLossPercent: 12, profit: false},
    {userName: "test@mail.com", name: 'Reliance', type: 'Mutual Fund', quantity:25, costPrice: 350, currentPrice: 375, profitLossPercent: 24.5, profit: true},

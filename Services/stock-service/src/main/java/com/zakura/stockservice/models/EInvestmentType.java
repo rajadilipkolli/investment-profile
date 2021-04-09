@@ -4,7 +4,7 @@ public enum EInvestmentType {
 
 	STOCK("Stock"), MUTUAL_FUND("Mutual Fund"), FIXED_DEPOSIT("Fix Deposit");
 
-	private String investment;
+	private final String investment;
 
 	EInvestmentType(String investment) {
 		this.investment = investment;

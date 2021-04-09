@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LogTimeAndMethodInvocationAspect {
 
-	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	@Around("@annotation(LogProcessTime)")
 	public Object logMethods(ProceedingJoinPoint pjp) throws Throwable {

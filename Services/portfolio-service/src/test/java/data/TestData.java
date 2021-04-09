@@ -15,7 +15,7 @@ import com.zakura.portfolioservice.models.Investment;
 
 public class TestData {
 
-	private static ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper mapper = new ObjectMapper();
 	private static final String INVESTMENT_RESULT = "./src/test/resources/Investment.json";
 	private static final String INVESTMENT_LIST_RESULT = "./src/test/resources/InvestmentList.json";
 	private static final String PROFIT_INVESTMENT_LIST_RESULT = "./src/test/resources/ProfitInvestmentList.json";

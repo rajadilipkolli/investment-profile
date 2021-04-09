@@ -17,7 +17,7 @@ import com.zakura.stockservice.models.StockRequest;
 
 public class TestData {
 
-	private static ObjectMapper mapper = new ObjectMapper();
+	private static final ObjectMapper mapper = new ObjectMapper();
 	private static final String STOCK_RESULT = "./src/test/resources/Stock.json";
 	private static final String STOCK_LIST_RESULT = "./src/test/resources/StockList.json";
 	private static final String STOCK_REQUEST = "./src/test/resources/StockRequest.json";

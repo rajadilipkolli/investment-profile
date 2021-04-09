@@ -45,7 +45,7 @@ public class StockController {
 	public ArrayList<Stock> availableStocksToBuy(@RequestHeader("Authorization") String authorizationToken) {
 		String jwtToken = authorizationToken.substring(7);
 		String userName = jwtUtils.getUserNameFromJwtToken(jwtToken);
-		log.info("userName : ", userName);
+		log.info("userName : {}", userName);
 		return stockServiceClient.getAvailableStocks();
 	}
 

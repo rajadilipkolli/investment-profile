@@ -71,7 +71,7 @@ public class PortfolioControllerTest {
 		Mockito.when(portfolioRepository.findByUserNameAndNameAndType(Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString())).thenReturn(TestData.getInvestmentOptional());
 		Mockito.when(portfolioRepository.deleteByUserNameAndNameAndType(Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString())).thenReturn(Integer.valueOf(1));
+				Mockito.anyString())).thenReturn(1);
 		Mockito.when(portfolioRepository.save(Mockito.any())).thenReturn(TestData.getInvestment());
 		final String body = TestData.getInvestmentString();
 		mockMvc.perform(post("/investments/add/{userId}", new Object[] { TestData.USER_ID }).content(body)
@@ -85,7 +85,7 @@ public class PortfolioControllerTest {
 		Mockito.when(portfolioRepository.findByUserNameAndNameAndType(Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString())).thenReturn(TestData.getInvestmentOptional());
 		Mockito.when(portfolioRepository.deleteByUserNameAndNameAndType(Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString())).thenReturn(Integer.valueOf(1));
+				Mockito.anyString())).thenReturn(1);
 		Mockito.when(portfolioRepository.save(Mockito.any())).thenReturn(TestData.getInvestment());
 		final String body = TestData.getInvestmentString();
 		mockMvc.perform(post("/investments/update/{userId}", new Object[] { TestData.USER_ID }).content(body)
@@ -100,7 +100,7 @@ public class PortfolioControllerTest {
 		Mockito.when(portfolioRepository.findByUserNameAndNameAndType(Mockito.anyString(), Mockito.anyString(),
 				Mockito.anyString())).thenReturn(TestData.getInvestmentOptional());
 		Mockito.when(portfolioRepository.deleteByUserNameAndNameAndType(Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString())).thenReturn(Integer.valueOf(1));
+				Mockito.anyString())).thenReturn(1);
 		final String body = TestData.getInvestmentString();
 		mockMvc.perform(post("/investments/delete/{userId}", new Object[] { TestData.USER_ID }).content(body)
 				.param("request", body).contentType(MediaType.APPLICATION_JSON_VALUE))

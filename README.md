@@ -5,9 +5,9 @@ end to end application
 ## Steps to start the application and open webpage(Please setup mongodb and beckend services before): -
 =================================================================================================
 Step 1: - use below command in cmd: -
->> npm install -g @angular/cli
+> npm install -g @angular/cli
  
->> ng serve
+> ng serve
 
 Step 2: - Open Google chrome and hit localhost:4200
 

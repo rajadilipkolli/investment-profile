@@ -28,13 +28,6 @@ public class StockService {
 	private final PortfolioServiceClient portfolioServiceClient;
 	private final StockRepository stockRepository;
 
-	/**
-	 * Method to save stock for a user(Buy Stock)
-	 * 
-	 * @param stockRequest
-	 * @param userId
-	 * @return
-	 */
 	@LogMethodInvocation
 	@LogProcessTime
 	public String saveUserStock(StockRequest stockRequest, String userId) {
@@ -42,7 +35,7 @@ public class StockService {
 		float randomFloat = rd.nextFloat() * 100;
 		float profitLossPercent = (float) (Math.round(randomFloat * 100.0) / 100.0);
 
-		BigDecimal currentPrice = stockRequest.getCurrentPrice().divide(BigDecimal.valueOf(100))
+		BigDecimal currentPrice = stockRequest.getCurrentPrice().divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP)
 				.multiply(BigDecimal.valueOf(profitLossPercent)).add(stockRequest.getCurrentPrice());
 		currentPrice = currentPrice.setScale(2, RoundingMode.HALF_UP);
 		boolean isProfit = true;

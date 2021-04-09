@@ -27,9 +27,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 			return errorResponse(e);
 		}
 
-		if (e instanceof RecordNotFoundException) {
-			return errorResponse(e);
-		}
 		log.warn("Unhandled RestControllerException");
 		return handleUnexpectedException(e, request);
 	}
@@ -45,7 +42,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 
 	private ResponseEntity<GatewayError> errorResponse(RestControllerException e, HttpHeaders headers) {
-		return new ResponseEntity<>(new GatewayError(Integer.valueOf(e.getHttpStatus().value()), e.getMessage()), headers,
+		return new ResponseEntity<>(new GatewayError(e.getHttpStatus().value(), e.getMessage()), headers,
 				e.getHttpStatus());
 	}
 
@@ -57,6 +54,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		error.setError(NO_RECORD_FOUND);
 		error.setMessage(ex.getMessage());
 		error.setException(ex.getClass().getSimpleName());
-		return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 	}
 }

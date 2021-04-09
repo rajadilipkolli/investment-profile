@@ -15,6 +15,6 @@ public interface PortfolioServiceClient {
 
 	@PostMapping("/portfolio-service/investments/add/{userId}")
 	@CrossOrigin
-	public Investment addUserInvestment(@RequestBody @Valid Investment investmentToSave,
-			@PathVariable("userId") String userId);
+	Investment addUserInvestment(@RequestBody @Valid Investment investmentToSave,
+								 @PathVariable("userId") String userId);
 }

@@ -15,23 +15,23 @@ import com.zakura.apigateway.models.User;
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
-	private String id;
+	private final String id;
 
-	private String firstName;
+	private final String firstName;
 
-	private String lastName;
+	private final String lastName;
 
-	private String email;
-
-	@JsonIgnore
-	private String password;
+	private final String email;
 
 	@JsonIgnore
-	private String pan;
+	private final String password;
 
-	private long phone;
+	@JsonIgnore
+	private final String pan;
 
-	private Collection<? extends GrantedAuthority> authorities;
+	private final long phone;
+
+	private final Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(String id, String firstName, String lastName, String email, String password, String pan,
 			long phone, Collection<? extends GrantedAuthority> authorities) {
