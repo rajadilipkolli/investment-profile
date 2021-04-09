@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private static final String NO_RECORD_FOUND = "No Record Found";
+	private static final String BAD_REQUEST = "Invalid request";
 	private static final String UNEXPECTED_ERROR_MESSAGE = "Unexpected internal server error";
 
 	@ExceptionHandler({ RestControllerException.class })

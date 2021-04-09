@@ -21,6 +21,7 @@ import { PortfolioDetailComponent } from './portfolio/portfolio-detail/portfolio
 import { PortfolioListComponent } from './portfolio/portfolio-list/portfolio-list.component';
 import { StockListComponent } from './stocks/stock-list/stock-list.component';
 import { StockDetailComponent } from './stocks/stock-detail/stock-detail.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { StockDetailComponent } from './stocks/stock-detail/stock-detail.compone
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

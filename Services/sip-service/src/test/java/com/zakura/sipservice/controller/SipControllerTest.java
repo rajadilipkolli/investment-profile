@@ -1,18 +1,17 @@
 package com.zakura.sipservice.controller;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigDecimal;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -22,7 +21,7 @@ import com.zakura.sipservice.service.SipService;
 
 import data.TestData;
 
-@ExtendWith(MockitoExtension.class)
+@RunWith(MockitoJUnitRunner.class)
 public class SipControllerTest {
 
 	@InjectMocks
@@ -33,7 +32,7 @@ public class SipControllerTest {
 
 	private MockMvc mockMvc;
 
-	@BeforeAll
+	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(sipControllerTest).build();
 	}
@@ -41,7 +40,7 @@ public class SipControllerTest {
 	@Test
 	public void testSaveUserStock() throws Exception {
 		final String body = TestData.getSipVoString();
-		when(sipService.calculateSIP(Mockito.any())).thenReturn(BigDecimal.valueOf(1000));
+		Mockito.when(sipService.calculateSIP(Mockito.any())).thenReturn(BigDecimal.valueOf(1000));
 		mockMvc.perform(post("/calculator/sip").content(body).param("request", body)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)).andDo(MockMvcResultHandlers.print())
 				.andExpect(status().isOk()).andReturn();

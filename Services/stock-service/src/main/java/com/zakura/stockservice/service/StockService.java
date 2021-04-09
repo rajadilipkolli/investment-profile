@@ -1,6 +1,7 @@
 package com.zakura.stockservice.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class StockService {
 
 		BigDecimal currentPrice = stockRequest.getCurrentPrice().divide(BigDecimal.valueOf(100))
 				.multiply(BigDecimal.valueOf(profitLossPercent)).add(stockRequest.getCurrentPrice());
-		currentPrice = currentPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
+		currentPrice = currentPrice.setScale(2, RoundingMode.HALF_UP);
 		boolean isProfit = true;
 		Investment investmentToSave = Investment.builder().costPrice(stockRequest.getCurrentPrice())
 				.currentPrice(currentPrice).name(stockRequest.getName()).quantity(stockRequest.getQuantity())

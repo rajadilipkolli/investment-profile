@@ -1,24 +1,26 @@
 package com.zakura.portfolioservice.controller;
 
-import com.zakura.portfolioservice.repository.PortfolioRepository;
-import data.TestData;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.zakura.portfolioservice.repository.PortfolioRepository;
 
-@ExtendWith(MockitoExtension.class)
+import data.TestData;
+
+@RunWith(MockitoJUnitRunner.class)
 public class PortfolioControllerTest {
 
 	@InjectMocks
@@ -29,7 +31,7 @@ public class PortfolioControllerTest {
 
 	private MockMvc mockMvc;
 
-	@BeforeAll
+	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.standaloneSetup(portfolioController).build();
 	}

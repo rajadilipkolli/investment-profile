@@ -6,7 +6,7 @@ public enum EInvestmentType {
 
 	private String investment;
 
-	private EInvestmentType(String investment) {
+	EInvestmentType(String investment) {
 		this.investment = investment;
 	}
 

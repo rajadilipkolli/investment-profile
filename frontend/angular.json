@@ -41,6 +41,7 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
+              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -123,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "investment-profile"
+  "defaultProject": "investment-profile",
+  "cli": {
+    "analytics": "a501d5df-2c85-4b9b-9aa7-bf8b5665bed2"
+  }
 }
