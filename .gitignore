@@ -42,3 +42,4 @@ build/
 .DS_Store
 /.metadata/
 /frontend/node_modules/
+frontend/dist/

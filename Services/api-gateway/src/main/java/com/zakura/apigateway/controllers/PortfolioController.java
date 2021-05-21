@@ -19,12 +19,10 @@ import com.zakura.apigateway.security.jwt.JwtUtils;
 import com.zakura.apigateway.util.Constants;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/restservices")
-@Slf4j
 public class PortfolioController {
 
 	private final PortfolioServiceClient portfolioServiceClient;

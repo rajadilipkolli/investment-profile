@@ -21,7 +21,6 @@ public class PortfolioServiceApplication implements CommandLineRunner {
 	@Autowired
 	PortfolioRepository portfolioRepository;
 
-
 	@Override
 	public void run(String... args) {
 		if (this.portfolioRepository.findByUserName("test@mail.com").isEmpty()) {

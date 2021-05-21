@@ -130,9 +130,9 @@ public class AuthController {
 		}
 
 		user.setRoles(roles);
-		User savedUser = userRepository.save(user);
+		userRepository.save(user);
 
-		if (null != savedUser && signUpRequest.isReturnSecureToken()) {
+		if (signUpRequest.isReturnSecureToken()) {
 			log.info("User registration Successfully!");
 			return authenticateUser(LoginRequest.builder().email(signUpRequest.getEmail())
 					.password(signUpRequest.getPassword()).build());
