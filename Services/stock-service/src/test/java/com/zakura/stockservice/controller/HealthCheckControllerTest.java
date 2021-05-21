@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
-public class HealthCheckControllerTest {
+class HealthCheckControllerTest {
 
 	@InjectMocks
 	private HealthCheckController healthCheckController;
@@ -27,7 +27,7 @@ public class HealthCheckControllerTest {
 	}
 
 	@Test
-	public void testHealthCheck() throws Exception {
+	void testHealthCheck() throws Exception {
 		mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
 	}

@@ -1,17 +1,27 @@
 # investment-profile
 end to end application
 
+## Steps to start backend application
 
-## Steps to start the application and open webpage(Please setup mongodb and beckend services before): -
+Goto Services folder and issue command `docker compose up`, this will bring mongo and zipkin up which will be used as infrastructure for all projects.
+Bring all services up in following order
+
+* discovery-service
+* api-gateway
+* portfolio-service
+* sip-service
+* stock-service
+
+## Steps to start the application and open webpage(Please setup mongodb and backend services before): -
 =================================================================================================
 Step 1: - use below command in cmd: -
 > npm install -g @angular/cli
  
 > ng serve
 
-Step 2: - Open Google chrome and hit localhost:4200
+Step 2: - Open Google Chrome and hit localhost:4200
 
-step 3: - For convinience, I have already setup a test user to login. you can also create your own profile(signup) and start using application.
+step 3: - For convenience, I have already set up a test user to login. you can also create your own profile(signup) and start using application.
 
 Test User Details: -
 ==================

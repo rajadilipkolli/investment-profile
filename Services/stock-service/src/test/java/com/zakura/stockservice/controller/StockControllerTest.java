@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = StockController.class)
-public class StockControllerTest {
+class StockControllerTest {
 
 	@MockBean
 	private StockService stockService;
@@ -31,14 +31,14 @@ public class StockControllerTest {
 	private MockMvc mockMvc;
 
 	@Test
-	public void testGetAvailableStocks() throws Exception {
+	void testGetAvailableStocks() throws Exception {
 		given(stockService.findAll()).willReturn(TestData.getStockList());
 		mockMvc.perform(get("/view/all").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
 	}
 
 	@Test
-	public void testSaveUserStock() throws Exception {
+	void testSaveUserStock() throws Exception {
 		final String body = TestData.getStockRequestString();
 		given(stockService.findByNameAndInvestmentType(Mockito.anyString(), Mockito.anyString()))
 				.willReturn(TestData.getOptionalStock());
