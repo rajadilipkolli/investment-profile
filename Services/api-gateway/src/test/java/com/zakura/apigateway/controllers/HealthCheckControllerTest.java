@@ -16,20 +16,20 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @RunWith(MockitoJUnitRunner.class)
 public class HealthCheckControllerTest {
 
-	@InjectMocks
-	private HealthCheckController healthCheckController;
+    @InjectMocks private HealthCheckController healthCheckController;
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Before
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
-	}
+    @Before
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
+    }
 
-	@Test
-	public void testHealthCheck() throws Exception {
-		mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
-	}
-
+    @Test
+    public void testHealthCheck() throws Exception {
+        mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 }

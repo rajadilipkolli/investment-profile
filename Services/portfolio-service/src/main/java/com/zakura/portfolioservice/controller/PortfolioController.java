@@ -1,6 +1,7 @@
 package com.zakura.portfolioservice.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -21,7 +22,7 @@ import com.zakura.portfolioservice.util.Constants;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("investments")
+@RequestMapping("/investments")
 @RequiredArgsConstructor
 public class PortfolioController {
 
@@ -29,22 +30,22 @@ public class PortfolioController {
 
 	@LogMethodInvocationAndParams
 	@GetMapping("/all/{userId}")
-	public ArrayList<Investment> getAllInvestments(@PathVariable("userId") String userId) {
+	public List<Investment> getAllInvestments(@PathVariable("userId") String userId) {
 		return portfolioRepository.findByUserName(userId).orElse(new ArrayList<>());
 	}
 
 	@LogMethodInvocationAndParams
 	@GetMapping("/profit/{userId}")
-	public ArrayList<Investment> getProfitInvestments(@PathVariable("userId") String userId) {
+	public List<Investment> getProfitInvestments(@PathVariable("userId") String userId) {
 		ArrayList<Investment> investments = portfolioRepository.findByUserName(userId).orElse(new ArrayList<>());
-		return (ArrayList<Investment>) investments.stream().filter(Investment::isProfit).collect(Collectors.toList());
+		return investments.stream().filter(Investment::isProfit).collect(Collectors.toList());
 	}
 
 	@LogMethodInvocationAndParams
 	@GetMapping("/loss/{userId}")
-	public ArrayList<Investment> getLossInvestments(@PathVariable("userId") String userId) {
-		ArrayList<Investment> investments = portfolioRepository.findByUserName(userId).orElse(new ArrayList<>());
-		return (ArrayList<Investment>) investments.stream().filter(p -> !p.isProfit()).collect(Collectors.toList());
+	public List<Investment> getLossInvestments(@PathVariable("userId") String userId) {
+		List<Investment> investments = portfolioRepository.findByUserName(userId).orElse(new ArrayList<>());
+		return investments.stream().filter(p -> !p.isProfit()).collect(Collectors.toList());
 	}
 
 	@LogMethodInvocationAndParams

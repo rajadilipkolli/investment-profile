@@ -1,29 +1,7 @@
 package com.zakura.apigateway.controllers;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.zakura.apigateway.aspect.LogProcessTime;
 import com.zakura.apigateway.aspect.LogMethodInvocationAndParams;
+import com.zakura.apigateway.aspect.LogProcessTime;
 import com.zakura.apigateway.models.ERole;
 import com.zakura.apigateway.models.Role;
 import com.zakura.apigateway.models.User;
@@ -31,112 +9,166 @@ import com.zakura.apigateway.payload.request.LoginRequest;
 import com.zakura.apigateway.payload.request.SignupRequest;
 import com.zakura.apigateway.payload.response.JwtResponse;
 import com.zakura.apigateway.payload.response.MessageResponse;
-import com.zakura.apigateway.repository.RoleRepository;
-import com.zakura.apigateway.repository.UserRepository;
-import com.zakura.apigateway.security.jwt.JwtUtils;
-import com.zakura.apigateway.security.services.UserDetailsImpl;
-
+import com.zakura.apigateway.repository.ReactiveRoleRepository;
+import com.zakura.apigateway.repository.ReactiveUserRepository;
+import com.zakura.apigateway.security.jwt.JwtTokenProvider;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.ReactiveAuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.ReactiveSecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
-	@Autowired
-	AuthenticationManager authenticationManager;
 
-	@Autowired
-	UserRepository userRepository;
+    private final ReactiveAuthenticationManager reactiveAuthenticationManager;
 
-	@Autowired
-	RoleRepository roleRepository;
+    private final ReactiveUserRepository reactiveUserRepository;
 
-	@Autowired
-	PasswordEncoder encoder;
+    private final ReactiveRoleRepository reactiveRoleRepository;
 
-	@Autowired
-	JwtUtils jwtUtils;
+    private final PasswordEncoder passwordEncoder;
 
-	@LogMethodInvocationAndParams
-	@PostMapping("/signin")
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    private final JwtTokenProvider jwtTokenProvider;
 
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+    @LogMethodInvocationAndParams
+    @PostMapping("/signin")
+    public Mono<ResponseEntity<?>> authenticateUser(
+            @Valid @RequestBody Mono<LoginRequest> loginRequest) {
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
-		Date expirationDate = jwtUtils.getExpirationDateFromToken(jwt);
-		long expiresIn = expirationDate.getTime() - System.currentTimeMillis();
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-				.collect(Collectors.toList());
+        return loginRequest
+                .flatMap(
+                        login ->
+                                this.reactiveAuthenticationManager.authenticate(
+                                        new UsernamePasswordAuthenticationToken(
+                                                login.getEmail(), login.getPassword())))
+                .map(
+                        authentication -> {
+                            ReactiveSecurityContextHolder.withAuthentication(authentication);
+                            String jwt = jwtTokenProvider.createToken(authentication);
+                            Date expirationDate = jwtTokenProvider.getExpirationDateFromToken(jwt);
+                            long expiresIn = expirationDate.getTime() - System.currentTimeMillis();
+                            var userDetails =
+                                    (org.springframework.security.core.userdetails.User)
+                                            authentication.getPrincipal();
+                            List<String> roles =
+                                    userDetails.getAuthorities().stream()
+                                            .map(GrantedAuthority::getAuthority)
+                                            .collect(Collectors.toList());
+                            return ResponseEntity.ok(
+                                    new JwtResponse(
+                                            jwt, userDetails.getUsername(), roles, expiresIn));
+                        });
+    }
 
-		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(),
-				userDetails.getEmail(), roles, expiresIn));
-	}
+    @LogProcessTime
+    @LogMethodInvocationAndParams
+    @PostMapping("/signup")
+    public Mono<ResponseEntity<?>> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
-	@LogProcessTime
-	@LogMethodInvocationAndParams
-	@PostMapping("/signup")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        //		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        //			return ResponseEntity.badRequest().body(new MessageResponse("Email is already in
+        // use!"));
+        //		}
+        //
+        //		if (userRepository.existsByPan(signUpRequest.getPan())) {
+        //			return ResponseEntity.badRequest().body(new MessageResponse("PAN number already in
+        // use!"));
+        //		}
+        //
+        //		if (userRepository.existsByPhone(signUpRequest.getPhone())) {
+        //			return ResponseEntity.badRequest().body(new MessageResponse("Phone number already in
+        // use!"));
+        //		}
 
-		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Email is already in use!"));
-		}
+        // Create new user's account
+        User user =
+                new User(
+                        signUpRequest.getFirstName(),
+                        signUpRequest.getLastName(),
+                        signUpRequest.getEmail(),
+                        passwordEncoder.encode(signUpRequest.getPassword()),
+                        signUpRequest.getPan(),
+                        signUpRequest.getPhone());
 
-		if (userRepository.existsByPan(signUpRequest.getPan())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("PAN number already in use!"));
-		}
-		
-		if (userRepository.existsByPhone(signUpRequest.getPhone())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Phone number already in use!"));
-		}
+        Set<String> strRoles = signUpRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
 
+        if (strRoles == null) {
+            reactiveRoleRepository
+                    .findByName(ERole.ROLE_USER)
+                    .map(roles::add)
+                    .switchIfEmpty(
+                            Mono.error(() -> new RuntimeException("Error: Role is not found.")));
+        } else {
+            strRoles.forEach(
+                    role -> {
+                        switch (role) {
+                            case "admin":
+                                reactiveRoleRepository
+                                        .findByName(ERole.ROLE_ADMIN)
+                                        .map(roles::add)
+                                        .switchIfEmpty(
+                                                Mono.error(
+                                                        () ->
+                                                                new RuntimeException(
+                                                                        "Error: Role is not found.")));
+                                break;
+                            case "mod":
+                                reactiveRoleRepository
+                                        .findByName(ERole.ROLE_MODERATOR)
+                                        .map(roles::add)
+                                        .switchIfEmpty(
+                                                Mono.error(
+                                                        () ->
+                                                                new RuntimeException(
+                                                                        "Error: Role is not found.")));
 
-		// Create new user's account
-		User user = new User(signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getEmail(),
-				encoder.encode(signUpRequest.getPassword()), signUpRequest.getPan(), signUpRequest.getPhone());
+                                break;
+                            default:
+                                reactiveRoleRepository
+                                        .findByName(ERole.ROLE_USER)
+                                        .map(roles::add)
+                                        .switchIfEmpty(
+                                                Mono.error(
+                                                        () ->
+                                                                new RuntimeException(
+                                                                        "Error: Role is not found.")));
+                        }
+                    });
+        }
 
-		Set<String> strRoles = signUpRequest.getRoles();
-		Set<Role> roles = new HashSet<>();
+        user.setRoles(roles);
+        reactiveUserRepository.save(user);
 
-		if (strRoles == null) {
-			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-			roles.add(userRole);
-		} else {
-			strRoles.forEach(role -> {
-				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-
-					break;
-				case "mod":
-					Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(modRole);
-
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
-				}
-			});
-		}
-
-		user.setRoles(roles);
-		userRepository.save(user);
-
-		if (signUpRequest.isReturnSecureToken()) {
-			log.info("User registration Successfully!");
-			return authenticateUser(LoginRequest.builder().email(signUpRequest.getEmail())
-					.password(signUpRequest.getPassword()).build());
-		}
-		return ResponseEntity.ok(new MessageResponse("User registration unSuccessfull!"));
-	}
+        if (signUpRequest.isReturnSecureToken()) {
+            log.info("User registration Successfully!");
+            return authenticateUser(
+                    Mono.just(
+                            LoginRequest.builder()
+                                    .email(signUpRequest.getEmail())
+                                    .password(signUpRequest.getPassword())
+                                    .build()));
+        }
+        return Mono.just(ResponseEntity.ok(new MessageResponse("User registration unSuccessful!")));
+    }
 }

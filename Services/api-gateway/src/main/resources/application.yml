@@ -1,0 +1,63 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+      
+info:
+  app:
+    description: '@project.description@'
+    name: '@project.name@'
+  version: '@project.version@'
+  
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      base-path: /${spring.application.name}
+      exposure:
+        include:
+        - features
+        - info
+        - health
+      
+resilience4j:
+  circuitbreaker:
+    instances:
+      default:
+        failureRateThreshold: 90
+        
+server:
+  port: 8085
+  servlet:
+    context-path: /${spring.application.name}
+    
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+    gateway:
+      routes:
+      - id: stock-service
+        uri: http://localhost:8083/stock-service
+        predicates:
+        - Path=/stock/**
+      - id: sip-service
+        uri: http://localhost:8084/sip-service
+        predicates:
+        - Path=/sip/**
+  data:
+    mongodb:
+      database: auth_db
+      host: localhost
+      port: 27017
+      
+zakura:
+  app:
+    secret-key: ecf1222c-88fd-47f3-988f-bdd78bade1ad
+    validityInMs: 6000000
+

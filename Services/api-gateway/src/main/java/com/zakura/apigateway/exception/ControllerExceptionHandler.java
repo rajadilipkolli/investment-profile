@@ -1,58 +1,50 @@
 package com.zakura.apigateway.exception;
 
-import org.springframework.http.HttpHeaders;
+import java.util.Map;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.reactive.error.ErrorAttributes;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerCodecConfigurer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.server.RequestPredicates;
+import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
+import org.springframework.web.reactive.function.server.ServerRequest;
+import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
 @Component
-@Slf4j
 @ControllerAdvice("com.zakura.apigateway")
-public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
+public class ControllerExceptionHandler extends AbstractErrorWebExceptionHandler {
 
-	private static final String NO_RECORD_FOUND = "No Record Found";
-	private static final String UNEXPECTED_ERROR_MESSAGE = "Unexpected internal server error";
+    public ControllerExceptionHandler(
+            DomainExceptionWrapper domainExceptionWrapper,
+            ApplicationContext applicationContext,
+            ServerCodecConfigurer serverCodecConfigurer) {
+        super(domainExceptionWrapper, new WebProperties.Resources(), applicationContext);
+        super.setMessageWriters(serverCodecConfigurer.getWriters());
+        super.setMessageReaders(serverCodecConfigurer.getReaders());
+    }
 
-	@ExceptionHandler({ RestControllerException.class })
-	public final ResponseEntity<GatewayError> handleRestControllerException(RestControllerException e,
-			WebRequest request) {
-		if (e instanceof RecordNotFoundException) {
-			return errorResponse(e);
-		}
+    @Override
+    protected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {
+        return RouterFunctions.route(RequestPredicates.all(), this::renderErrorResponse);
+    }
 
-		log.warn("Unhandled RestControllerException");
-		return handleUnexpectedException(e, request);
-	}
+    private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
 
-	@ExceptionHandler({ RuntimeException.class })
-	private ResponseEntity<GatewayError> handleUnexpectedException(RestControllerException e, WebRequest request) {
-		log.error(UNEXPECTED_ERROR_MESSAGE, e);
-		return errorResponse(new RestControllerException(UNEXPECTED_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR));
-	}
+        Map<String, Object> errorPropertiesMap =
+                getErrorAttributes(request, ErrorAttributeOptions.defaults());
 
-	private ResponseEntity<GatewayError> errorResponse(RestControllerException e) {
-		return errorResponse(e, new HttpHeaders());
-	}
-
-	private ResponseEntity<GatewayError> errorResponse(RestControllerException e, HttpHeaders headers) {
-		return new ResponseEntity<>(new GatewayError(e.getHttpStatus().value(), e.getMessage()), headers,
-				e.getHttpStatus());
-	}
-
-	@ExceptionHandler(RecordNotFoundException.class)
-	public final ResponseEntity<ErrorResponse> handleRecordNotFoundException(RecordNotFoundException ex,
-			WebRequest request) {
-		ErrorResponse error = new ErrorResponse();
-		error.setPath(request.getContextPath());
-		error.setError(NO_RECORD_FOUND);
-		error.setMessage(ex.getMessage());
-		error.setException(ex.getClass().getSimpleName());
-		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-	}
+        return ServerResponse.status(
+                        (Integer) errorPropertiesMap.getOrDefault("status", HttpStatus.NOT_FOUND))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(errorPropertiesMap));
+    }
 }
