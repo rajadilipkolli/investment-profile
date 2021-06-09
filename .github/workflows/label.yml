@@ -7,7 +7,10 @@
 
 name: "Pull Request Labeler"
 on:
-- pull_request_target
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   triage:
