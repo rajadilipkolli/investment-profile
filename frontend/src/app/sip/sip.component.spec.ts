@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { SipComponent } from './sip.component';
 
@@ -8,6 +11,11 @@ describe('SipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        FormsModule
+      ],
       declarations: [ SipComponent ]
     })
     .compileComponents();

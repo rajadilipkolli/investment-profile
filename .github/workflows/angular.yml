@@ -34,4 +34,5 @@ jobs:
           cd frontend
           npm i
           npm install
+          npm test
           npm run build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/"
