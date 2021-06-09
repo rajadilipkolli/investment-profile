@@ -33,4 +33,5 @@ jobs:
         run: |
           cd frontend
           npm i
-          npm run build:prod
+          npm install
+          ng build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/"
