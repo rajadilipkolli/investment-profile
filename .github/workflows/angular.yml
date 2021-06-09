@@ -29,10 +29,9 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       
-      - name: npm install and npm run build
+      - name: npm ci and npm run build
         run: |
           cd frontend
-          npm i
-          npm install
-          npm test
-          npm run build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/"
+          npm ci
+          npm run build:ci
+          
