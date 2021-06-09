@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('investment-profile app is running!');
+    expect(page.getTitleText().then).toEqual('investment-profile app is running!');
   });
 
   afterEach(async () => {
