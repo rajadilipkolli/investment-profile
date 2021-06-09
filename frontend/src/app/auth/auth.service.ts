@@ -58,7 +58,7 @@ export class AuthService {
     );
   }
 
-  login(email: string, password: string) {
+  public login(email: string, password: string) {
     return this.http.post<SignInResponseData>(
       'http://localhost:8085/api-gateway/auth/signin',
       {

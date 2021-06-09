@@ -7,7 +7,8 @@ export class Portfolio {
     public profitLossPercent: number;
     public profit: boolean;
 
-    public constructor(name: string, type: string, quantity: number, costPrice: number, currentPrice: number, profitLossPercent: number, profit: boolean) {
+    public constructor(name: string, type: string, quantity: number, costPrice: number, currentPrice: number, 
+        profitLossPercent: number, profit: boolean) {
         this.name = name;
         this.type = type;
         this.quantity = quantity;

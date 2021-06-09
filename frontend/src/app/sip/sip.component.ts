@@ -11,7 +11,7 @@ import { InvestmentService } from '../shared/investment.service';
   styleUrls: ['./sip.component.css']
 })
 export class SipComponent implements OnInit {
-  isLoading: boolean = false;
+  isLoading: boolean;
   error: string = null;
   defaultDuration = '1 year';
   durationList: string[] = ['1 year', '2 year', '3 year', '4 year', '5 year', '6 year', '7 year', '8 year', '9 year', '10 year'];
@@ -20,8 +20,8 @@ export class SipComponent implements OnInit {
   ror: number;
   durationString: string;
   duration: number;
-  investment: number = 0;
-  predictedReturn: number = 0;
+  investment: number;
+  predictedReturn: number;
   constructor(private investmentService: InvestmentService, private router: Router) { }
 
   onCalculate(form: NgForm) {
@@ -39,7 +39,7 @@ export class SipComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.duration = +this.durationString.replace(" year", "");
+    this.duration = +this.durationString.replace(' year', '');
     this.investment = 12 * this.duration * form.value.amount;
     predictedSipReturnObs = this.investmentService.calculateSip(this.amount, this.ror, this.duration, this.investment);
 
@@ -57,7 +57,7 @@ export class SipComponent implements OnInit {
       }
     );
 
-    //form.reset();
+    // form.reset();
   }
 
   ngOnInit(): void { }

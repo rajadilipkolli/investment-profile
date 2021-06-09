@@ -15,7 +15,7 @@ import { StockService } from '../stock.service';
 export class StockDetailComponent implements OnInit {
   isLoading: boolean = false;
   error: string = null;
-  stock: Stock = { name: "", investmentType: "", currentPrice: 0, anticipatedGrowth: 0, term: 0, quantity: 0 };
+  stock: Stock = { name: '', investmentType: '', currentPrice: 0, anticipatedGrowth: 0, term: 0, quantity: 0 };
   id: number;
   defaultDuration = '1 year';
   durationList: string[] = ['1 year', '2 year', '3 year', '4 year', '5 year', '6 year', '7 year', '8 year', '9 year', '10 year'];
@@ -55,7 +55,7 @@ export class StockDetailComponent implements OnInit {
     }
 
     this.quantity = form.value.quantity;
-    var stockToBuy: Stock;
+    let stockToBuy: Stock;
 
     stockToBuy = this.stock;
     stockToBuy.quantity = form.value.quantity;
@@ -71,7 +71,7 @@ export class StockDetailComponent implements OnInit {
         console.log('here is response of save stock');
         console.log(resData);
         this.isLoading = false;
-        //this.predictedReturn = resData;
+        // this.predictedReturn = resData;
         this.router.navigate(['/portfolio']);
       },
       errorMessage => {

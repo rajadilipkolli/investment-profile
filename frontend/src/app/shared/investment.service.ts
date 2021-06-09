@@ -19,7 +19,7 @@ export class InvestmentService {
       'http://localhost:8085/api-gateway/restservices/buy/stock',
       stockToBuy,
       {
-        headers: new HttpHeaders({ 'Authorization': authToken })
+        headers: new HttpHeaders({ Authorization: authToken })
       }
     ).pipe(
       catchError(this.handleError)

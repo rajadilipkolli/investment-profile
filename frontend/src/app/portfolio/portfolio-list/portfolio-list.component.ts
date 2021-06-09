@@ -13,9 +13,7 @@ export class PortfolioListComponent implements OnInit, OnDestroy {
   investments: Portfolio[];
   subscription: Subscription;
 
-  constructor(private portfolioService: PortfolioService,
-    private router: Router,
-    private route: ActivatedRoute) {
+  constructor(private portfolioService: PortfolioService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

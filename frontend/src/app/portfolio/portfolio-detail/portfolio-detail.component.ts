@@ -73,7 +73,7 @@ export class PortfolioDetailComponent implements OnInit {
           this.isLoading = false;
           console.log('update response');
           console.log(resData);
-          if (resData != undefined && resData.name != '') {
+          if (resData !== undefined && resData.name !== '') {
             this.portfolioService.updatePortfolio(this.id, this.portfolio);
           }
         },

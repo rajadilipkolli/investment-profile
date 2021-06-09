@@ -13,9 +13,7 @@ export class StockListComponent implements OnInit, OnDestroy {
   stocks: Stock[];
   subscription: Subscription;
 
-  constructor(private stockService: StockService,
-    private router: Router,
-    private route: ActivatedRoute) {
+  constructor(private stockService: StockService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
