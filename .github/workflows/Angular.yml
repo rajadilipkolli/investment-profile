@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
+      - run: cd frontend && npm install && cd -
       - run: npm test
       - run: npm install -g @angular/cli > /dev/null
       - run: ng build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/" 
