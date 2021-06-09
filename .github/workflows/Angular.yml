@@ -34,4 +34,4 @@ jobs:
           cd frontend
           npm i
           npm install
-          ng build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/"
+          npm run build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/"
