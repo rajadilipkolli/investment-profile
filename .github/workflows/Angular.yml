@@ -15,11 +15,22 @@ jobs:
     name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v2
-      - name: Setup node
+      
+      - name: Cache node modules
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+      - name: Setup node - ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: cd frontend && npm install && cd -
-      - run: cd frontend && npm test
-      - run: cd frontend && npm install -g @angular/cli > /dev/null
-      - run: cd frontend && ng build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/" 
+      
+      - name: npm install and npm run build
+        run: |
+          cd frontend
+          npm i
+          npm run build:prod
