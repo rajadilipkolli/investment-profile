@@ -20,6 +20,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: cd frontend && npm install && cd -
-      - run: npm test
-      - run: npm install -g @angular/cli > /dev/null
-      - run: ng build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/" 
+      - run: cd frontend && npm test
+      - run: cd frontend && npm install -g @angular/cli > /dev/null
+      - run: cd frontend && ng build --prod --output-path=dist --base-href="https://rajadileepkolli.github.io/investment-profile/" 
