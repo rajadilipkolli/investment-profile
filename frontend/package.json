@@ -23,7 +23,7 @@
     "@angular/forms": "^12.1.0",
     "@angular/material": "^12.1.0",
     "@angular/platform-browser": "^12.1.0",
-    "@angular/platform-browser-dynamic": "^12.1.0",
+    "@angular/platform-browser-dynamic": "^12.1.2",
     "@angular/router": "^12.1.0",
     "bootstrap": "^5.0.1",
     "rxjs": "^6.6.7",
