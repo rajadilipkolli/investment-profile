@@ -1,0 +1,54 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiGatewayApplication<api-gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.zakura.apigateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-EurekaServiceApplication<discovery-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.zakura.discoveryservice.EurekaServiceApplication",
+            "projectName": "discovery-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PortfolioServiceApplication<portfolio-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.zakura.portfolioservice.PortfolioServiceApplication",
+            "projectName": "portfolio-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SipServiceApplication<sip-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.zakura.sipservice.SipServiceApplication",
+            "projectName": "sip-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-StockServiceApplication<stock-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.zakura.stockservice.StockServiceApplication",
+            "projectName": "stock-service",
+            "args": ""
+        }
+    ]
+}
