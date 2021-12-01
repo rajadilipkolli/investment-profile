@@ -16,8 +16,8 @@
 	<description>Project for portfolio service</description>
 
 	<properties>
-		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.4</spring-cloud.version>
+		<java.version>17</java.version>
+		<spring-cloud.version>2021.0.0-RC1</spring-cloud.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
 	</properties>
 
@@ -54,9 +54,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.5.13</version>
 		</dependency>
 
 		<dependency>
@@ -124,5 +124,24 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 </project>
