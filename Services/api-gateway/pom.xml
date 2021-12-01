@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.6</version>
+		<version>2.6.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zakura</groupId>
@@ -16,8 +16,8 @@
 	<description>Spring Boot API Gateway with Spring Security, JWT, MongoDB</description>
 
 	<properties>
-		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.4</spring-cloud.version>
+		<java.version>17</java.version>
+		<spring-cloud.version>2021.0.0-RC1</spring-cloud.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<springdoc-openapi.version>1.5.13</springdoc-openapi.version>
 		<jjwt.version>0.11.2</jjwt.version>

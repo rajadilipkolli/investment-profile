@@ -38,4 +38,5 @@ Note: If you are facing error related to Angular Material, Consider doing below:
    ? Set up browser animations for Angular Material? Yes
 
  
- 
+## Changes in code
+Due to breaking changes in spring boot 2.6.0 we cannot use spring fox 3.0.0 starter unless it is fixed, hence migrated to springdoc openui
