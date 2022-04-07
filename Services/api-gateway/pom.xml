@@ -19,7 +19,7 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.1</spring-cloud.version>
 		<testcontainers.version>1.16.3</testcontainers.version>
-		<springdoc-openapi.version>1.6.6</springdoc-openapi.version>
+		<springdoc-openapi.version>1.6.7</springdoc-openapi.version>
 		<jjwt.version>0.11.2</jjwt.version>
 	</properties>
 
