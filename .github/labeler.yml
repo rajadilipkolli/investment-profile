@@ -1,0 +1,4 @@
+"component: backend":
+  - Services/**/*
+"component: ui":
+  - frountend/**/*
