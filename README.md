@@ -16,14 +16,24 @@ Bring all services up in following order
 
 ## Steps to start the application and open webpage(Please setup mongodb and backend services before): -
 =================================================================================================
+
+
 Step 1: - use below command in cmd: -
-> npm install -g @angular/cli
+
+> 
+```
+ npm install -g @angular/cli
+```
  
-> ng serve
+>
+```
+ ng serve
+```
 
-Step 2: - Open Google Chrome and hit localhost:4200
+Step 2: - Open Google Chrome and hit **localhost:4200**
 
-step 3: - For convenience, I have already set up a test user to login. you can also create your own profile(signup) and start using application.
+step 3: - For convenience, Test user is created which can be used to login. you can also create your own profile(signup) and start using application.
+
 
 Test User Details: -
 ==================
@@ -33,6 +43,8 @@ password: welcome123
 
 
 Note: If you are facing error related to Angular Material, Consider doing below: -
+
+
 1. ng add @angular/material
    Note: select below options while installing: -
    ? Choose a prebuilt theme name, or "custom" for a custom theme: Indigo/Pink
@@ -41,4 +53,6 @@ Note: If you are facing error related to Angular Material, Consider doing below:
 
  
 ## Changes in code
-Due to breaking changes in spring boot 2.6.0 we cannot use spring fox 3.0.0 starter unless it is fixed, hence migrated to springdoc openui
+ - Due to breaking changes in spring boot 2.6.0 we cannot use spring fox 3.0.0 starter unless it is fixed, hence migrated to springdoc openui -  Wont switch back to spring fox
+ - Upgraded to Java 17
+ - Converted all maven wrappers to Apache Maven Wrapper using command ` mvn wrapper:wrapper`
