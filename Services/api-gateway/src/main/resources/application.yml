@@ -30,8 +30,6 @@ resilience4j:
         
 server:
   port: 8085
-  servlet:
-    context-path: /${spring.application.name}
     
 spring:
   application:
@@ -55,6 +53,8 @@ spring:
       database: auth_db
       host: localhost
       port: 27017
+  webflux:
+    base-path: /${spring.application.name}
       
 zakura:
   app:

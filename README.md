@@ -3,6 +3,11 @@
 # investment-profile
 This repository is the sample microservices based end to end solutions which demonstrates key microservices architecture patterns
 
+## Tools Required
+ * JDK 17+
+ * Node 16+
+ * IDE(IntelliJ Or VSCode or STS)
+
 ## Steps to start backend application
 
 Goto Services folder and issue command ```docker compose up```, this will bring mongo and zipkin up which will be used as infrastructure for all projects.
@@ -55,3 +60,4 @@ Note: If you are facing error related to Angular Material, Consider doing below:
  - Due to breaking changes in spring boot 2.6.0 we cannot use spring fox 3.0.0 starter unless it is fixed, hence migrated to **springdoc openui** -  Wont switch back to spring fox
  - Upgraded to **Java 17**
  - Converted all maven wrappers to **Apache Maven Wrapper** using command ` mvn wrapper:wrapper`
+ - Since api-gateway is migrated to spring cloud gateway which under the hood uses webflux `server.servlet.context-path` is no longer valid, it should be replaced with `spring.webflux.base-path` 
