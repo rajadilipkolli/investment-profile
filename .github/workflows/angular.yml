@@ -3,8 +3,12 @@ name: Angular CI
 on:
   push:
     branches: [ master ]
+    paths:
+      - "frontend/**"
   pull_request:
     branches: [ master ]
+    paths:
+      - "frontend/**"
 
 jobs:
   build:
@@ -12,6 +16,9 @@ jobs:
     strategy:
       matrix:
         node: [ '16', '18' ]
+    defaults:
+      run:
+        working-directory: "frontend"
     name: Node ${{ matrix.node }} sample
     steps:
       - uses: actions/checkout@v3
@@ -31,7 +38,6 @@ jobs:
       
       - name: npm ci and npm run build
         run: |
-          cd frontend
           npm ci
           npm run build:ci
           
