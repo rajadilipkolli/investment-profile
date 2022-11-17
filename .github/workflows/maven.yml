@@ -6,8 +6,12 @@ name: Java CI with Maven
 on:
   push:
     branches: [ master ]
+    paths:
+      - "services/**"
   pull_request:
     branches: [ master ]
+    paths:
+      - "services/**"
 
 jobs:
   build:
@@ -16,6 +20,9 @@ jobs:
     strategy:
       matrix:
         java-version: [17]
+    defaults:
+      run:
+        working-directory: "services"
 
     steps:
     - uses: actions/checkout@v3

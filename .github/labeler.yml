@@ -1,5 +1,5 @@
 "component: backend":
-  - Services/**/*
+  - services/**/*
 "component: ui":
   - frountend/**/*
 "status: waiting-for-triage":
@@ -7,4 +7,4 @@
   - ./**/*
 "type: documentation": docs/**/*
 "type: dependency-upgrade":
-  - Services/**/pom.xml
+  - services/**/pom.xml
