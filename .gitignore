@@ -44,3 +44,5 @@ build/
 /frontend/node_modules/
 frontend/dist/
 frontend/.angular/
+spring-boot-migrator.jar
+.rewrite-cache/

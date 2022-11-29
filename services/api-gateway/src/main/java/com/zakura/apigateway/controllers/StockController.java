@@ -7,7 +7,7 @@ import com.zakura.apigateway.security.jwt.JwtTokenProvider;
 import com.zakura.apigateway.util.Constants;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

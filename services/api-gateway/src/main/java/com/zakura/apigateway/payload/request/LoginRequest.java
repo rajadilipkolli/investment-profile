@@ -1,7 +1,7 @@
 package com.zakura.apigateway.payload.request;
 
 import java.io.Serializable;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 

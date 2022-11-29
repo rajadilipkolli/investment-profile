@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.6</version>
+		<version>3.0.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zakura</groupId>
@@ -17,9 +17,9 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2021.0.5</spring-cloud.version>
+		<spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
-		<springdoc-openapi.version>1.6.13</springdoc-openapi.version>
+		<springdoc-openapi.version>2.0.0</springdoc-openapi.version>
 		<jjwt.version>0.11.5</jjwt.version>
 	</properties>
 
@@ -67,6 +67,10 @@
 			<version>${jjwt.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
 			<version>${jjwt.version}</version>
@@ -86,14 +90,14 @@
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
 			<version>${springdoc-openapi.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-security</artifactId>
 			<version>${springdoc-openapi.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -183,6 +187,14 @@
 	</build>
 
 	<repositories>
+		<repository>
+			<id>netflix-candidates</id>
+			<name>Netflix Candidates</name>
+			<url>https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>
