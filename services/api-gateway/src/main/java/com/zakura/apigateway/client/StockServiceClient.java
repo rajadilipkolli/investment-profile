@@ -2,7 +2,7 @@ package com.zakura.apigateway.client;
 
 import com.zakura.apigateway.models.investment.Stock;
 import java.util.ArrayList;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

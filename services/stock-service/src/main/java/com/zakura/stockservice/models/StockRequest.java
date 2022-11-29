@@ -3,7 +3,7 @@ package com.zakura.stockservice.models;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
