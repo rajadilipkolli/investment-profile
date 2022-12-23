@@ -10,7 +10,13 @@ This repository is the sample microservices based end to end solutions which dem
 
 ## Steps to start backend application
 
-Goto Services folder and issue command ```docker compose up```, this will bring mongo and zipkin up which will be used as infrastructure for all projects.
+Goto Services folder and issue command 
+
+```shell
+docker compose up
+```
+
+this will bring mongo and zipkin up which will be used as infrastructure for all projects.
 Bring all services up in following order
 
 1. discovery-service
@@ -25,12 +31,12 @@ Bring all services up in following order
 Step 1: - use below command in cmd: -
 
 > 
-```
+```bash
  npm install -g @angular/cli
 ```
  
 >
-```
+```bash
  ng serve
 ```
 

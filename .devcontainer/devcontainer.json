@@ -11,12 +11,15 @@
 			"installMaven": "true",
 			"installGradle": "false"
 		},
+		"ghcr.io/devcontainers/features/docker-from-docker:1": {},
 		"ghcr.io/devcontainers-contrib/features/angular-cli:1": {}
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"vscjava.vscode-java-pack"
+				"vscjava.vscode-java-pack",
+				"ms-azuretools.vscode-docker",
+				"Pivotal.vscode-boot-dev-pack"
 			]
 		}
 	}
