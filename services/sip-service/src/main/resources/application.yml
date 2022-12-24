@@ -1,0 +1,7 @@
+micronaut:
+  application:
+    name: sipService
+netty:
+  default:
+    allocator:
+      max-order: 3

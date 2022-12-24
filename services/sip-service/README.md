@@ -1,23 +1,13 @@
-## Run Spring Boot application
-```
-mvn spring-boot:run
-```
-# SIP Return Calculation
-> The formula for SIP return calculation is based on the formula for future value of annuity-due.
+## Micronaut 3.7.5 Documentation
 
-> FV = P × ((1 + i)n - 1) / i) × (1 + i)
+- [User Guide](https://docs.micronaut.io/3.7.5/guide/index.html)
+- [API Reference](https://docs.micronaut.io/3.7.5/api/index.html)
+- [Configuration Reference](https://docs.micronaut.io/3.7.5/guide/configurationreference.html)
+- [Micronaut Guides](https://guides.micronaut.io/index.html)
+---
 
-> Where,
-> FV = Future value
-> P = Amount invested at the start of every payment interval
-> n = Number of payments
-> i = Periodic interest rate
-> r = Expected return rate in % per annum
+## Feature http-client documentation
 
-> Monthly SIP Formula
-> For a monthly SIP payment P for a period of n months:
+- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
 
-> Maturity amount = P × ((1 + i)n - 1) / i) × (1 + i)
 
-> where,
-> i = r / 100 / 12
