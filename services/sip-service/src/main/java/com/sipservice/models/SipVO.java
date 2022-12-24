@@ -1,11 +1,18 @@
 package com.sipservice.models;
 
+import io.micronaut.core.annotation.NonNull;
+import io.micronaut.serde.annotation.Serdeable;
+
+import java.util.Objects;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@Serdeable
 public class SipVO implements Serializable {
 
+    @NonNull
     private BigDecimal monthlyInvestment;
+    @NonNull
 	private BigDecimal expectedRateOfInterest;
 	private int investmentDuration;
 	private BigDecimal investedAmount;
