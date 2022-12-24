@@ -1,5 +1,5 @@
 /* Licensed under Apache-2.0 2021-2022 */
-package data;
+package com.zakura.apigateway.data;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class TestData {
@@ -40,14 +41,9 @@ public class TestData {
         return gson.fromJson(new FileReader(INVESTMENT_LIST_RESULT), Investment[].class);
     }
 
-    public static ArrayList<Investment> getInvestmentList()
+    public static List<Investment> getInvestmentList()
             throws JsonSyntaxException, JsonIOException, FileNotFoundException {
-        return new ArrayList<>(Arrays.asList(getInvestmentArray()));
-    }
-
-    public static Optional<ArrayList<Investment>> getInvestmentListOptional()
-            throws JsonSyntaxException, JsonIOException, FileNotFoundException {
-        return Optional.of(getInvestmentList());
+        return Arrays.asList(getInvestmentArray());
     }
 
     public static Investment[] getLossInvestmentArray()

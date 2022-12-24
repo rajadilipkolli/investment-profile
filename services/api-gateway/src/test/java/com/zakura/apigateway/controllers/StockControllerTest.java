@@ -1,103 +1,114 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.controllers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.zakura.apigateway.client.StockServiceClient;
+import com.zakura.apigateway.data.TestData;
+import com.zakura.apigateway.exception.DomainExceptionWrapper;
+import com.zakura.apigateway.models.investment.Stock;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
-import data.TestData;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@RunWith(MockitoJUnitRunner.class)
-public class StockControllerTest {
+@WebFluxTest(
+        controllers = StockController.class,
+        includeFilters = {
+            @ComponentScan.Filter(
+                    type = FilterType.ASSIGNABLE_TYPE,
+                    classes = DomainExceptionWrapper.class)
+        })
+@AutoConfigureWebTestClient
+class StockControllerTest {
 
-    @InjectMocks private StockController stockController;
+    @MockBean private StockServiceClient stockServiceClient;
 
-    @Mock private StockServiceClient stockServiceClient;
+    @MockBean private JwtTokenProvider jwtUtils;
 
-    @Mock private JwtTokenProvider jwtUtils;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(stockController).build();
-    }
+    @Autowired private WebTestClient webTestClient;
 
     @Test
-    public void testAvailableStocksToBuy() throws Exception {
+    @WithMockUser
+    void testAvailableStocksToBuy() throws Exception {
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
         Mockito.when(stockServiceClient.getAvailableStocks())
                 .thenReturn(Flux.fromIterable(TestData.getStockList()));
-        mockMvc.perform(
-                        get("/restservices/availableStocks")
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .header(
-                                        TestData.AUTHORIZATION_STRING,
-                                        TestData.AUTHORIZATION_HEADER_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk())
-                .andReturn();
-    }
-
-    @Test(expected = AssertionError.class)
-    public void testAvailableStocksToBuyUnauthorized() throws Exception {
-        mockMvc.perform(
-                        get("/restservices/availableStocks")
-                                .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk())
-                .andReturn();
+        webTestClient
+                .get()
+                .uri("/restservices/availableStocks")
+                .header(TestData.AUTHORIZATION_STRING, TestData.AUTHORIZATION_HEADER_VALUE)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBodyList(Stock.class)
+                .hasSize(4);
     }
 
     @Test
-    public void testAvailableStocksToBuyUnauthorized1() throws Exception {
+    void testAvailableStocksToBuyUnauthorized() {
+        webTestClient
+                .get()
+                .uri("/restservices/availableStocks")
+                .exchange()
+                .expectStatus()
+                .isUnauthorized();
+    }
+
+    @Test
+    void testAvailableStocksToBuyUnauthorized1() throws Exception {
         Mockito.when(stockServiceClient.getAvailableStocks())
                 .thenReturn(Flux.fromIterable(TestData.getStockList()));
-        mockMvc.perform(
-                        get("/restservices/availableStocks")
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .header(
-                                        TestData.AUTHORIZATION_STRING,
-                                        TestData.INVALID_AUTHORIZATION_HEADER_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk())
-                .andReturn();
+        webTestClient
+                .get()
+                .uri("/restservices/availableStocks")
+                .header(TestData.AUTHORIZATION_STRING, TestData.INVALID_AUTHORIZATION_HEADER_VALUE)
+                .exchange()
+                .expectStatus()
+                .isUnauthorized();
     }
 
     @Test
-    public void testBuyStock() throws Exception {
+    @WithMockUser
+    void testBuyStock() throws Exception {
 
         final String body = TestData.getStockString();
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
         Mockito.when(stockServiceClient.saveUserStock(Mockito.any(), Mockito.anyString()))
                 .thenReturn(Mono.just(TestData.SUCCESS));
-        mockMvc.perform(
-                        post("/restservices/buy/stock")
-                                .content(body)
-                                .param("request", body)
-                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                                .header(
-                                        TestData.AUTHORIZATION_STRING,
-                                        TestData.INVALID_AUTHORIZATION_HEADER_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk())
-                .andReturn();
+        webTestClient
+                .mutateWith(SecurityMockServerConfigurers.csrf())
+                .post()
+                .uri("/restservices/buy/stock")
+                .body(BodyInserters.fromValue(body))
+                .headers(
+                        httpHeaders -> {
+                            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+                            httpHeaders.add(
+                                    TestData.AUTHORIZATION_STRING,
+                                    TestData.INVALID_AUTHORIZATION_HEADER_VALUE);
+                        })
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(String.class)
+                .consumeWith(
+                        stringEntityExchangeResult ->
+                                assertThat(stringEntityExchangeResult.getResponseBody())
+                                        .isEqualTo("SUCCESS"));
     }
 }

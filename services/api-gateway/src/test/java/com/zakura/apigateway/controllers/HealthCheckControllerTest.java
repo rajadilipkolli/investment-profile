@@ -1,36 +1,43 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.controllers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import com.zakura.apigateway.exception.DomainExceptionWrapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
-@RunWith(MockitoJUnitRunner.class)
-public class HealthCheckControllerTest {
+@WebFluxTest(
+        controllers = HealthCheckController.class,
+        includeFilters = {
+            @ComponentScan.Filter(
+                    type = FilterType.ASSIGNABLE_TYPE,
+                    classes = DomainExceptionWrapper.class)
+        })
+@AutoConfigureWebTestClient
+class HealthCheckControllerTest {
 
-    @InjectMocks private HealthCheckController healthCheckController;
-
-    private MockMvc mockMvc;
-
-    @Before
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
-    }
+    @Autowired private WebTestClient webTestClient;
 
     @Test
-    public void testHealthCheck() throws Exception {
-        mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isOk())
-                .andReturn();
+    @WithMockUser
+    void testHealthCheck() {
+        webTestClient
+                .get()
+                .uri("/health-check/status")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(String.class)
+                .consumeWith(
+                        response ->
+                                assertThat(response.getResponseBody())
+                                        .isEqualTo("API Service is UP!"));
     }
 }
