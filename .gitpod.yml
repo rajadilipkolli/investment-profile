@@ -30,5 +30,9 @@ ports:
     visibility: public
   - port: 9411
     visibility: public
-  - port: 8085
+  - port: 8082-8085
+    visibility: public
+  - port: 8761
+    visibility: public
+  - port: 18081
     visibility: public

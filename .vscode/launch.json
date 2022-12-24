@@ -1,6 +1,13 @@
 {
     "configurations": [
         {
+            "name": "Launch UI in Edge",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "type": "java",
             "name": "Spring Boot-ApiGatewayApplication<api-gateway>",
             "request": "launch",
