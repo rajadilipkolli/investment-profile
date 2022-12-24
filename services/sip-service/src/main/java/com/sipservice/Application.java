@@ -1,4 +1,4 @@
-package com.example;
+package com.sipservice;
 
 import io.micronaut.runtime.Micronaut;
 
