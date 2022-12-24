@@ -13,7 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 // @FeignClient("portfolio-service")
-@HttpExchange("http://localhost:8082/")
+@HttpExchange("http://localhost:8082/api-gateway")
 public interface PortfolioServiceClient {
 
     @GetExchange("/portfolio-service/investments/all/{userId}")

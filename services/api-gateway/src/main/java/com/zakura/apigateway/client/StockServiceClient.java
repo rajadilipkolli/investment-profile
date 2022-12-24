@@ -12,7 +12,7 @@ import org.springframework.web.service.annotation.PostExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@HttpExchange("http://localhost:8083/")
+@HttpExchange("http://localhost:8083/api-gateway")
 public interface StockServiceClient {
 
     @GetExchange("/stock-service/view/all")
