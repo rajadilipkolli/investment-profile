@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2022 */
 package com.zakura.apigateway.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;

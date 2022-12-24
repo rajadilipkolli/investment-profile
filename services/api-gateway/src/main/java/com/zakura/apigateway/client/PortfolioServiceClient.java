@@ -1,38 +1,41 @@
+/* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.client;
 
 import com.zakura.apigateway.models.investment.Investment;
-import java.util.ArrayList;
 import jakarta.validation.Valid;
-import org.springframework.cloud.openfeign.FeignClient;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.service.annotation.GetExchange;
+import org.springframework.web.service.annotation.HttpExchange;
+import org.springframework.web.service.annotation.PostExchange;
 
-@FeignClient("portfolio-service")
+// @FeignClient("portfolio-service")
+@HttpExchange("http://localhost:8082/")
 public interface PortfolioServiceClient {
 
-    @GetMapping("/portfolio-service/investments/all/{userId}")
+    @GetExchange("/portfolio-service/investments/all/{userId}")
     @CrossOrigin
-    ArrayList<Investment> getAllInvestments(@PathVariable("userId") String userId);
+    List<Investment> getAllInvestments(@PathVariable("userId") String userId);
 
-    @GetMapping("/portfolio-service/investments/profit/{userId}")
+    @GetExchange("/portfolio-service/investments/profit/{userId}")
     @CrossOrigin
     ArrayList<Investment> getProfitInvestments(@PathVariable("userId") String userId);
 
-    @GetMapping("/portfolio-service/investments/loss/{userId}")
+    @GetExchange("/portfolio-service/investments/loss/{userId}")
     @CrossOrigin
     ArrayList<Investment> getLossInvestments(@PathVariable("userId") String userId);
 
-    @PostMapping("/portfolio-service/investments/update/{userId}")
+    @PostExchange("/portfolio-service/investments/update/{userId}")
     @CrossOrigin
     @Valid
     Investment updateUserInvestment(
             @RequestBody @Valid Investment investmentToUpdate,
             @PathVariable("userId") String userId);
 
-    @PostMapping("/portfolio-service/investments/delete/{userId}")
+    @PostExchange("/portfolio-service/investments/delete/{userId}")
     @CrossOrigin
     @Valid
     String deleteUserInvestment(

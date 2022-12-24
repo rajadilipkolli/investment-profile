@@ -1,10 +1,11 @@
+/* Licensed under Apache-2.0 2022 */
 package com.zakura.apigateway.payload.request;
 
-import java.io.Serializable;
-import java.util.Set;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Set;
 import lombok.Data;
 
 @Data

@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2022 */
 package com.zakura.apigateway.security.jwt;
 
 import static java.util.stream.Collectors.joining;
@@ -9,7 +10,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;

@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2022 */
 package com.zakura.apigateway.controllers;
 
 import com.zakura.apigateway.aspect.LogMethodInvocationAndParams;
@@ -6,8 +7,8 @@ import com.zakura.apigateway.models.investment.Stock;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
 import com.zakura.apigateway.util.Constants;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import java.util.ArrayList;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
