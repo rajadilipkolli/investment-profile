@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2022 */
+/* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.exception;
 
 import org.springframework.http.HttpStatus;

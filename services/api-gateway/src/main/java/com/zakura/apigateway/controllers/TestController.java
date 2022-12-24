@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2022 */
+/* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
