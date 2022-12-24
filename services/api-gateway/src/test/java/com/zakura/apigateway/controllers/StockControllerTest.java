@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StockControllerTest {
@@ -40,7 +42,8 @@ public class StockControllerTest {
     public void testAvailableStocksToBuy() throws Exception {
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
-        Mockito.when(stockServiceClient.getAvailableStocks()).thenReturn(TestData.getStockList());
+        Mockito.when(stockServiceClient.getAvailableStocks())
+                .thenReturn(Flux.fromIterable(TestData.getStockList()));
         mockMvc.perform(
                         get("/restservices/availableStocks")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -64,7 +67,8 @@ public class StockControllerTest {
 
     @Test
     public void testAvailableStocksToBuyUnauthorized1() throws Exception {
-        Mockito.when(stockServiceClient.getAvailableStocks()).thenReturn(TestData.getStockList());
+        Mockito.when(stockServiceClient.getAvailableStocks())
+                .thenReturn(Flux.fromIterable(TestData.getStockList()));
         mockMvc.perform(
                         get("/restservices/availableStocks")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -83,7 +87,7 @@ public class StockControllerTest {
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
         Mockito.when(stockServiceClient.saveUserStock(Mockito.any(), Mockito.anyString()))
-                .thenReturn(TestData.SUCCESS);
+                .thenReturn(Mono.just(TestData.SUCCESS));
         mockMvc.perform(
                         post("/restservices/buy/stock")
                                 .content(body)

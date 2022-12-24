@@ -4,6 +4,7 @@ package com.zakura.apigateway.security;
 import com.zakura.apigateway.repository.ReactiveUserRepository;
 import com.zakura.apigateway.security.jwt.JwtTokenAuthenticationFilter;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
+import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableReactiveMethodSecurity
@@ -36,7 +40,8 @@ public class WebSecurityConfig {
     public SecurityWebFilterChain springWebFilterChain(
             ServerHttpSecurity http,
             JwtTokenProvider tokenProvider,
-            ReactiveAuthenticationManager reactiveAuthenticationManager) {
+            ReactiveAuthenticationManager reactiveAuthenticationManager,
+            CorsWebFilter corsFilter) {
 
         final String authenticationPaths = "/auth/**";
 
@@ -57,6 +62,7 @@ public class WebSecurityConfig {
                                         .permitAll()
                                         .anyExchange()
                                         .authenticated())
+                .addFilterBefore(corsFilter, SecurityWebFiltersOrder.CORS)
                 .addFilterAt(
                         new JwtTokenAuthenticationFilter(tokenProvider),
                         SecurityWebFiltersOrder.AUTHENTICATION)
@@ -67,6 +73,21 @@ public class WebSecurityConfig {
                 .logout()
                 .disable()
                 .build();
+    }
+
+    @Bean
+    public CorsWebFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of("http://localhost:4200"));
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsWebFilter(source);
     }
 
     @Bean

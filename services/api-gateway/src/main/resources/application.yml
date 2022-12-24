@@ -39,6 +39,8 @@ spring:
       retry:
         enabled: true
     gateway:
+      globalcors:
+        enabled: true
       routes:
       - id: stock-service
         uri: http://localhost:8083/stock-service

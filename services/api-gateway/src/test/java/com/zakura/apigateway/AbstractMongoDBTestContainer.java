@@ -4,14 +4,12 @@ package com.zakura.apigateway;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MongoDBContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.utility.DockerImageName;
 
 abstract class AbstractMongoDBTestContainer {
 
-    static final DockerImageName dockerImageName = DockerImageName.parse("mongo:5.0.12");
+    static final DockerImageName dockerImageName = DockerImageName.parse("mongo:6.0.3");
 
-    @Container
     protected static final MongoDBContainer MONGO_DB_CONTAINER =
             new MongoDBContainer(dockerImageName).withExposedPorts(27017);
 
@@ -21,7 +19,7 @@ abstract class AbstractMongoDBTestContainer {
 
     @DynamicPropertySource
     static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
-        propertyRegistry.add("spring.data.mongodb.host", MONGO_DB_CONTAINER::getHost);
-        propertyRegistry.add("spring.data.mongodb.port", MONGO_DB_CONTAINER::getFirstMappedPort);
+        propertyRegistry.add("spring.data.mongodb.url", MONGO_DB_CONTAINER::getReplicaSetUrl);
+        // propertyRegistry.add("spring.data.mongodb.port", MONGO_DB_CONTAINER::getFirstMappedPort);
     }
 }

@@ -8,8 +8,6 @@ import com.zakura.apigateway.security.jwt.JwtTokenProvider;
 import com.zakura.apigateway.util.Constants;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,28 +28,29 @@ public class PortfolioController {
     private final PortfolioServiceClient portfolioServiceClient;
     private final JwtTokenProvider jwtTokenProvider;
 
-    private List<Investment> fallback(String authorizationToken, Exception ex) {
+    private Flux<Investment> fallback(String authorizationToken, Exception ex) {
         log.error("Exception :{}", ex.getMessage());
         log.info("Serving from FallBack");
-        return new ArrayList<>();
+        return Flux.empty();
     }
 
-    private Investment fallbackUpdate(
+    private Mono<Investment> fallbackUpdate(
             String authorizationToken, Investment investment, Exception ex) {
         log.error("Exception :{}", ex.getMessage());
-        return Investment.builder().build();
+        return Mono.just(Investment.builder().build());
     }
 
-    private String fallbackDelete(String authorizationToken, Investment investment, Exception ex) {
+    private Mono<String> fallbackDelete(
+            String authorizationToken, Investment investment, Exception ex) {
         log.error("Exception :{}", ex.getMessage());
-        return Constants.FAILED_FALLBACK;
+        return Mono.just(Constants.FAILED_FALLBACK);
     }
 
     @LogMethodInvocation
     @GetMapping("/investments/all")
     // @CrossOrigin
     @CircuitBreaker(name = "default", fallbackMethod = "fallback")
-    public List<Investment> allInvestments(
+    public Flux<Investment> allInvestments(
             @RequestHeader("Authorization") String authorizationToken) {
         String jwtToken = authorizationToken.substring(7);
         String userName = jwtTokenProvider.getUsernameFromToken(jwtToken);
@@ -60,7 +61,7 @@ public class PortfolioController {
     @PostMapping("/investments/update")
     // @CrossOrigin
     @CircuitBreaker(name = "default", fallbackMethod = "fallbackUpdate")
-    public @Valid Investment updateInvestment(
+    public @Valid Mono<Investment> updateInvestment(
             @RequestHeader("Authorization") String authorizationToken,
             @RequestBody @Valid Investment investment) {
         String jwtToken = authorizationToken.substring(7);
@@ -72,7 +73,7 @@ public class PortfolioController {
     @PostMapping("/investments/delete")
     // @CrossOrigin
     @CircuitBreaker(name = "default", fallbackMethod = "fallbackDelete")
-    public @Valid String deleteInvestment(
+    public @Valid Mono<String> deleteInvestment(
             @RequestHeader("Authorization") String authorizationToken,
             @RequestBody @Valid Investment investment) {
         String jwtToken = authorizationToken.substring(7);
@@ -84,7 +85,7 @@ public class PortfolioController {
     @GetMapping("/investments/profit")
     // @CrossOrigin
     @CircuitBreaker(name = "default", fallbackMethod = "fallback")
-    public ArrayList<Investment> profitInvestments(
+    public Flux<Investment> profitInvestments(
             @RequestHeader("Authorization") String authorizationToken) {
         String jwtToken = authorizationToken.substring(7);
         String userName = jwtTokenProvider.getUsernameFromToken(jwtToken);
@@ -95,7 +96,7 @@ public class PortfolioController {
     @GetMapping("/investments/loss")
     // @CrossOrigin
     @CircuitBreaker(name = "default", fallbackMethod = "fallback")
-    public ArrayList<Investment> lossInvestments(
+    public Flux<Investment> lossInvestments(
             @RequestHeader("Authorization") String authorizationToken) {
         String jwtToken = authorizationToken.substring(7);
         String userName = jwtTokenProvider.getUsernameFromToken(jwtToken);

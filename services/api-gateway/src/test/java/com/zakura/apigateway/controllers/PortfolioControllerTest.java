@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PortfolioControllerTest {
@@ -41,7 +43,7 @@ public class PortfolioControllerTest {
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
         Mockito.when(portfolioServiceClient.getAllInvestments(Mockito.anyString()))
-                .thenReturn(TestData.getInvestmentList());
+                .thenReturn(Flux.fromIterable(TestData.getInvestmentList()));
         mockMvc.perform(
                         get("/restservices//investments/all")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -61,7 +63,7 @@ public class PortfolioControllerTest {
         Mockito.when(
                         portfolioServiceClient.updateUserInvestment(
                                 Mockito.any(), Mockito.anyString()))
-                .thenReturn(TestData.getInvestment());
+                .thenReturn(Mono.just(TestData.getInvestment()));
         mockMvc.perform(
                         post("/restservices/investments/update", new Object[] {TestData.USER_ID})
                                 .content(body)
@@ -82,7 +84,7 @@ public class PortfolioControllerTest {
         Mockito.when(
                         portfolioServiceClient.deleteUserInvestment(
                                 Mockito.any(), Mockito.anyString()))
-                .thenReturn(TestData.SUCCESS);
+                .thenReturn(Mono.just(TestData.SUCCESS));
         final String body = TestData.getInvestmentString();
         mockMvc.perform(
                         post("/restservices/investments/delete")
@@ -102,7 +104,7 @@ public class PortfolioControllerTest {
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
         Mockito.when(portfolioServiceClient.getProfitInvestments(Mockito.anyString()))
-                .thenReturn(TestData.getProfitInvestmentList());
+                .thenReturn(Flux.fromIterable(TestData.getProfitInvestmentList()));
         mockMvc.perform(
                         get("/restservices/investments/profit")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -119,7 +121,7 @@ public class PortfolioControllerTest {
         Mockito.when(jwtUtils.getUsernameFromToken(Mockito.anyString()))
                 .thenReturn(TestData.USER_ID);
         Mockito.when(portfolioServiceClient.getLossInvestments(Mockito.anyString()))
-                .thenReturn(TestData.getLossInvestmentList());
+                .thenReturn(Flux.fromIterable(TestData.getLossInvestmentList()));
         mockMvc.perform(
                         get("/restservices/investments/loss")
                                 .contentType(MediaType.APPLICATION_JSON_VALUE)
