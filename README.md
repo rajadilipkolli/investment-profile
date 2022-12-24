@@ -1,4 +1,4 @@
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rajadileepkolli/investment-profile)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rajadilipkolli/investment-profile)
 
 # investment-profile
 This repository is the sample microservices based end to end solutions which demonstrates key microservices architecture patterns
@@ -25,6 +25,11 @@ Bring all services up in following order
 4. sip-service
 5. stock-service
 
+Verify if all services are up here
+
+http://localhost:8761
+
+
 ## Steps to start the application and open webpage(Please setup mongodb and backend services) ahead :
 
 
@@ -40,7 +45,7 @@ Step 1: - use below command in cmd: -
  ng serve
 ```
 
-Step 2: - Open Google Chrome and hit **localhost:4200**
+Step 2: - Open Google Chrome and hit **http://localhost:4200**
 
 step 3: - For convenience, Test user is created which can be used to login. you can also create your own profile(signup) and start using application.
 
