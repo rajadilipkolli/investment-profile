@@ -7,9 +7,7 @@ import com.zakura.apigateway.models.User;
 import com.zakura.apigateway.repository.ReactiveRoleRepository;
 import com.zakura.apigateway.repository.ReactiveUserRepository;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -51,12 +49,10 @@ public class LoadInitialData implements CommandLineRunner {
     }
 
     private Mono<User> getUserMono() {
-        Set<Role> roleSet = new HashSet<>();
         return this.reactiveRoleRepository
                 .findByName(ERole.ROLE_USER)
-                .map(roleSet::add)
                 .flatMap(
-                        aBoolean -> {
+                        role -> {
                             User user = new User();
                             user.setFirstName("firstName");
                             user.setLastName("lastName");
@@ -64,8 +60,8 @@ public class LoadInitialData implements CommandLineRunner {
                             user.setPassword(
                                     "$2a$10$mrq0WtVfOzS0SuDYCjLoVOSwmgUlJE7z4Iq8fC3LQkqNayzrY9tXq");
                             user.setPan("ABCD234567");
-                            user.setPhone(1234323432L);
-                            user.setRoles(roleSet);
+                            user.setPhone(9234323432L);
+                            user.setRoles(List.of(role));
                             return Mono.just(user);
                         });
     }

@@ -1,9 +1,7 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.payload.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
@@ -35,8 +33,8 @@ public class SignupRequest implements Serializable {
     @Size(min = 10, max = 10)
     private String pan;
 
-    @NotBlank
-    @Size(min = 10, max = 10)
+    @Min(value = 5999_999_999L)
+    @Max(value = 9999_999_999L)
     private Long phone;
 
     private Set<String> roles;
