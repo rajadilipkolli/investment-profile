@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.zakura.stockservice.models.Investment;
 
-@FeignClient("portfolio-service")
+@FeignClient(url = "http://localhost:8082/api-gateway", name = "portfolio-service")
 public interface PortfolioServiceClient {
 
 	@PostMapping("/portfolio-service/investments/add/{userId}")

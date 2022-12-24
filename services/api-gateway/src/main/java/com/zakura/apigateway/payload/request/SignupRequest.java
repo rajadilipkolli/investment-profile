@@ -4,6 +4,7 @@ package com.zakura.apigateway.payload.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 import lombok.Data;
@@ -11,7 +12,7 @@ import lombok.Data;
 @Data
 public class SignupRequest implements Serializable {
 
-    private static final long serialVersionUID = 8943941344586376658L;
+    @Serial private static final long serialVersionUID = 8943941344586376658L;
 
     @NotBlank
     @Size(min = 3, max = 20)
@@ -34,12 +35,9 @@ public class SignupRequest implements Serializable {
     @Size(min = 10, max = 10)
     private String pan;
 
-    /*
-     * @NotBlank
-     *
-     * @Size(min = 10, max = 10)
-     */
-    private long phone;
+    @NotBlank
+    @Size(min = 10, max = 10)
+    private Long phone;
 
     private Set<String> roles;
 

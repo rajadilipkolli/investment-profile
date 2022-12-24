@@ -14,8 +14,8 @@ import com.zakura.apigateway.repository.ReactiveRoleRepository;
 import com.zakura.apigateway.repository.ReactiveUserRepository;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -86,82 +87,44 @@ public class AuthController {
     @PostMapping("/signup")
     public Mono<ResponseEntity<?>> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
-        //		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-        //			return ResponseEntity.badRequest().body(new MessageResponse("Email is already in
-        // use!"));
-        //		}
-        //
-        //		if (userRepository.existsByPan(signUpRequest.getPan())) {
-        //			return ResponseEntity.badRequest().body(new MessageResponse("PAN number already in
-        // use!"));
-        //		}
-        //
-        //		if (userRepository.existsByPhone(signUpRequest.getPhone())) {
-        //			return ResponseEntity.badRequest().body(new MessageResponse("Phone number already in
-        // use!"));
-        //		}
+        return reactiveUserRepository
+                .existsByEmail(signUpRequest.getEmail())
+                .flatMap(
+                        emailExists -> {
+                            if (emailExists) {
+                                return badResponseBuilder("Email is already in use!");
+                            }
+                            return reactiveUserRepository
+                                    .existsByPan(signUpRequest.getPan())
+                                    .flatMap(
+                                            panExists ->
+                                                    processAfterPanCheck(signUpRequest, panExists));
+                        });
+    }
 
-        // Create new user's account
-        User user =
-                new User(
-                        signUpRequest.getFirstName(),
-                        signUpRequest.getLastName(),
-                        signUpRequest.getEmail(),
-                        passwordEncoder.encode(signUpRequest.getPassword()),
-                        signUpRequest.getPan(),
-                        signUpRequest.getPhone());
-
-        Set<String> strRoles = signUpRequest.getRoles();
-        Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            reactiveRoleRepository
-                    .findByName(ERole.ROLE_USER)
-                    .map(roles::add)
-                    .switchIfEmpty(
-                            Mono.error(() -> new RuntimeException("Error: Role is not found.")));
-        } else {
-            strRoles.forEach(
-                    role -> {
-                        switch (role) {
-                            case "admin":
-                                reactiveRoleRepository
-                                        .findByName(ERole.ROLE_ADMIN)
-                                        .map(roles::add)
-                                        .switchIfEmpty(
-                                                Mono.error(
-                                                        () ->
-                                                                new RuntimeException(
-                                                                        "Error: Role is not found.")));
-                                break;
-                            case "mod":
-                                reactiveRoleRepository
-                                        .findByName(ERole.ROLE_MODERATOR)
-                                        .map(roles::add)
-                                        .switchIfEmpty(
-                                                Mono.error(
-                                                        () ->
-                                                                new RuntimeException(
-                                                                        "Error: Role is not found.")));
-
-                                break;
-                            default:
-                                reactiveRoleRepository
-                                        .findByName(ERole.ROLE_USER)
-                                        .map(roles::add)
-                                        .switchIfEmpty(
-                                                Mono.error(
-                                                        () ->
-                                                                new RuntimeException(
-                                                                        "Error: Role is not found.")));
-                        }
-                    });
+    private Mono<? extends ResponseEntity<?>> processAfterPanCheck(
+            SignupRequest signUpRequest, Boolean panExists) {
+        if (panExists) {
+            return badResponseBuilder("PAN number already in use!");
         }
+        return reactiveUserRepository
+                .existsByPhone(signUpRequest.getPhone())
+                .flatMap(phoneExists -> processAfterPhoneCheck(signUpRequest, phoneExists));
+    }
 
-        user.setRoles(roles);
-        reactiveUserRepository.save(user);
+    private Mono<? extends ResponseEntity<?>> processAfterPhoneCheck(
+            SignupRequest signUpRequest, Boolean phoneExists) {
+        if (phoneExists) {
+            return badResponseBuilder("Phone number already in use!");
+        }
+        // Create new user's account
+        return createUser(signUpRequest)
+                .flatMap(savedUser -> returnResponseMono(signUpRequest, savedUser));
+    }
 
-        if (signUpRequest.isReturnSecureToken()) {
+    private Mono<? extends ResponseEntity<?>> returnResponseMono(
+            SignupRequest signUpRequest, User savedUser) {
+        if (null != savedUser && signUpRequest.isReturnSecureToken()) {
             log.info("User registration Successfully!");
             return authenticateUser(
                     Mono.just(
@@ -170,6 +133,71 @@ public class AuthController {
                                     .password(signUpRequest.getPassword())
                                     .build()));
         }
-        return Mono.just(ResponseEntity.ok(new MessageResponse("User registration unSuccessful!")));
+        return badResponseBuilder("User registration unSuccessful!");
+    }
+
+    Mono<User> createUser(SignupRequest signUpRequest) {
+        Mono<User> userMono =
+                Mono.just(
+                        new User(
+                                signUpRequest.getFirstName(),
+                                signUpRequest.getLastName(),
+                                signUpRequest.getEmail(),
+                                passwordEncoder.encode(signUpRequest.getPassword()),
+                                signUpRequest.getPan(),
+                                signUpRequest.getPhone()));
+
+        Set<String> strRoles = signUpRequest.getRoles();
+
+        Mono<List<Role>> rolesMono = Mono.just(new ArrayList<>());
+
+        if (strRoles == null) {
+            Mono<Role> userRoleMono = getUserRole(ERole.ROLE_USER);
+            rolesMono =
+                    rolesMono.flatMap(
+                            roles ->
+                                    userRoleMono.map(
+                                            userRole -> {
+                                                roles.add(userRole);
+                                                return roles;
+                                            }));
+        } else {
+            Mono<List<Role>> finalRolesMono = rolesMono;
+            rolesMono =
+                    Flux.fromIterable(strRoles)
+                            .flatMap(
+                                    role ->
+                                            switch (role) {
+                                                case "admin" -> getUserRole(ERole.ROLE_ADMIN);
+                                                case "mod" -> getUserRole(ERole.ROLE_MODERATOR);
+                                                default -> getUserRole(ERole.ROLE_USER);
+                                            })
+                            .collect(Collectors.toSet())
+                            .flatMap(
+                                    roles ->
+                                            finalRolesMono.map(
+                                                    existingRoles -> {
+                                                        existingRoles.addAll(roles);
+                                                        return existingRoles;
+                                                    }));
+        }
+
+        return userMono.zipWith(
+                        rolesMono,
+                        (user, roles) -> {
+                            user.setRoles(roles);
+                            return user;
+                        })
+                .flatMap(reactiveUserRepository::save);
+    }
+
+    private static Mono<ResponseEntity<MessageResponse>> badResponseBuilder(String message) {
+        return Mono.just(ResponseEntity.badRequest().body(new MessageResponse(message)));
+    }
+
+    private Mono<Role> getUserRole(ERole eRole) {
+        return reactiveRoleRepository
+                .findByName(eRole)
+                .switchIfEmpty(Mono.error(new RuntimeException("Error: Role is not found.")));
     }
 }
