@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: sipService
+  server:
+    port: 8084
 netty:
   default:
     allocator:

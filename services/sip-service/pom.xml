@@ -61,6 +61,11 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
+        <groupId>io.micronaut.serde</groupId>
+        <artifactId>micronaut-serde-jackson</artifactId>
+        <version>1.5.0</version>
+    </dependency>
+    <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>compile</scope>
@@ -106,6 +111,11 @@
               <groupId>io.micronaut</groupId>
               <artifactId>micronaut-http-validation</artifactId>
               <version>${micronaut.version}</version>
+            </path>
+            <path>
+                <groupId>io.micronaut.serde</groupId>
+                <artifactId>micronaut-serde-processor</artifactId>
+                <version>1.5.0</version>
             </path>
           </annotationProcessorPaths>
           <compilerArgs>
