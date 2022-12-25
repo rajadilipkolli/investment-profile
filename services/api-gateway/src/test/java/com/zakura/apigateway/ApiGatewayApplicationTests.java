@@ -6,16 +6,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.zakura.apigateway.data.TestData;
 import com.zakura.apigateway.payload.request.SignupRequest;
 import com.zakura.apigateway.payload.response.JwtResponse;
-import com.zakura.apigateway.payload.response.MessageResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ProblemDetail;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 
-@SpringBootTest(properties = {"spring.cloud.service-registry.auto-registration.enabled=false"})
+@SpringBootTest(
+        properties = {"spring.cloud.service-registry.auto-registration.enabled=false"},
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
 
@@ -57,7 +59,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                 .exchange()
                 .expectStatus()
                 .isBadRequest()
-                .expectBody(MessageResponse.class)
+                .expectBody(ProblemDetail.class)
                 .consumeWith(
                         messageResponseEntityExchangeResult -> {
                             assertThat(messageResponseEntityExchangeResult.getResponseBody())
@@ -65,7 +67,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                             assertThat(
                                             messageResponseEntityExchangeResult
                                                     .getResponseBody()
-                                                    .message())
+                                                    .getDetail())
                                     .isEqualTo("Email is already in use!");
                         });
 
@@ -79,7 +81,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                 .exchange()
                 .expectStatus()
                 .isBadRequest()
-                .expectBody(MessageResponse.class)
+                .expectBody(ProblemDetail.class)
                 .consumeWith(
                         messageResponseEntityExchangeResult -> {
                             assertThat(messageResponseEntityExchangeResult.getResponseBody())
@@ -87,7 +89,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                             assertThat(
                                             messageResponseEntityExchangeResult
                                                     .getResponseBody()
-                                                    .message())
+                                                    .getDetail())
                                     .isEqualTo("PAN number already in use!");
                         });
 
@@ -101,7 +103,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                 .exchange()
                 .expectStatus()
                 .isBadRequest()
-                .expectBody(MessageResponse.class)
+                .expectBody(ProblemDetail.class)
                 .consumeWith(
                         messageResponseEntityExchangeResult -> {
                             assertThat(messageResponseEntityExchangeResult.getResponseBody())
@@ -109,7 +111,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                             assertThat(
                                             messageResponseEntityExchangeResult
                                                     .getResponseBody()
-                                                    .message())
+                                                    .getDetail())
                                     .isEqualTo("Phone number already in use!");
                         });
 
@@ -123,7 +125,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                 .exchange()
                 .expectStatus()
                 .isBadRequest()
-                .expectBody(MessageResponse.class)
+                .expectBody(ProblemDetail.class)
                 .consumeWith(
                         messageResponseEntityExchangeResult -> {
                             assertThat(messageResponseEntityExchangeResult.getResponseBody())
@@ -131,7 +133,7 @@ class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
                             assertThat(
                                             messageResponseEntityExchangeResult
                                                     .getResponseBody()
-                                                    .message())
+                                                    .getDetail())
                                     .isEqualTo("Phone number already in use!");
                         });
 
