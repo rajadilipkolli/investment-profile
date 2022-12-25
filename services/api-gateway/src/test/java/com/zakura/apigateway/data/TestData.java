@@ -8,12 +8,10 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.zakura.apigateway.models.investment.Investment;
 import com.zakura.apigateway.models.investment.Stock;
+import com.zakura.apigateway.payload.request.SignupRequest;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class TestData {
 
@@ -116,5 +114,18 @@ public class TestData {
             throws JsonSyntaxException, JsonIOException, JsonProcessingException,
                     FileNotFoundException {
         return mapper.writeValueAsString(getStock());
+    }
+
+    public static SignupRequest getSignupRequest() {
+        SignupRequest signupRequest = new SignupRequest();
+        signupRequest.setEmail("junit@email.com");
+        signupRequest.setPan("ABCDE1234F");
+        signupRequest.setPhone(9876543210L);
+        signupRequest.setPassword("AbcXyz@123");
+        signupRequest.setFirstName("junitFirstName");
+        signupRequest.setLastName("junitLastName");
+        signupRequest.setReturnSecureToken(true);
+        signupRequest.setRoles(Set.of("admin", "user"));
+        return signupRequest;
     }
 }
