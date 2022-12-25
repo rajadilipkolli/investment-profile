@@ -66,8 +66,7 @@ spring:
   data:
     mongodb:
       database: auth_db
-      host: localhost
-      port: 27017
+      uri: mongodb://localhost:27017/mongo?directConnection=true&serverSelectionTimeoutMS=2000
   webflux:
     base-path: /${spring.application.name}
       

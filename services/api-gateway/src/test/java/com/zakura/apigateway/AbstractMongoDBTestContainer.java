@@ -19,7 +19,6 @@ abstract class AbstractMongoDBTestContainer {
 
     @DynamicPropertySource
     static void setMongoDbContainerURI(DynamicPropertyRegistry propertyRegistry) {
-        propertyRegistry.add("spring.data.mongodb.url", MONGO_DB_CONTAINER::getReplicaSetUrl);
-        // propertyRegistry.add("spring.data.mongodb.port", MONGO_DB_CONTAINER::getFirstMappedPort);
+        propertyRegistry.add("spring.data.mongodb.uri", MONGO_DB_CONTAINER::getReplicaSetUrl);
     }
 }
