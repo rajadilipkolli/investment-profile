@@ -6,14 +6,18 @@ import com.zakura.apigateway.models.Role;
 import com.zakura.apigateway.models.User;
 import com.zakura.apigateway.repository.ReactiveRoleRepository;
 import com.zakura.apigateway.repository.ReactiveUserRepository;
-import java.util.ArrayList;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Slf4j

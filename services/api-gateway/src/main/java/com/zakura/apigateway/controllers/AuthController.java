@@ -7,14 +7,18 @@ import com.zakura.apigateway.payload.request.LoginRequest;
 import com.zakura.apigateway.payload.request.SignupRequest;
 import com.zakura.apigateway.payload.response.JwtResponse;
 import com.zakura.apigateway.services.AuthService;
+
 import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import reactor.core.publisher.Mono;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
