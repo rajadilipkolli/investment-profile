@@ -1,11 +1,12 @@
 /* Licensed under Apache-2.0 2022 */
 package com.zakura.apigateway.exception;
 
-import java.net.URI;
-import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;
+
+import java.net.URI;
+import java.time.LocalDateTime;
 
 public class AuthenticationValidationException extends ErrorResponseException {
     public AuthenticationValidationException(String message) {

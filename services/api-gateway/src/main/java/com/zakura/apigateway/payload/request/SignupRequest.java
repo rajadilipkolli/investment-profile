@@ -2,10 +2,12 @@
 package com.zakura.apigateway.payload.request;
 
 import jakarta.validation.constraints.*;
+
+import lombok.Data;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
-import lombok.Data;
 
 @Data
 public class SignupRequest implements Serializable {
