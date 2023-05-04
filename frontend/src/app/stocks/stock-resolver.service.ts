@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Resolve,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { InvestmentService } from '../shared/investment.service';
 import { Stock } from '../shared/stock.model';
 import { StockService } from './stock.service';
@@ -11,7 +7,7 @@ import { StockService } from './stock.service';
 @Injectable({
   providedIn: 'root'
 })
-export class StockResolverService implements Resolve<Stock[]> {
+export class StockResolverService  {
 
   constructor(private stockService: StockService) { }
 
