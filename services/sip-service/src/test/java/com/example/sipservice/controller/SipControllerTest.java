@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(controllers = SipController.class)
-public class SipControllerTest {
+class SipControllerTest {
 
 	@MockBean
 	private SipService sipService;
@@ -31,7 +31,7 @@ public class SipControllerTest {
 	private MockMvc mockMvc;
 	
 	@Test
-	public void testSaveUserStock() throws Exception {
+	void testSaveUserStock() throws Exception {
 		final String body = TestData.getSipVoString();
 		given(sipService.calculateSIP(Mockito.any())).willReturn(BigDecimal.valueOf(1000));
 		mockMvc.perform(post("/calculator/sip")

@@ -11,13 +11,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = HealthCheckController.class)
-public class HealthCheckControllerTest {
+class HealthCheckControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
-	public void testHealthCheck() throws Exception {
+	void testHealthCheck() throws Exception {
 		mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
 	}
