@@ -1,4 +1,4 @@
-package com.zakura.sipservice.exception;
+package com.example.sipservice.exception;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

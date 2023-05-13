@@ -1,4 +1,4 @@
-package com.zakura.sipservice.service;
+package com.example.sipservice.service;
 
 import data.TestData;
 import org.junit.jupiter.api.Test;

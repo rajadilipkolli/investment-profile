@@ -1,6 +1,5 @@
-package com.zakura.sipservice.controller;
+package com.example.sipservice.controller;
 
-import com.zakura.sipservice.service.SipService;
 import data.TestData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +11,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+
+import com.example.sipservice.service.SipService;
 
 import java.math.BigDecimal;
 

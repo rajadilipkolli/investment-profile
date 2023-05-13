@@ -1,4 +1,4 @@
-package com.zakura.sipservice.aspect;
+package com.example.sipservice.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface LogMethodInvocationAndParams {
+public @interface LogMethodInvocation {
 
 }

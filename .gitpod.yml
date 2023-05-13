@@ -12,18 +12,10 @@ tasks:
 
 vscode:
   extensions:
-    - pivotal.vscode-boot-dev-pack
-    - pivotal.vscode-spring-boot
-    - redhat.java
-    - vscjava.vscode-java-debug
-    - vscjava.vscode-java-dependency
-    - vscjava.vscode-java-pack
-    - vscjava.vscode-java-test
-    - vscjava.vscode-maven
-    - vscjava.vscode-spring-boot-dashboard
-    - vscjava.vscode-spring-initializr
     - Angular.ng-template
-
+    - vscjava.vscode-java-pack
+    - Pivotal.vscode-boot-dev-pack
+    - GabrielBB.vscode-lombok
 
 ports:
   - port: 4200

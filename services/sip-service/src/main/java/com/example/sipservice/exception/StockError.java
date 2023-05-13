@@ -1,4 +1,4 @@
-package com.zakura.sipservice.exception;
+package com.example.sipservice.exception;
 
 public class StockError {
 	private final Integer errorCode;

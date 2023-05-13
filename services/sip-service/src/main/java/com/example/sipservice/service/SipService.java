@@ -1,13 +1,13 @@
-package com.zakura.sipservice.service;
+package com.example.sipservice.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import org.springframework.stereotype.Component;
 
-import com.zakura.sipservice.aspect.LogMethodInvocation;
-import com.zakura.sipservice.aspect.LogProcessTime;
-import com.zakura.sipservice.models.SipVO;
+import com.example.sipservice.aspect.LogMethodInvocation;
+import com.example.sipservice.aspect.LogProcessTime;
+import com.example.sipservice.models.SipVO;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.zakura.sipservice.exception;
+package com.example.sipservice.exception;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

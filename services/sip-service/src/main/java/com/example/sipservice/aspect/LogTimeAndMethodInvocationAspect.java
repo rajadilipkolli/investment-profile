@@ -1,4 +1,4 @@
-package com.zakura.sipservice.aspect;
+package com.example.sipservice.aspect;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -10,17 +10,19 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.Configuration;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Aspect
 @Configuration
 @Slf4j
+@RequiredArgsConstructor
 public class LogTimeAndMethodInvocationAspect {
 
-	private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	// private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private final ObjectMapper objectMapper;
 
 	@Around("@annotation(LogProcessTime)")
 	public Object logMethods(ProceedingJoinPoint pjp) throws Throwable {
@@ -65,7 +67,7 @@ public class LogTimeAndMethodInvocationAspect {
 
 		log.info("-> method {}.{} invocation", className, methodName);
 		if (!params.isEmpty() && log.isDebugEnabled()) {
-			log.debug("{}", gson.toJson(params));
+			log.debug("{}", objectMapper.writeValueAsString(params));
 		}
 
 		Object response = pjp.proceed(pjp.getArgs());

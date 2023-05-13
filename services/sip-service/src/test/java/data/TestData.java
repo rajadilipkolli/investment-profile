@@ -3,12 +3,12 @@ package data;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import com.example.sipservice.models.SipVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.zakura.sipservice.models.SipVO;
 
 public class TestData {
 

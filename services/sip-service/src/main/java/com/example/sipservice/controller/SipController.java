@@ -1,4 +1,4 @@
-package com.zakura.sipservice.controller;
+package com.example.sipservice.controller;
 
 import java.math.BigDecimal;
 
@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zakura.sipservice.aspect.LogMethodInvocationAndParams;
-import com.zakura.sipservice.models.SipVO;
-import com.zakura.sipservice.service.SipService;
+import com.example.sipservice.aspect.LogMethodInvocationAndParams;
+import com.example.sipservice.models.SipVO;
+import com.example.sipservice.service.SipService;
 
 import lombok.RequiredArgsConstructor;
 

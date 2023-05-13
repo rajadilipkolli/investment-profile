@@ -1,4 +1,4 @@
-package com.zakura.sipservice.controller;
+package com.example.sipservice.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

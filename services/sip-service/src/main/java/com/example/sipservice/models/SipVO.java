@@ -1,4 +1,4 @@
-package com.zakura.sipservice.models;
+package com.example.sipservice.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

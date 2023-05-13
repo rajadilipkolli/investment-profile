@@ -1,4 +1,4 @@
-package com.zakura.sipservice;
+package com.example.sipservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
