@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LogTimeAndMethodInvocationAspect {
 
-	// private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private final ObjectMapper objectMapper;
 
 	@Around("@annotation(LogProcessTime)")
