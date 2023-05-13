@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Aspect
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @Slf4j
 @RequiredArgsConstructor
 public class LogTimeAndMethodInvocationAspect {
