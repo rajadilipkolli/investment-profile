@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '16', '18' ]
+        node: [ '20', '18' ]
     defaults:
       run:
         working-directory: "frontend"
