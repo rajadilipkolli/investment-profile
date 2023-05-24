@@ -1,14 +1,13 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.models.investment;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.math.BigDecimal;
 
 @Data
 @Builder

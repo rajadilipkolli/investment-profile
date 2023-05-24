@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.zakura.apigateway.data.TestData;
 import com.zakura.apigateway.payload.request.SignupRequest;
 import com.zakura.apigateway.payload.response.JwtResponse;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;

@@ -9,7 +9,6 @@ import com.google.gson.JsonSyntaxException;
 import com.zakura.apigateway.models.investment.Investment;
 import com.zakura.apigateway.models.investment.Stock;
 import com.zakura.apigateway.payload.request.SignupRequest;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
@@ -84,7 +83,9 @@ public class TestData {
     }
 
     public static String getInvestmentString()
-            throws JsonProcessingException, JsonSyntaxException, JsonIOException,
+            throws JsonProcessingException,
+                    JsonSyntaxException,
+                    JsonIOException,
                     FileNotFoundException {
         return mapper.writeValueAsString(getInvestment());
     }
@@ -112,7 +113,9 @@ public class TestData {
     }
 
     public static String getStockString()
-            throws JsonSyntaxException, JsonIOException, JsonProcessingException,
+            throws JsonSyntaxException,
+                    JsonIOException,
+                    JsonProcessingException,
                     FileNotFoundException {
         return mapper.writeValueAsString(getStock());
     }

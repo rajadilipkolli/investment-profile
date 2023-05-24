@@ -4,7 +4,8 @@ package com.zakura.apigateway.security;
 import com.zakura.apigateway.repository.ReactiveUserRepository;
 import com.zakura.apigateway.security.jwt.JwtTokenAuthenticationFilter;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,9 +25,6 @@ import org.springframework.security.web.server.context.NoOpServerSecurityContext
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 @EnableReactiveMethodSecurity
