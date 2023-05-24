@@ -8,7 +8,6 @@ import com.zakura.apigateway.data.TestData;
 import com.zakura.apigateway.exception.DomainExceptionWrapper;
 import com.zakura.apigateway.models.investment.Stock;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

@@ -1,10 +1,9 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.payload.response;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

@@ -2,16 +2,13 @@
 package com.zakura.apigateway.client;
 
 import com.zakura.apigateway.models.investment.Investment;
-
 import jakarta.validation.Valid;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 import org.springframework.web.service.annotation.PostExchange;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
