@@ -19,7 +19,8 @@
 			"extensions": [
 				"vscjava.vscode-java-pack",
 				"ms-azuretools.vscode-docker",
-				"Pivotal.vscode-boot-dev-pack"
+				"Pivotal.vscode-boot-dev-pack",
+				"github.vscode-github-actions"
 			]
 		}
 	}
