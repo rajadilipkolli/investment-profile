@@ -1,7 +1,9 @@
 # Discovery Service
 
 ### Run tests
-`$ ./mvnw clean verify`
+```shell
+./mvnw clean verify
+```
 
 ### Run locally
 ```shell
