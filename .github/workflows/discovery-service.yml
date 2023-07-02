@@ -1,0 +1,40 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven for Api Gateway
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - "services/**"
+  pull_request:
+    branches: [ master ]
+    paths:
+      - "services/discovery-service/**"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [17, 20]
+    defaults:
+      run:
+        working-directory: "services/discovery-service"
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK ${{ matrix.java-version }}
+      uses: actions/setup-java@v3.11.0
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: 'zulu'
+        cache: 'maven'
+
+    - name: Build with Maven for API gateway
+      run: ./mvnw -B package --file pom.xml
+
+    - name: Codecov
+      uses: codecov/codecov-action@v3.1.4
