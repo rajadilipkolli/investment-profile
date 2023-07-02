@@ -9,3 +9,6 @@
 ```shell
 ./mvnw spring-boot:run
 ```
+
+### Urls
+Access Eureka Server - ```http://localhost:8761```
