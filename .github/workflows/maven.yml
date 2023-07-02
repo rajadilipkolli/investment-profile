@@ -11,7 +11,8 @@ on:
   pull_request:
     branches: [ master ]
     paths:
-      - "services/**"
+      - "services/api-gateway/**"
+      - "services/discovery-service/**"
 
 jobs:
   build:
@@ -33,7 +34,12 @@ jobs:
         distribution: 'zulu'
         cache: 'maven'
 
-    - name: Build with Maven
-      run: ./mvnw -B package --file pom.xml
+    - name: Build with Maven for API gateway
+      run: cd api-gateway |
+        ./mvnw -B package --file pom.xml
+    - name: Build with Maven for discovery service
+      run: cd discovery-service |
+        ./mvnw -B verify --file pom.xml
+
     - name: Codecov
       uses: codecov/codecov-action@v3.1.4
