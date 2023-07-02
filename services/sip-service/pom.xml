@@ -11,7 +11,7 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>sip-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>sip-service</name>
 	<description>Project for sip-service</description>
 
@@ -19,6 +19,9 @@
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.3</spring-cloud.version>
 		<springdoc-openapi.version>2.1.0</springdoc-openapi.version>
+
+		<CI_DOCKER_USERNAME />
+        <CI_DOCKER_PASSWORD />
 
 	</properties>
 
@@ -125,6 +128,16 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<image>
+                        <name>${CI_DOCKER_USERNAME}/${project.artifactId}:${project.version}</name>
+						<publish>true</publish>
+                    </image>
+					<docker>
+                        <publishRegistry>
+                            <username>${CI_DOCKER_USERNAME}</username>
+                            <password>${CI_DOCKER_PASSWORD}</password>
+                        </publishRegistry>
+                    </docker>
 				</configuration>
             </plugin>
 		</plugins>
