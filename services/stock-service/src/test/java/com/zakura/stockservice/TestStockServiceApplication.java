@@ -29,13 +29,16 @@ public class TestStockServiceApplication {
 				.withExposedPorts(8761);
 		dynamicPropertyRegistry.add("eureka.client.service-url.defaultZone", () -> String.format("http://%s:%d/eureka",
 				discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
-		GenericContainer<?> portfolioContainer = new GenericContainer<>("dockertmt/portfolio-service:0.0.1")
+		return discoveryServiceContainer;
+	}
+
+	@Bean
+	GenericContainer<?> portfolioServiceContainer(GenericContainer<?> discoveryServiceContainer) {
+		return new GenericContainer<>("dockertmt/portfolio-service:0.0.1")
 				.withExposedPorts(8002)
 				.dependsOn(discoveryServiceContainer)
 				.withEnv("eureka.client.service-url.defaultZone", String.format("http://%s:%d/eureka",
 						discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
-		portfolioContainer.start();
-		return discoveryServiceContainer;
 	}
 
 	public static void main(String[] args) {
