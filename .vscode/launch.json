@@ -1,6 +1,13 @@
 {
     "configurations": [
         {
+            "type": "java",
+            "name": "TestStockServiceApplication",
+            "request": "launch",
+            "mainClass": "com.zakura.stockservice.TestStockServiceApplication",
+            "projectName": "stock-service"
+        },
+        {
             "name": "Launch UI in Edge",
             "request": "launch",
             "type": "msedge",
@@ -45,7 +52,8 @@
             "console": "internalConsole",
             "mainClass": "com.zakura.stockservice.StockServiceApplication",
             "projectName": "stock-service",
-            "args": ""
+            "args": "",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=33549 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=stock-service"
         },
         {
             "type": "java",
