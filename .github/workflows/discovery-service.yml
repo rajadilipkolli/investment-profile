@@ -36,7 +36,7 @@ jobs:
     - name: Build with Maven for API gateway
       run: ./mvnw -B package --file pom.xml
 
-    - if: ${{ github.ref == 'refs/heads/main' }}
+    - if: ${{ github.ref == 'refs/heads/master' }}
       name: Build and Publish Docker Image
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
