@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [17, 20]
+        java-version: [17]
     defaults:
       run:
         working-directory: "services/discovery-service"
@@ -35,6 +35,13 @@ jobs:
 
     - name: Build with Maven for API gateway
       run: ./mvnw -B package --file pom.xml
+
+    - if: ${{ github.ref == 'refs/heads/main' }}
+      name: Build and Publish Docker Image
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/discovery-service
+        docker push ${{ secrets.DOCKER_USERNAME }}/discovery-service
 
     - name: Codecov
       uses: codecov/codecov-action@v3.1.4

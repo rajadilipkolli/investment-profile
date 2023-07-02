@@ -12,7 +12,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>discovery-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>eureka-service</name>
+	<name>discovery-service</name>
 	<description>Service Registry </description>
 	
 	<properties>
