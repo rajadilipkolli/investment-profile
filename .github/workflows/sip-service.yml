@@ -1,4 +1,4 @@
-name: sip-service
+name: Java CI with Maven for sip-service
 
 on:
   push:
