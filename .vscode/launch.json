@@ -39,16 +39,6 @@
         },
         {
             "type": "java",
-            "name": "Spring Boot-SipServiceApplication<sip-service>",
-            "request": "launch",
-            "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
-            "mainClass": "com.zakura.sipservice.SipServiceApplication",
-            "projectName": "sip-service",
-            "args": ""
-        },
-        {
-            "type": "java",
             "name": "Spring Boot-StockServiceApplication<stock-service>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -56,6 +46,27 @@
             "mainClass": "com.zakura.stockservice.StockServiceApplication",
             "projectName": "stock-service",
             "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-TestSipServiceApplication<sip-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.sipservice.TestSipServiceApplication",
+            "projectName": "sip-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=38755 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=sip-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SipServiceApplication<sip-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.sipservice.SipServiceApplication",
+            "projectName": "sip-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
