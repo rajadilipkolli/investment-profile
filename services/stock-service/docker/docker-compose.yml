@@ -3,6 +3,8 @@ services:
   mongodb:
     image: mongo:6.0.7
     container_name: mongodb
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
     volumes:
       - mongo-data:/data/db/mongo
     ports:
@@ -50,7 +52,7 @@ services:
       discovery-service:
         condition: service_started
       mongodb:
-        condition: service_started
+        condition: service_healthy
     environment:
       - SPRING_DATA_MONGODB_HOST=mongodb
       - SPRING_DATA_MONGODB_PORT=27017
