@@ -1,0 +1,56 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:6.0.7
+    container_name: mongodb
+    volumes:
+      - mongo-data:/data/db/mongo
+    ports:
+      - 27017:27017
+    networks:
+      - investment-network
+
+  mongo-express:
+    image: mongo-express
+    ports:
+      - "18081:8081"
+    environment:
+#      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+#      - ME_CONFIG_MONGODB_ADMINPASSWORD=passcode
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    restart: unless-stopped
+    networks:
+      - investment-network
+  
+  zipkin-server:
+    image: openzipkin/zipkin
+    mem_limit: 512m
+    expose:
+      - "9411"
+    ports:
+      - "9411:9411"
+    networks:
+      - investment-network
+  
+  discovery-service:
+    image: dockertmt/discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - investment-network
+
+  portfolio-service:
+    image: dockertmt/portfolio-service:0.0.1
+    ports:
+      - "8082:8082"
+    networks:
+      - investment-network
+    depends_on:
+      discovery-service:
+        condition: service_started
+      
+volumes:
+  mongo-data:
+  
+networks:
+  investment-network:

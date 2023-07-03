@@ -1,5 +1,7 @@
 # Portfolio Service
 
+There is an issue with AOT in native images,hence for time being reverting to normal images
+
 ### Run tests
 `$ ./mvnw clean verify`
 
