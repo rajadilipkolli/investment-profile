@@ -10,8 +10,7 @@ import org.testcontainers.containers.MongoDBContainer;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class TestStockServiceApplication {
-    
-    
+
 	@Bean
 	@ServiceConnection
 	MongoDBContainer mongoDbContainer() {
@@ -33,9 +32,13 @@ public class TestStockServiceApplication {
 		return discoveryServiceContainer;
 	}
 
-    @Bean
-	GenericContainer<?> portfolioServiceContainer() {
-		return new GenericContainer<>("dockertmt/portfolio-service:0.0.1").withExposedPorts(8002);
+	@Bean
+	GenericContainer<?> portfolioServiceContainer(GenericContainer<?> discoveryServiceContainer) {
+		return new GenericContainer<>("dockertmt/portfolio-service:0.0.1")
+				.withExposedPorts(8002)
+				.dependsOn(discoveryServiceContainer)
+				.withEnv("eureka.client.service-url.defaultZone", String.format("http://%s:%d/eureka",
+						discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
 	}
 
 	public static void main(String[] args) {

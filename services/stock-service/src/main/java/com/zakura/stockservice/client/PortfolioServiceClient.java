@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.zakura.stockservice.models.Investment;
 
-@FeignClient(url = "http://localhost:8082/api-gateway", name = "portfolio-service")
+@FeignClient("portfolio-service")
 public interface PortfolioServiceClient {
 
-	@PostMapping("/portfolio-service/investments/add/{userId}")
+	@PostMapping("/api-gateway/portfolio-service/investments/add/{userId}")
 	@CrossOrigin
 	Investment addUserInvestment(@RequestBody @Valid Investment investmentToSave,
 								 @PathVariable("userId") String userId);
