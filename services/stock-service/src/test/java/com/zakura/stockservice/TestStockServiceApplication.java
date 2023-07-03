@@ -33,12 +33,14 @@ public class TestStockServiceApplication {
 	}
 
 	@Bean
-	GenericContainer<?> portfolioServiceContainer(GenericContainer<?> discoveryServiceContainer) {
+	GenericContainer<?> portfolioServiceContainer(GenericContainer<?> discoveryServiceContainer,
+			MongoDBContainer mongoDbContainer) {
 		return new GenericContainer<>("dockertmt/portfolio-service:0.0.1")
 				.withExposedPorts(8002)
-				.dependsOn(discoveryServiceContainer)
+				.dependsOn(discoveryServiceContainer, mongoDbContainer)
 				.withEnv("eureka.client.service-url.defaultZone", String.format("http://%s:%d/eureka",
-						discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
+						discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)))
+				.withEnv("spring.data.mongodb.uri", mongoDbContainer.getReplicaSetUrl());
 	}
 
 	public static void main(String[] args) {
