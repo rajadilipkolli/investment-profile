@@ -23,13 +23,13 @@
 				"vmware.vscode-boot-dev-pack"
 			]
 		}
-	}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [18081, 8761, 9411],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "java -version",
+	"postCreateCommand": "./mvnw clean verify -DskipTests=true"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
