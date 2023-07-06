@@ -8,6 +8,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.Network;
+import org.testcontainers.containers.wait.strategy.Wait;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class TestStockServiceApplication {
@@ -31,7 +32,8 @@ public class TestStockServiceApplication {
 	@Bean
 	GenericContainer<?> discoveryServiceContainer(DynamicPropertyRegistry dynamicPropertyRegistry) {
 		GenericContainer<?> discoveryServiceContainer = new GenericContainer<>("dockertmt/discovery-service")
-				.withExposedPorts(8761).withNetwork(network).withNetworkAliases("discovery-service");
+				.withExposedPorts(8761).withNetwork(network).withNetworkAliases("discovery-service")
+				.waitingFor(Wait.forHttp("/actuator/health"));
 		dynamicPropertyRegistry.add("eureka.client.service-url.defaultZone", () -> String.format("http://%s:%d/eureka",
 				discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
 		return discoveryServiceContainer;
@@ -42,10 +44,11 @@ public class TestStockServiceApplication {
 			MongoDBContainer mongoDbContainer) {
 		return new GenericContainer<>("dockertmt/portfolio-service:0.0.1")
 				.withExposedPorts(8002).withNetwork(network)
-				.dependsOn(discoveryServiceContainer, mongoDbContainer)
+				.waitingFor(Wait.forHttp("/actuator/health"))
 				.withEnv("eureka.client.service-url.defaultZone", String.format("http://%s:%d/eureka",
 						discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)))
-				.withEnv("spring.data.mongodb.uri", mongoDbContainer.getReplicaSetUrl());
+				.withEnv("spring.data.mongodb.uri", mongoDbContainer.getReplicaSetUrl())
+				.dependsOn(discoveryServiceContainer, mongoDbContainer);
 	}
 
 	public static void main(String[] args) {
