@@ -44,7 +44,7 @@ public class TestStockServiceApplication {
 			MongoDBContainer mongoDbContainer) {
 		return new GenericContainer<>("dockertmt/portfolio-service:0.0.1")
 				.withExposedPorts(8002).withNetwork(network)
-				.waitingFor(Wait.forHttp("/actuator/health"))
+				.waitingFor(Wait.forHttp("/api-gateway/portfolio-service/actuator/health"))
 				.withEnv("eureka.client.service-url.defaultZone", String.format("http://%s:%d/eureka",
 						discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)))
 				.withEnv("spring.data.mongodb.uri", mongoDbContainer.getReplicaSetUrl())
