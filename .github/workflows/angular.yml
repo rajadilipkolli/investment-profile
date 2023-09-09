@@ -21,7 +21,7 @@ jobs:
         working-directory: "frontend"
     name: Node ${{ matrix.node }} sample
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Cache node modules
         uses: actions/cache@v3.3.2
