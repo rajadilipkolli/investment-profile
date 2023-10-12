@@ -68,10 +68,8 @@ public class WebSecurityConfig {
                         SecurityWebFiltersOrder.AUTHENTICATION)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .formLogin()
-                .disable()
-                .logout()
-                .disable()
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+                .logout(ServerHttpSecurity.LogoutSpec::disable)
                 .build();
     }
 

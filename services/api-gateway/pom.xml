@@ -21,7 +21,7 @@
 		<testcontainers.version>1.18.1</testcontainers.version>
 		<springdoc-openapi.version>2.2.0</springdoc-openapi.version>
 		<spotless.version>2.40.0</spotless.version>
-		<jjwt.version>0.11.5</jjwt.version>
+		<jjwt.version>0.12.2</jjwt.version>
 	</properties>
 
 	<dependencies>
