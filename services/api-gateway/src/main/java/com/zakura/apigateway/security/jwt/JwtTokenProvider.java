@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.zakura.apigateway.security.jwt;
 
 import static java.util.stream.Collectors.joining;
@@ -7,7 +7,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
@@ -47,7 +46,7 @@ public class JwtTokenProvider {
 
         String username = authentication.getName();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Claims claims = Jwts.claims().setSubject(username);
+        Claims claims = Jwts.claims().subject(username).build();
         if (!authorities.isEmpty()) {
             claims.put(
                     AUTHORITIES_KEY,
@@ -58,20 +57,20 @@ public class JwtTokenProvider {
         Date validity = new Date(now.getTime() + this.jwtProperties.getValidityInMs());
 
         return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .signWith(this.secretKey, SignatureAlgorithm.HS256)
+                .claims(claims)
+                .issuedAt(now)
+                .expiration(validity)
+                .signWith(this.secretKey, Jwts.SIG.HS256)
                 .compact();
     }
 
     public Authentication getAuthentication(String token) {
         Claims claims =
-                Jwts.parserBuilder()
-                        .setSigningKey(this.secretKey)
+                Jwts.parser()
+                        .verifyWith(this.secretKey)
                         .build()
-                        .parseClaimsJws(token)
-                        .getBody();
+                        .parseSignedClaims(token)
+                        .getPayload();
 
         Object authoritiesClaim = claims.get(AUTHORITIES_KEY);
 
@@ -89,12 +88,9 @@ public class JwtTokenProvider {
     public Boolean validateToken(String token) {
         try {
             Jws<Claims> claims =
-                    Jwts.parserBuilder()
-                            .setSigningKey(this.secretKey)
-                            .build()
-                            .parseClaimsJws(token);
+                    Jwts.parser().verifyWith(this.secretKey).build().parseSignedClaims(token);
             //  parseClaimsJws will check expiration date. No need do here.
-            log.info("expiration date: {}", claims.getBody().getExpiration());
+            log.info("expiration date: {}", claims.getPayload().getExpiration());
             return Boolean.TRUE;
         } catch (JwtException | IllegalArgumentException e) {
             log.info("Invalid JWT token: {}", e.getMessage());
@@ -117,10 +113,6 @@ public class JwtTokenProvider {
     }
 
     private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
     }
 }
