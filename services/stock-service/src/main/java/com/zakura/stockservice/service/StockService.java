@@ -2,6 +2,7 @@ package com.zakura.stockservice.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -28,7 +29,7 @@ public class StockService {
 	private final PortfolioServiceClient portfolioServiceClient;
 	private final StockRepository stockRepository;
 
-	private Random random = new Random();
+	private SecureRandom random = new SecureRandom();
 
 	@LogMethodInvocation
 	@LogProcessTime
