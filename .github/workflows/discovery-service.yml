@@ -5,11 +5,11 @@ name: Java CI with Maven for Discovery Service
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - "services/discovery-service/**"
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - "services/discovery-service/**"
 
@@ -36,7 +36,7 @@ jobs:
     - name: Build with Maven for API gateway
       run: ./mvnw -B package --file pom.xml
 
-    - if: ${{ github.ref == 'refs/heads/master' }}
+    - if: ${{ github.ref == 'refs/heads/main' }}
       name: Build and Publish Docker Image
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSCODE }}

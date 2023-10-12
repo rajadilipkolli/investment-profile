@@ -5,11 +5,11 @@ name: Java CI with Maven for Api Gateway
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - "services/api-gateway/**"
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - "services/api-gateway/**"
 
