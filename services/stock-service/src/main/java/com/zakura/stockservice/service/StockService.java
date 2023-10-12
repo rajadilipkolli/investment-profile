@@ -28,11 +28,12 @@ public class StockService {
 	private final PortfolioServiceClient portfolioServiceClient;
 	private final StockRepository stockRepository;
 
+	private Random random = new Random();
+
 	@LogMethodInvocation
 	@LogProcessTime
 	public String saveUserStock(StockRequest stockRequest, String userId) {
-		Random rd = new Random();
-		float randomFloat = rd.nextFloat() * 100;
+		float randomFloat = random.nextFloat() * 100;
 		float profitLossPercent = (float) (Math.round(randomFloat * 100.0) / 100.0);
 
 		BigDecimal currentPrice = stockRequest.getCurrentPrice().divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP)
