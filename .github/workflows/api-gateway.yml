@@ -5,11 +5,11 @@ name: Java CI with Maven for Api Gateway
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - "services/api-gateway/**"
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
     paths:
       - "services/api-gateway/**"
 
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [17, 20]
+        java-version: [17, 21]
     defaults:
       run:
         working-directory: "services/api-gateway"
