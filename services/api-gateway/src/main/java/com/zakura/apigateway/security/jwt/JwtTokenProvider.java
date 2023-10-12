@@ -4,6 +4,7 @@ package com.zakura.apigateway.security.jwt;
 import static java.util.stream.Collectors.joining;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ClaimsBuilder;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -46,9 +47,9 @@ public class JwtTokenProvider {
 
         String username = authentication.getName();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        Claims claims = Jwts.claims().subject(username).build();
+        ClaimsBuilder claimsBuilder = Jwts.claims().subject(username);
         if (!authorities.isEmpty()) {
-            claims.put(
+            claimsBuilder.add(
                     AUTHORITIES_KEY,
                     authorities.stream().map(GrantedAuthority::getAuthority).collect(joining(",")));
         }
@@ -57,7 +58,7 @@ public class JwtTokenProvider {
         Date validity = new Date(now.getTime() + this.jwtProperties.getValidityInMs());
 
         return Jwts.builder()
-                .claims(claims)
+                .claims(claimsBuilder.build())
                 .issuedAt(now)
                 .expiration(validity)
                 .signWith(this.secretKey, Jwts.SIG.HS256)
