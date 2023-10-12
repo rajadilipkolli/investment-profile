@@ -1,4 +1,4 @@
-/* Licensed under Apache-2.0 2021-2022 */
+/* Licensed under Apache-2.0 2021-2023 */
 package com.zakura.apigateway.exception;
 
 import java.util.Map;
@@ -18,21 +18,19 @@ public class DomainExceptionWrapper extends DefaultErrorAttributes {
         final var error = getError(request);
         final var errorAttributes = super.getErrorAttributes(request, includeStackTrace);
         //        errorAttributes.put(ErrorAttribute.TRACE_ID.value, tracer.traceId());
-        if (error instanceof RecordNotFoundException) {
+        if (error instanceof RecordNotFoundException errorStatus) {
             log.error("Caught an instance of: {}, err: {}", RecordNotFoundException.class, error);
-            final var errorStatus = ((RecordNotFoundException) error);
             errorAttributes.replace(
                     ErrorAttribute.STATUS.value, errorStatus.getHttpStatus().value());
             errorAttributes.replace(
                     ErrorAttribute.ERROR.value, errorStatus.getHttpStatus().getReasonPhrase());
             errorAttributes.replace("message", errorStatus.getMessage());
             return errorAttributes;
-        } else if (error instanceof UserAuthenticationFailedException) {
+        } else if (error instanceof UserAuthenticationFailedException errorStatus) {
             log.error(
                     "Caught an instance of: {}, err: {}",
                     UserAuthenticationFailedException.class,
                     error);
-            final var errorStatus = ((UserAuthenticationFailedException) error);
             errorAttributes.replace(
                     ErrorAttribute.STATUS.value, errorStatus.getHttpStatus().value());
             errorAttributes.replace(
