@@ -34,7 +34,13 @@ jobs:
         cache: 'maven'
 
     - name: Build with Maven for API gateway
-      run: ./mvnw -B package --file pom.xml
+      run: ./mvnw -Pnative -B package --file pom.xml
+
+    - if: ${{ github.ref == 'refs/heads/main' }}
+      name: Build Image and push to docker
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+      run: ./mvnw -Pnative spring-boot:build-image -DskipTests 
 
     - name: Codecov
       uses: codecov/codecov-action@v3.1.4
