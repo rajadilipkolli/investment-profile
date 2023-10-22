@@ -2,6 +2,8 @@
 package com.zakura.apigateway.models.investment;
 
 import jakarta.validation.constraints.NotBlank;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Stock implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = -3965849301639516052L;
 
     @NotBlank private String name;

@@ -5,7 +5,7 @@ This repository is the sample microservices based end to end solutions which dem
 
 ## Tools Required
  * JDK 17+
- * Node 16+
+ * Node 18+
  * IDE(IntelliJ Or VSCode or STS)
 
 ## Steps to start backend application
@@ -70,5 +70,5 @@ Note: If you are facing error related to Angular Material, Consider doing below:
 ## Changes in code
  - Due to breaking changes in spring boot 2.6.0 we cannot use spring fox 3.0.0 starter unless it is fixed, hence migrated to **springdoc openui** -  Wont switch back to spring fox
  - Upgraded to **Java 17**
- - Converted all maven wrappers to **Apache Maven Wrapper** using command ` mvn wrapper:wrapper`
+ - Converted all maven wrappers to **Apache Maven Wrapper** using command `mvn wrapper:wrapper`
  - Since api-gateway is migrated to spring cloud gateway which under the hood uses webflux `server.servlet.context-path` is no longer valid, it should be replaced with `spring.webflux.base-path` 

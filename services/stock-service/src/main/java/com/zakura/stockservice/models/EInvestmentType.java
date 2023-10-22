@@ -1,5 +1,8 @@
 package com.zakura.stockservice.models;
 
+import lombok.Getter;
+
+@Getter
 public enum EInvestmentType {
 
 	STOCK("Stock"), MUTUAL_FUND("Mutual Fund"), FIXED_DEPOSIT("Fix Deposit");
@@ -10,7 +13,4 @@ public enum EInvestmentType {
 		this.investment = investment;
 	}
 
-	public String getInvestment() {
-		return this.investment;
-	}
 }

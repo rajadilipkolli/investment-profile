@@ -1,5 +1,8 @@
 package com.zakura.stockservice.exception;
 
+import lombok.Getter;
+
+@Getter
 public class StockError {
 	private final Integer errorCode;
 	private final String errorMessage;
@@ -8,12 +11,5 @@ public class StockError {
 		this.errorCode = errorCode;
 		this.errorMessage = errorMessage;
 	}
-	
-	public Integer getErrorCode() {
-		return this.errorCode;
-	}
 
-	public String getErrorMessage() {
-		return this.errorMessage;
-	}
 }

@@ -13,29 +13,13 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class StockRequest implements Serializable {
-
-	private static final long serialVersionUID = 2223858521883494244L;
-
-	@JsonIgnore
-	private String userName;
-
-	@NotBlank
-	private String name;
-
-	private String investmentType;
-
-	private BigDecimal currentPrice;
-
-	private float anticipatedGrowth;
-
-	private int term;
-
-	private int quantity;
+public record StockRequest(@JsonIgnore String userName,
+                           @NotBlank(message = "StockName cant be Blank")
+                           String name,
+                           String investmentType,
+                           BigDecimal currentPrice,
+                           float anticipatedGrowth,
+                           int term,
+                           int quantity) implements Serializable {
 
 }
