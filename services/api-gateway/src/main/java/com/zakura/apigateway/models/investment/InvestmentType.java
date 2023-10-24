@@ -14,5 +14,4 @@ public enum InvestmentType {
     InvestmentType(String investment) {
         this.investment = investment;
     }
-
 }
