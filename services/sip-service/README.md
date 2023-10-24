@@ -13,6 +13,15 @@
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
+### Using Testcontainers at Development Time
+You can run `TestSipServiceApplication.java` from your IDE directly.
+You can also run the application using Maven as follows:
+
+```shell
+./mvnw spotless:apply spring-boot:test-run
+```
+
+
 ### SIP Return Calculation
 > The formula for SIP return calculation is based on the formula for future value of annuity-due.
 
