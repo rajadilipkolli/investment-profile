@@ -22,7 +22,7 @@ jobs:
         working-directory: "services/sip-service"
     strategy:
       matrix:
-        java: ["17"]
+        java: ["21"]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,18 +30,15 @@ jobs:
 
       - uses: graalvm/setup-graalvm@v1
         with:
-          version: "latest"
+          distribution: 'graalvm'
           java-version: ${{ matrix.java }}
-          components: "native-image"
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           cache: "maven"
-
+  
       - name: Printing versions
         run: |
           echo "GRAALVM_HOME: $GRAALVM_HOME"
           echo "JAVA_HOME: $JAVA_HOME"
           java --version
-          gu --version
           native-image --version
 
       - name: Build, analyze 

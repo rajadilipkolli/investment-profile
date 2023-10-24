@@ -26,7 +26,10 @@ services:
   
   zipkin-server:
     image: openzipkin/zipkin
-    mem_limit: 512m
+    deploy:
+      resources:
+        limits:
+          memory: 512m
     expose:
       - "9411"
     ports:

@@ -6,16 +6,9 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.MongoDBContainer;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class TestSipServiceApplication {
-
-	@Bean
-	@ServiceConnection
-	MongoDBContainer mongoDbContainer() {
-		return new MongoDBContainer("mongo:latest");
-	}
 
 	@Bean
 	@ServiceConnection(name = "openzipkin/zipkin")

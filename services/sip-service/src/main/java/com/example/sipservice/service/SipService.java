@@ -18,13 +18,13 @@ public class SipService {
 	@LogProcessTime
 	@LogMethodInvocation
 	public BigDecimal calculateSIP(SipVO sipVO) {
-		BigDecimal periodicInterestRate = sipVO.getExpectedRateOfInterest()
+		BigDecimal periodicInterestRate = sipVO.expectedRateOfInterest()
 				.divide(BigDecimal.valueOf(100), 6, RoundingMode.HALF_UP)
 				.divide(BigDecimal.valueOf(12), 6, RoundingMode.HALF_UP);
 
-		int numberOfPayments = sipVO.getInvestmentDuration() * 12;
+		int numberOfPayments = sipVO.investmentDuration() * 12;
 
-		BigDecimal estimatedReturns = sipVO.getMonthlyInvestment()
+		BigDecimal estimatedReturns = sipVO.monthlyInvestment()
 				.multiply((((BigDecimal.valueOf(1).add(periodicInterestRate)).pow(numberOfPayments))
 						.subtract(BigDecimal.valueOf(1))).divide(periodicInterestRate, 2, RoundingMode.HALF_UP))
 				.multiply(BigDecimal.valueOf(1).add(periodicInterestRate));
