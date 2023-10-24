@@ -8,8 +8,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class SipServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SipServiceApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(SipServiceApplication.class, args);
+    }
 }

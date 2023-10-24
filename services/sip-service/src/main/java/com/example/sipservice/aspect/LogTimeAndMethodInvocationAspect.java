@@ -1,77 +1,79 @@
 package com.example.sipservice.aspect;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Aspect
 @Configuration(proxyBeanMethods = false)
-@Slf4j
-@RequiredArgsConstructor
 public class LogTimeAndMethodInvocationAspect {
 
-	private final ObjectMapper objectMapper;
+    private static final Logger log =
+            LoggerFactory.getLogger(LogTimeAndMethodInvocationAspect.class);
 
-	@Around("@annotation(LogProcessTime)")
-	public Object logMethods(ProceedingJoinPoint pjp) throws Throwable {
-		String className = pjp.getTarget().getClass().getSimpleName();
-		String methodName = pjp.getSignature().getName();
+    private final ObjectMapper objectMapper;
 
-		long startTime = new Date().getTime();
-		Object response = pjp.proceed(pjp.getArgs());
-		long endTime = new Date().getTime();
+    public LogTimeAndMethodInvocationAspect(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
-		log.info("{}.{} Execution time: {} ms", className, methodName, (endTime - startTime));
-		return response;
-	}
+    @Around("@annotation(LogProcessTime)")
+    public Object logMethods(ProceedingJoinPoint pjp) throws Throwable {
+        String className = pjp.getTarget().getClass().getSimpleName();
+        String methodName = pjp.getSignature().getName();
 
-	@Around("@annotation(LogMethodInvocation)")
-	public Object logMethodInvocation(ProceedingJoinPoint pjp) throws Throwable {
-		String className = pjp.getTarget().getClass().getSimpleName();
-		String methodName = pjp.getSignature().getName();
+        long startTime = new Date().getTime();
+        Object response = pjp.proceed(pjp.getArgs());
+        long endTime = new Date().getTime();
 
-		log.info("-> method {}.{} invocation", className, methodName);
+        log.info("{}.{} Execution time: {} ms", className, methodName, (endTime - startTime));
+        return response;
+    }
 
-		Object response = pjp.proceed(pjp.getArgs());
+    @Around("@annotation(LogMethodInvocation)")
+    public Object logMethodInvocation(ProceedingJoinPoint pjp) throws Throwable {
+        String className = pjp.getTarget().getClass().getSimpleName();
+        String methodName = pjp.getSignature().getName();
 
-		log.info("-> method {}.{} execution complete", className, methodName);
-		return response;
-	}
+        log.info("-> method {}.{} invocation", className, methodName);
 
-	@Around("@annotation(LogMethodInvocationAndParams)")
-	public Object logMethodInvocationAndParams(ProceedingJoinPoint pjp) throws Throwable {
-		String className = pjp.getTarget().getClass().getSimpleName();
-		String methodName = pjp.getSignature().getName();
+        Object response = pjp.proceed(pjp.getArgs());
 
-		String[] argsNames = ((MethodSignature) pjp.getSignature()).getParameterNames();
-		Object[] values = pjp.getArgs();
+        log.info("-> method {}.{} execution complete", className, methodName);
+        return response;
+    }
 
-		Map<String, Object> params = new HashMap<>();
-		if (argsNames.length != 0) {
-			for (int i = 0; i < argsNames.length; i++) {
-				params.put(argsNames[i], values[i]);
-			}
-		}
+    @Around("@annotation(LogMethodInvocationAndParams)")
+    public Object logMethodInvocationAndParams(ProceedingJoinPoint pjp) throws Throwable {
+        String className = pjp.getTarget().getClass().getSimpleName();
+        String methodName = pjp.getSignature().getName();
 
-		log.info("-> method {}.{} invocation", className, methodName);
-		if (!params.isEmpty() && log.isDebugEnabled()) {
-			log.debug("{}", objectMapper.writeValueAsString(params));
-		}
+        String[] argsNames = ((MethodSignature) pjp.getSignature()).getParameterNames();
+        Object[] values = pjp.getArgs();
 
-		Object response = pjp.proceed(pjp.getArgs());
+        Map<String, Object> params = new HashMap<>();
+        if (argsNames.length != 0) {
+            for (int i = 0; i < argsNames.length; i++) {
+                params.put(argsNames[i], values[i]);
+            }
+        }
 
-		log.info("-> method {}.{} execution complete", className, methodName);
-		return response;
-	}
+        log.info("-> method {}.{} invocation", className, methodName);
+        if (!params.isEmpty() && log.isDebugEnabled()) {
+            log.debug("{}", objectMapper.writeValueAsString(params));
+        }
+
+        Object response = pjp.proceed(pjp.getArgs());
+
+        log.info("-> method {}.{} execution complete", className, methodName);
+        return response;
+    }
 }
