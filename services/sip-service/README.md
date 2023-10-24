@@ -1,14 +1,16 @@
 ## Run Spring Boot application
 ```shell
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
+
 ### Run tests
-`$ ./mvnw clean verify`
+```shell
+./mvnw clean verify
+```
 
 ### Run locally
 ```shell
-$ docker-compose -f docker/docker-compose.yml up -d
-$ ./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
 ### SIP Return Calculation
