@@ -27,8 +27,8 @@ public class TestPortfolioServiceApplication {
 	GenericContainer<?> discoveryServiceContainer(DynamicPropertyRegistry dynamicPropertyRegistry) {
 		GenericContainer<?> discoveryServiceContainer = new GenericContainer<>("dockertmt/discovery-service")
 				.withExposedPorts(8761);
-		dynamicPropertyRegistry.add("eureka.client.service-url.defaultZone", () -> String.format("http://%s:%d/eureka",
-				discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
+		dynamicPropertyRegistry.add("eureka.client.service-url.defaultZone", () -> "http://%s:%d/eureka".formatted(
+                discoveryServiceContainer.getHost(), discoveryServiceContainer.getMappedPort(8761)));
 		return discoveryServiceContainer;
 	}
 
