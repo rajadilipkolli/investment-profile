@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java-version: [17]
+        java-version: [21]
     defaults:
       run:
         working-directory: "services/api-gateway"
