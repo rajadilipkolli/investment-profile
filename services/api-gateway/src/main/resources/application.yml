@@ -71,6 +71,9 @@ spring:
     base-path: /${spring.application.name}
     problemdetails:
       enabled: true
+  threads:
+    virtual:
+      enabled: true
       
 zakura:
   app:
