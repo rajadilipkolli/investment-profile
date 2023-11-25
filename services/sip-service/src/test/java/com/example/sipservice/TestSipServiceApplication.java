@@ -23,10 +23,10 @@ public class TestSipServiceApplication {
         dynamicPropertyRegistry.add(
                 "eureka.client.service-url.defaultZone",
                 () ->
-                        
-                                "http://%s:%d/eureka".formatted(
-                                discoveryServiceContainer.getHost(),
-                                discoveryServiceContainer.getMappedPort(8761)));
+                        "http://%s:%d/eureka"
+                                .formatted(
+                                        discoveryServiceContainer.getHost(),
+                                        discoveryServiceContainer.getMappedPort(8761)));
         return discoveryServiceContainer;
     }
 
