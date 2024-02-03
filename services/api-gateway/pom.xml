@@ -20,7 +20,7 @@
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 		<springdoc-openapi.version>2.3.0</springdoc-openapi.version>
 		<spotless.version>2.43.0</spotless.version>
-		<jjwt.version>0.12.3</jjwt.version>
+		<jjwt.version>0.12.5</jjwt.version>
 	</properties>
 
 	<dependencies>
