@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   mongodb:
-    image: mongo:7.0.5
+    image: mongo:7.0.6
     container_name: mongodb
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
