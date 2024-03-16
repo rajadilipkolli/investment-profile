@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.2</version>
+		<version>3.2.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.zakura</groupId>
@@ -19,8 +19,8 @@
 		<java.version>21</java.version>
 		<spring-cloud.version>2023.0.0</spring-cloud.version>
 		<springdoc-openapi.version>2.3.0</springdoc-openapi.version>
-		<spotless.version>2.42.0</spotless.version>
-		<jjwt.version>0.12.3</jjwt.version>
+		<spotless.version>2.43.0</spotless.version>
+		<jjwt.version>0.12.5</jjwt.version>
 	</properties>
 
 	<dependencies>
