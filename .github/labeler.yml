@@ -6,9 +6,6 @@
   - changed-files:
       - any-glob-to-any-file:
           - frountend/**/*
-"status: waiting-for-triage":
-  - ./*
-  - ./**/*
 "type: documentation": 
   - changed-files:
       - any-glob-to-any-file: 'docs/**/*'
