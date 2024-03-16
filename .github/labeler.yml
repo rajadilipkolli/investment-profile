@@ -1,10 +1,18 @@
 "component: backend":
-  - services/**/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - services/**/*
 "component: ui":
-  - frountend/**/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - frountend/**/*
 "status: waiting-for-triage":
   - ./*
   - ./**/*
-"type: documentation": docs/**/*
+"type: documentation": 
+  - changed-files:
+      - any-glob-to-any-file: 'docs/**/*'
 "type: dependency-upgrade":
-  - services/**/pom.xml
+  - changed-files:
+      - any-glob-to-any-file:
+          - services/**/pom.xml
