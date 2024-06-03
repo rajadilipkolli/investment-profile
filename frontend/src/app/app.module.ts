@@ -13,7 +13,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './auth/login/login.component';
 import { MustMatchDirective } from './auth/register/must-match.directive';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RegisterComponent } from './auth/register/register.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MatTableModule } from '@angular/material/table';
@@ -23,35 +23,28 @@ import { StockListComponent } from './stocks/stock-list/stock-list.component';
 import { StockDetailComponent } from './stocks/stock-detail/stock-detail.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    DropdownDirective,
-    LoadingSpinnerComponent,
-    HeaderComponent,
-    RegisterComponent,
-    LoginComponent,
-    MustMatchDirective,
-    PortfolioComponent,
-    SipComponent,
-    StocksComponent,
-    PageNotFoundComponent,
-    PortfolioDetailComponent,
-    PortfolioListComponent,
-    StockListComponent,
-    StockDetailComponent
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatTableModule,
-    BrowserAnimationsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AuthComponent,
+        DropdownDirective,
+        LoadingSpinnerComponent,
+        HeaderComponent,
+        RegisterComponent,
+        LoginComponent,
+        MustMatchDirective,
+        PortfolioComponent,
+        SipComponent,
+        StocksComponent,
+        PageNotFoundComponent,
+        PortfolioDetailComponent,
+        PortfolioListComponent,
+        StockListComponent,
+        StockDetailComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        MatTableModule,
+        BrowserAnimationsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
