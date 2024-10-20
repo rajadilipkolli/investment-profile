@@ -26,7 +26,7 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [18081, 8761, 9411],
+	"forwardPorts": [18081, 8761, 9411, 4200],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "./mvnw clean verify -DskipTests=true"
