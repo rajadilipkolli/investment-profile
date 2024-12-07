@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertyRegistrar;
 import org.testcontainers.containers.GenericContainer;
 
 @TestConfiguration(proxyBeanMethods = false)
@@ -17,17 +17,22 @@ public class TestSipServiceApplication {
     }
 
     @Bean
-    GenericContainer<?> discoveryServiceContainer(DynamicPropertyRegistry dynamicPropertyRegistry) {
-        GenericContainer<?> discoveryServiceContainer =
-                new GenericContainer<>("dockertmt/discovery-service").withExposedPorts(8761);
-        dynamicPropertyRegistry.add(
-                "eureka.client.service-url.defaultZone",
-                () ->
-                        "http://%s:%d/eureka"
-                                .formatted(
-                                        discoveryServiceContainer.getHost(),
-                                        discoveryServiceContainer.getMappedPort(8761)));
-        return discoveryServiceContainer;
+    GenericContainer<?> discoveryServiceContainer() {
+        return new GenericContainer<>("dockertmt/discovery-service").withExposedPorts(8761);
+    }
+
+    @Bean
+    DynamicPropertyRegistrar dynamicPropertyRegistrar(
+            GenericContainer<?> discoveryServiceContainer) {
+        return dynamicPropertyRegistry -> {
+            dynamicPropertyRegistry.add(
+                    "eureka.client.service-url.defaultZone",
+                    () ->
+                            "http://%s:%d/eureka"
+                                    .formatted(
+                                            discoveryServiceContainer.getHost(),
+                                            discoveryServiceContainer.getMappedPort(8761)));
+        };
     }
 
     public static void main(String[] args) {
