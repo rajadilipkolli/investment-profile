@@ -9,9 +9,10 @@ export interface PeriodicElement {
 }
 
 @Component({
-  selector: 'app-stocks',
-  templateUrl: './stocks.component.html',
-  styleUrls: ['./stocks.component.css']
+    selector: 'app-stocks',
+    templateUrl: './stocks.component.html',
+    styleUrls: ['./stocks.component.css'],
+    standalone: false
 })
 export class StocksComponent implements OnInit {
 

@@ -3,8 +3,9 @@ import { FormGroup, NG_VALIDATORS, Validator, ValidationErrors } from '@angular/
 import { MustMatch } from './must-match.validator';
 
 @Directive({
-  selector: '[mustMatch]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: MustMatchDirective, multi: true }]
+    selector: '[mustMatch]',
+    providers: [{ provide: NG_VALIDATORS, useExisting: MustMatchDirective, multi: true }],
+    standalone: false
 })
 
 export class MustMatchDirective implements Validator {

@@ -8,9 +8,10 @@ import { Stock } from 'src/app/shared/stock.model';
 import { StockService } from '../stock.service';
 
 @Component({
-  selector: 'app-stock-detail',
-  templateUrl: './stock-detail.component.html',
-  styleUrls: ['./stock-detail.component.css']
+    selector: 'app-stock-detail',
+    templateUrl: './stock-detail.component.html',
+    styleUrls: ['./stock-detail.component.css'],
+    standalone: false
 })
 export class StockDetailComponent implements OnInit {
   isLoading: boolean = false;

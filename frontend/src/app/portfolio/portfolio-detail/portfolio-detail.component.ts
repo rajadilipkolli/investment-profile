@@ -7,9 +7,10 @@ import { Portfolio } from 'src/app/shared/portfolio.model';
 import { PortfolioService } from '../portfolio.service';
 
 @Component({
-  selector: 'app-portfolio-detail',
-  templateUrl: './portfolio-detail.component.html',
-  styleUrls: ['./portfolio-detail.component.css']
+    selector: 'app-portfolio-detail',
+    templateUrl: './portfolio-detail.component.html',
+    styleUrls: ['./portfolio-detail.component.css'],
+    standalone: false
 })
 export class PortfolioDetailComponent implements OnInit {
 

@@ -5,9 +5,10 @@ import { Portfolio } from 'src/app/shared/portfolio.model';
 import { PortfolioService } from '../portfolio.service';
 
 @Component({
-  selector: 'app-portfolio-list',
-  templateUrl: './portfolio-list.component.html',
-  styleUrls: ['./portfolio-list.component.css']
+    selector: 'app-portfolio-list',
+    templateUrl: './portfolio-list.component.html',
+    styleUrls: ['./portfolio-list.component.css'],
+    standalone: false
 })
 export class PortfolioListComponent implements OnInit, OnDestroy {
   investments: Portfolio[];

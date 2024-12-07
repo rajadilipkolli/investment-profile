@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html'
+    selector: 'app-auth',
+    templateUrl: './auth.component.html',
+    standalone: false
 })
 export class AuthComponent {
   error: string = null;

@@ -5,9 +5,10 @@ import { Stock } from 'src/app/shared/stock.model';
 import { StockService } from '../stock.service';
 
 @Component({
-  selector: 'app-stock-list',
-  templateUrl: './stock-list.component.html',
-  styleUrls: ['./stock-list.component.css']
+    selector: 'app-stock-list',
+    templateUrl: './stock-list.component.html',
+    styleUrls: ['./stock-list.component.css'],
+    standalone: false
 })
 export class StockListComponent implements OnInit, OnDestroy {
   stocks: Stock[];

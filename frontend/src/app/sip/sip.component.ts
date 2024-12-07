@@ -5,9 +5,10 @@ import { Observable } from 'rxjs';
 import { InvestmentService } from '../shared/investment.service';
 
 @Component({
-  selector: 'app-sip',
-  templateUrl: './sip.component.html',
-  styleUrls: ['./sip.component.css']
+    selector: 'app-sip',
+    templateUrl: './sip.component.html',
+    styleUrls: ['./sip.component.css'],
+    standalone: false
 })
 export class SipComponent implements OnInit {
   isLoading: boolean;

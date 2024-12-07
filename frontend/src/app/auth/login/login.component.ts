@@ -7,9 +7,10 @@ import { PortfolioService } from 'src/app/portfolio/portfolio.service';
 import { StockService } from 'src/app/stocks/stock.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: false
 })
 export class LoginComponent {
   isLoading = false;
