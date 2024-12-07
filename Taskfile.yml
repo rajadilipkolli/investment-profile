@@ -1,0 +1,62 @@
+version: '3'
+
+tasks:
+  ui-build:
+    dir: frontend
+    cmds:
+      - npm install -g @angular/cli@latest
+      - npm install
+    run: once
+
+  ui-start:
+    dir: frontend
+    deps:
+      - ui-build
+    cmds:
+      - ng serve
+
+  docker-up:
+    dir: services
+    preconditions:
+      - test -f docker-compose.yml
+    cmd: docker compose up -d
+
+  service-registry-start:
+    dir: services/discovery-service
+    deps:
+      - docker-up
+    cmd: mvnw compile spring-boot:run
+
+  api-gateway-start:
+    dir: services/api-gateway
+    deps:
+      - docker-up
+    cmds:
+      - mvnw spring-boot:run
+
+  portfolio-start:
+    dir: services/portfolio-service
+    deps:
+      - docker-up
+    cmds:
+      - mvnw spring-boot:run
+
+  sip-start:
+    dir: services/sip-service
+    deps:
+      - docker-up
+    cmds:
+      - mvnw spring-boot:run
+
+  stock-start:
+    dir: services/stock-service
+    deps:
+      - docker-up
+    cmds:
+      - mvnw spring-boot:run
+
+  docker-down:
+    dir: services
+    cmds:
+      - docker compose down -v
+
