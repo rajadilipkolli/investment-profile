@@ -17,7 +17,7 @@
 
 	<properties>
 		<java.version>21</java.version>
-		<spring-cloud.version>2023.0.4</spring-cloud.version>
+		<spring-cloud.version>2024.0.0</spring-cloud.version>
 		<springdoc-openapi.version>2.6.0</springdoc-openapi.version>
 		<spotless.version>2.43.0</spotless.version>
 		<jjwt.version>0.12.6</jjwt.version>
