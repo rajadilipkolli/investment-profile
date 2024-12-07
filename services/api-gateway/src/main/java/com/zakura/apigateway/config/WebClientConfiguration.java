@@ -22,11 +22,11 @@ public class WebClientConfiguration {
     }
 
     @Bean
-    public HttpServiceProxyFactory httpServiceProxyFactory(WebClient webClient) {
-        return HttpServiceProxyFactory.builder(WebClientAdapter.forClient(webClient))
-                // default value is 5 sec, as we are unable to get data increasing timeout
-                .blockTimeout(Duration.ofSeconds(20))
-                .build();
+    HttpServiceProxyFactory httpServiceProxyFactory(WebClient webClient) {
+        WebClientAdapter webClientAdapter = WebClientAdapter.create(webClient);
+        // default value is 5 sec, as we are unable to get data increasing timeout
+        webClientAdapter.setBlockTimeout(Duration.ofSeconds(20));
+        return HttpServiceProxyFactory.builderFor(webClientAdapter).build();
     }
 
     @Bean
