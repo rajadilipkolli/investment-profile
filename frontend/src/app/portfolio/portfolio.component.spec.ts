@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { PortfolioComponent } from './portfolio.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { PortfolioListComponent } from './portfolio-list/portfolio-list.component';
 
 describe('PortfolioComponent', () => {
   let component: PortfolioComponent;
@@ -10,9 +12,10 @@ describe('PortfolioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [PortfolioComponent],
+    declarations: [PortfolioComponent, PortfolioListComponent],
     imports: [RouterTestingModule],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
     .compileComponents();
   });
