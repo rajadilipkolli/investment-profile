@@ -1,54 +1,60 @@
 <div class="card" style="width: 30rem; align-self: auto;">
-    <div class="card-header" style="font-style: italic;">Stocks to Buy</div>
-    <div class="card-body">
-        <div class="alert alert-danger" *ngIf="error">
-            <p>{{ error }}</p>
-        </div>
-        <div *ngIf="isLoading" style="text-align: center;">
-            <app-loading-spinner></app-loading-spinner>
-        </div>
-        <form #stockForm="ngForm" (ngSubmit)="onBuy(stockForm)" *ngIf="!isLoading">
-            <div class="form-group row">
-                <label for="name" class="col-sm-6 col-form-label">Name: </label>
-                <div class="col-sm-4">
-                    <input type="text" [disabled]=true id="name" class="form-control" [ngModel]="stock.name"
-                        name="name" />
-                </div>
+  <div class="card-header" style="font-style: italic;">Stocks to Buy</div>
+  <div class="card-body">
+    @if (error) {
+      <div class="alert alert-danger">
+        <p>{{ error }}</p>
+      </div>
+    }
+    @if (isLoading) {
+      <div style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    }
+    @if (!isLoading) {
+      <form #stockForm="ngForm" (ngSubmit)="onBuy(stockForm)">
+        <div class="form-group row">
+          <label for="name" class="col-sm-6 col-form-label">Name: </label>
+          <div class="col-sm-4">
+            <input type="text" [disabled]=true id="name" class="form-control" [ngModel]="stock.name"
+              name="name" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="investmentType" class="col-sm-6 col-form-label">Investment Type: </label>
+            <div class="col-sm-4">
+              <input type="text" [disabled]=true id="investmentType" class="form-control"
+                [ngModel]="stock.investmentType" name="investmentType" />
+              </div>
             </div>
             <div class="form-group row">
-                <label for="investmentType" class="col-sm-6 col-form-label">Investment Type: </label>
-                <div class="col-sm-4">
-                    <input type="text" [disabled]=true id="investmentType" class="form-control"
-                        [ngModel]="stock.investmentType" name="investmentType" />
+              <label for="currentPrice" class="col-sm-6 col-form-label">Current Price: </label>
+              <div class="col-sm-4">
+                <input type="number" [disabled]=true id="currentPrice" class="form-control"
+                  [ngModel]="stock.currentPrice" name="currentPrice" />
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="currentPrice" class="col-sm-6 col-form-label">Current Price: </label>
-                <div class="col-sm-4">
-                    <input type="number" [disabled]=true id="currentPrice" class="form-control"
-                        [ngModel]="stock.currentPrice" name="currentPrice" />
-                </div>
-            </div>
-            <div class="form-group row">
+              </div>
+              <div class="form-group row">
                 <label for="anticipatedGrowth" class="col-sm-6 col-form-label">Anticipated Growth: </label>
                 <div class="col-sm-4">
-                    <input type="number" [disabled]=true id="anticipatedGrowth" class="form-control"
-                        [ngModel]="stock.anticipatedGrowth" name="anticipatedGrowth" />
+                  <input type="number" [disabled]=true id="anticipatedGrowth" class="form-control"
+                    [ngModel]="stock.anticipatedGrowth" name="anticipatedGrowth" />
+                  </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="quantity" class="col-sm-6 col-form-label">Quantity*: </label>
-                <div class="col-sm-4">
+                <div class="form-group row">
+                  <label for="quantity" class="col-sm-6 col-form-label">Quantity*: </label>
+                  <div class="col-sm-4">
                     <input type="number" id="quantity" class="form-control" ngModel name="quantity" required
-                        minlength="1" maxlength="20" />
-                </div>
+                      min="1" max="20" />
+                    </div>
+                  </div>
+                  <div>
+                    <button class="btn btn-primary" type="submit" [disabled]="!stockForm.valid">
+                      {{'Buy Stock'}}
+                    </button>
+                    <!-- <button class="btn btn-secondary" type="reset">Clear</button> -->
+                  </div>
+                </form>
+              }
             </div>
-            <div>
-                <button class="btn btn-primary" type="submit" [disabled]="!stockForm.valid">
-                    {{'Buy Stock'}}
-                </button>
-                <!-- <button class="btn btn-secondary" type="reset">Clear</button> -->
-            </div>
-        </form>
-    </div>
-</div>
+          </div>

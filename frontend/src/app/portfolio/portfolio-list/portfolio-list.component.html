@@ -1,32 +1,40 @@
-<div class= "alert alert-info" style=" text-align: center;" *ngIf="investments && investments.length == 0"> 
-  <h6> Your investment bucket is empty! Want to buy some? please visit Stocks tab!</h6>
-</div>
-<div class="table" style="width: 40rem; align-self: auto;" *ngIf="investments && investments.length !=0">
-  <div class="col-md-12">
-    <div class="container">
-      <table class="table table-stripped">
-        <thead style="background-color: chartreuse; color: black;">
-          <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Cost Price</th>
-            <th>Current Price</th>
-            <th>%P/L</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let portfolioEl of investments; let i = index">
-            <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
+@if (investments && investments.length == 0) {
+  <div class= "alert alert-info" style=" text-align: center;">
+    <h6> Your investment bucket is empty! Want to buy some? please visit Stocks tab!</h6>
+  </div>
+}
+@if (investments && investments.length !=0) {
+  <div class="table" style="width: 40rem; align-self: auto;">
+    <div class="col-md-12">
+      <div class="container">
+        <table class="table table-stripped">
+          <thead style="background-color: chartreuse; color: black;">
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Quantity</th>
+              <th>Cost Price</th>
+              <th>Current Price</th>
+              <th>%P/L</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (portfolioEl of investments; track portfolioEl; let i = $index) {
+              <tr>
+                <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
                 {{ portfolioEl.name }} </a></td>
-            <td>{{ portfolioEl.type }}</td>
-            <td>{{ portfolioEl.quantity }}</td>
-            <td>{{ portfolioEl.costPrice }}</td>
-            <td>{{ portfolioEl.currentPrice }}</td>
-            <td><span *ngIf="!portfolioEl.profit">-</span>{{ portfolioEl.profitLossPercent }}%</td>
-          </tr>
-        </tbody>
-      </table>
+                <td>{{ portfolioEl.type }}</td>
+                <td>{{ portfolioEl.quantity }}</td>
+                <td>{{ portfolioEl.costPrice }}</td>
+                <td>{{ portfolioEl.currentPrice }}</td>
+                <td>@if (!portfolioEl.profit) {
+                  <span>-</span>
+                }{{ portfolioEl.profitLossPercent }}%</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
+}

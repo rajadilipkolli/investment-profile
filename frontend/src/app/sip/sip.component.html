@@ -1,61 +1,69 @@
 <div style="text-align: center; vertical-align: middle; line-height: 90px; ">
-    <h4>SIP Calculator</h4>
+  <h4>SIP Calculator</h4>
 </div>
 <div class="card" style="width: 40rem; align-self: auto;">
-    <div class="card-header" style="font-style: italic;">Your SIP</div>
-    <div class="card-body">
-        <div class="alert alert-danger" *ngIf="error">
-            <p>{{ error }}</p>
-        </div>
-        <div *ngIf="isLoading" style="text-align: center;">
-            <app-loading-spinner></app-loading-spinner>
-        </div>
-        <form #sipForm="ngForm" (ngSubmit)="onCalculate(sipForm)" *ngIf="!isLoading">
-            <div class="form-group row">
-                <label for="amount" class="col-sm-6 col-form-label">Amount*: </label>
-                <div class="col-sm-4">
-                    <input type="number" id="amount" class="form-control" [ngModel]="amount" name="amount" required
-                        minlength="1" maxlength="20" />
-                </div>
+  <div class="card-header" style="font-style: italic;">Your SIP</div>
+  <div class="card-body">
+    @if (error) {
+      <div class="alert alert-danger">
+        <p>{{ error }}</p>
+      </div>
+    }
+    @if (isLoading) {
+      <div style="text-align: center;">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    }
+    @if (!isLoading) {
+      <form #sipForm="ngForm" (ngSubmit)="onCalculate(sipForm)">
+        <div class="form-group row">
+          <label for="amount" class="col-sm-6 col-form-label">Amount*: </label>
+          <div class="col-sm-4">
+            <input type="number" id="amount" class="form-control" [ngModel]="amount" name="amount" required
+              min="1" max="20" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="ror" class="col-sm-6 col-form-label">Expected Rate of Return(%)*: </label>
+            <div class="col-sm-4">
+              <input type="number" id="ror" class="form-control" [ngModel]="ror" name="ror" required min="0"
+                max="100" />
+              </div>
             </div>
             <div class="form-group row">
-                <label for="ror" class="col-sm-6 col-form-label">Expected Rate of Return(%)*: </label>
-                <div class="col-sm-4">
-                    <input type="number" id="ror" class="form-control" [ngModel]="ror" name="ror" required min="0"
-                        max="100" />
-                </div>
+              <label for="duration" class="col-sm-6 col-form-label">Investment Duration*:</label>
+              <div class="col-sm-4">
+                <select id="duration" class="form-control" name="duration" [ngModel]="defaultDuration">
+                  @for (duration of durationList; track duration) {
+                    <option [ngValue]="duration">
+                      {{duration}}
+                    </option>
+                  }
+                </select>
+              </div>
             </div>
             <div class="form-group row">
-                <label for="duration" class="col-sm-6 col-form-label">Investment Duration*:</label>
-                <div class="col-sm-4">
-                    <select id="duration" class="form-control" name="duration" [ngModel]="defaultDuration">
-                        <option [ngValue]="duration" *ngFor="let duration of durationList">
-                            {{duration}}
-                        </option>
-                    </select>
+              <label for="investment" class="col-sm-6 col-form-label">Your Investments:</label>
+              <div class="col-sm-4">
+                <input type="number" [disabled]=true id="investment" class="form-control" [ngModel]="investment"
+                  name="investment" required minlength="1" maxlength="20" />
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="investment" class="col-sm-6 col-form-label">Your Investments:</label>
-                <div class="col-sm-4">
-                    <input type="number" [disabled]=true id="investment" class="form-control" [ngModel]="investment"
-                        name="investment" required minlength="1" maxlength="20" />
-                </div>
-            </div>
-            <div class="form-group row">
+              </div>
+              <div class="form-group row">
                 <label for="predictedReturn" class="col-sm-6 col-form-label">Your Predicted SIP Return: </label>
                 <div class="col-sm-4">
-                    <input type="number" [disabled]=true id="predictedReturn" class="form-control"
-                        [ngModel]="predictedReturn" name="predictedReturn" minlength="1" maxlength="20" />
+                  <input type="number" [disabled]=true id="predictedReturn" class="form-control"
+                    [ngModel]="predictedReturn" name="predictedReturn" minlength="1" maxlength="20" />
+                  </div>
                 </div>
-            </div>
-            <div>
-                <button class="btn btn-primary" type="submit" [disabled]="!sipForm.valid">
+                <div>
+                  <button class="btn btn-primary" type="submit" [disabled]="!sipForm.valid">
                     {{'Calculate'}}
-                </button> |
-                <button class="btn btn-secondary" type="reset">Clear</button>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer" style="font-style: italic;">*Mandatory fields</div>
-</div>
+                  </button> |
+                  <button class="btn btn-secondary" type="reset">Clear</button>
+                </div>
+              </form>
+            }
+          </div>
+          <div class="card-footer" style="font-style: italic;">*Mandatory fields</div>
+        </div>

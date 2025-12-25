@@ -7,17 +7,27 @@
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#" *ngIf="!isAuthenticated">Home<span
-          class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/portfolio"
-        *ngIf="isAuthenticated">Portfolio</a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/sip-calculator" *ngIf="isAuthenticated">SIP
+      @if (!isAuthenticated) {
+        <a class="nav-item nav-link active" href="#">Home<span
+        class="sr-only">(current)</span></a>
+      }
+      @if (isAuthenticated) {
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="/portfolio"
+        >Portfolio</a>
+      }
+      @if (isAuthenticated) {
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="/sip-calculator">SIP
         Calculator</a>
-      <a class="nav-item nav-link" routerLinkActive="active" routerLink="/stocks" *ngIf="isAuthenticated">Stocks</a>
+      }
+      @if (isAuthenticated) {
+        <a class="nav-item nav-link" routerLinkActive="active" routerLink="/stocks">Stocks</a>
+      }
     </div>
 
-    <div class="nav ml-auto justify-content-end" *ngIf="isAuthenticated">
-      <a style="cursor: pointer; color: white;" (click)="onLogout()">logout</a>
-    </div>
+    @if (isAuthenticated) {
+      <div class="nav ml-auto justify-content-end">
+        <a style="cursor: pointer; color: white;" (click)="onLogout()">logout</a>
+      </div>
+    }
   </div>
 </nav>
