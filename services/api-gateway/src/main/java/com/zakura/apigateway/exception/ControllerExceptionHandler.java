@@ -3,9 +3,9 @@ package com.zakura.apigateway.exception;
 
 import java.util.Map;
 import org.springframework.boot.autoconfigure.web.WebProperties;
-import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
-import org.springframework.boot.web.reactive.error.ErrorAttributes;
+import org.springframework.boot.webflux.autoconfigure.error.AbstractErrorWebExceptionHandler;
+import org.springframework.boot.webflux.error.ErrorAttributes;
 import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,10 +25,10 @@ import reactor.core.publisher.Mono;
 public class ControllerExceptionHandler extends AbstractErrorWebExceptionHandler {
 
     public ControllerExceptionHandler(
-            DomainExceptionWrapper domainExceptionWrapper,
+            ErrorAttributes errorAttributes,
             ApplicationContext applicationContext,
             ServerCodecConfigurer serverCodecConfigurer) {
-        super(domainExceptionWrapper, new WebProperties.Resources(), applicationContext);
+        super(errorAttributes, new WebProperties.Resources(), applicationContext);
         super.setMessageWriters(serverCodecConfigurer.getWriters());
         super.setMessageReaders(serverCodecConfigurer.getReaders());
     }
