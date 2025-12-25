@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2025 */
 package com.zakura.portfolioservice.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -31,7 +32,8 @@ public class HealthCheckControllerTest {
     @Test
     public void testHealthCheck() throws Exception {
         mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andReturn();
     }
-
 }

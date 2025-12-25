@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2025 */
 package com.zakura.portfolioservice.exception;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -8,8 +9,7 @@ public class RecordNotFoundException extends RestControllerException {
 
     @Serial private static final long serialVersionUID = 7270193384232612561L;
 
-	public RecordNotFoundException(String message) {
-		super("%s not found.".formatted(message), NOT_FOUND);
-	}
-
+    public RecordNotFoundException(String message) {
+        super("%s not found.".formatted(message), NOT_FOUND);
+    }
 }
