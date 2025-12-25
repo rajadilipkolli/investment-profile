@@ -11,14 +11,13 @@ import com.zakura.apigateway.security.jwt.JwtTokenProvider;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.BodyInserters;
 import reactor.core.publisher.Flux;
@@ -31,12 +30,11 @@ import reactor.core.publisher.Mono;
                     type = FilterType.ASSIGNABLE_TYPE,
                     classes = DomainExceptionWrapper.class)
         })
-@AutoConfigureWebTestClient
 class StockControllerTest {
 
-    @MockBean private StockServiceClient stockServiceClient;
+    @MockitoBean private StockServiceClient stockServiceClient;
 
-    @MockBean private JwtTokenProvider jwtUtils;
+    @MockitoBean private JwtTokenProvider jwtUtils;
 
     @Autowired private WebTestClient webTestClient;
 

@@ -8,8 +8,8 @@ import com.zakura.apigateway.payload.request.SignupRequest;
 import com.zakura.apigateway.payload.response.JwtResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ProblemDetail;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -17,16 +17,12 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 @SpringBootTest(
         properties = {"spring.cloud.service-registry.auto-registration.enabled=false"},
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = {ApiGatewayApplication.class, TestContainersConfig.class})
 @AutoConfigureWebTestClient
-class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
+class ApiGatewayApplicationTests {
 
     @Autowired private WebTestClient webTestClient;
-
-    @Test
-    void contextLoads() {
-        assertThat(MONGO_DB_CONTAINER.isRunning()).isTrue();
-    }
 
     @Test
     void testSignUp() {

@@ -1,4 +1,8 @@
+/* Licensed under Apache-2.0 2025 */
 package com.zakura.stockservice.controller;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,26 +14,23 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @ExtendWith(MockitoExtension.class)
 class HealthCheckControllerTest {
 
-	@InjectMocks
-	private HealthCheckController healthCheckController;
+    @InjectMocks private HealthCheckController healthCheckController;
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@BeforeEach
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
-	}
+    @BeforeEach
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
+    }
 
-	@Test
-	void testHealthCheck() throws Exception {
-		mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
-	}
-
+    @Test
+    void testHealthCheck() throws Exception {
+        mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 }
