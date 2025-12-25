@@ -20,6 +20,9 @@
         <module>sip-service</module>
         <module>stock-service</module>
     </modules>
+	<properties>
+		<maven.compiler.release>21</maven.compiler.release>
+	</properties>
     <repositories>
         <repository>
             <id>spring-milestone</id>

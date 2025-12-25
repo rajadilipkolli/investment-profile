@@ -1,10 +1,11 @@
 package com.zakura.portfolioservice.exception;
 
+import java.io.Serial;
 import org.springframework.http.HttpStatus;
 
 public class RestControllerException extends RuntimeException{
 
-	private static final long serialVersionUID = 5293541620167474447L;
+    @Serial private static final long serialVersionUID = 5293541620167474447L;
 
 	private final HttpStatus httpStatus; 
 	

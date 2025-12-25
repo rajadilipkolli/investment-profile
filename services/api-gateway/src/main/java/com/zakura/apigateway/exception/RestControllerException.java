@@ -1,11 +1,12 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.exception;
 
+import java.io.Serial;
 import org.springframework.http.HttpStatus;
 
 public class RestControllerException extends RuntimeException {
 
-    private static final long serialVersionUID = 5293541620167474447L;
+    @Serial private static final long serialVersionUID = 5293541620167474447L;
 
     private final HttpStatus httpStatus;
 

@@ -1,8 +1,7 @@
 /* Licensed under Apache-2.0 2021-2022 */
 package com.zakura.apigateway.data;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -12,6 +11,7 @@ import com.zakura.apigateway.payload.request.SignupRequest;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
+import tools.jackson.core.JacksonException;
 
 public class TestData {
 
@@ -83,7 +83,7 @@ public class TestData {
     }
 
     public static String getInvestmentString()
-            throws JsonProcessingException,
+            throws JacksonException,
                     JsonSyntaxException,
                     JsonIOException,
                     FileNotFoundException {
@@ -115,7 +115,7 @@ public class TestData {
     public static String getStockString()
             throws JsonSyntaxException,
                     JsonIOException,
-                    JsonProcessingException,
+                    JacksonException,
                     FileNotFoundException {
         return mapper.writeValueAsString(getStock());
     }

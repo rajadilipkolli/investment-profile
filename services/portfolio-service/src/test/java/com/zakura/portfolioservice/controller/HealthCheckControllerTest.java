@@ -3,33 +3,35 @@ package com.zakura.portfolioservice.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.WARN)
 public class HealthCheckControllerTest {
 
-	@InjectMocks
-	private HealthCheckController healthCheckController;
+    @InjectMocks private HealthCheckController healthCheckController;
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@Before
-	public void setup() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
-	}
+    @BeforeEach
+    public void setup() {
+        this.mockMvc = MockMvcBuilders.standaloneSetup(healthCheckController).build();
+    }
 
-	@Test
-	public void testHealthCheck() throws Exception {
-		mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
-	}
+    @Test
+    public void testHealthCheck() throws Exception {
+        mockMvc.perform(get("/health-check/status").contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(MockMvcResultHandlers.print()).andExpect(status().isOk()).andReturn();
+    }
 
 }

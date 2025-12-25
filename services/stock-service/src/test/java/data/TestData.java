@@ -5,9 +5,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -39,7 +38,7 @@ public class TestData {
 	}
 
 	public static String getStockRequestString()
-			throws JsonSyntaxException, JsonIOException, JsonProcessingException, FileNotFoundException {
+			throws JsonSyntaxException, JsonIOException, JacksonException, FileNotFoundException {
 		return mapper.writeValueAsString(getStockRequest());
 	}
 

@@ -6,7 +6,7 @@ import com.zakura.apigateway.security.jwt.JwtTokenAuthenticationFilter;
 import com.zakura.apigateway.security.jwt.JwtTokenProvider;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
+import org.springframework.boot.security.autoconfigure.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

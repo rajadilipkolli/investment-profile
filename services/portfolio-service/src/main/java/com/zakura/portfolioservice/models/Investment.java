@@ -1,5 +1,6 @@
 package com.zakura.portfolioservice.models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Document(collection = "investments")
 public class Investment implements Serializable {
-	private static final long serialVersionUID = 2223858521883494244L;
+    @Serial private static final long serialVersionUID = 2223858521883494244L;
 
 	private String userName;
 
