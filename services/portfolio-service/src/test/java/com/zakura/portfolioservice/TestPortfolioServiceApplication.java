@@ -18,7 +18,10 @@ public class TestPortfolioServiceApplication {
     @Bean
     @ServiceConnection
     MongoDBContainer mongoDbContainer() {
-        return new MongoDBContainer("mongo:latest");
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.2.3"))
+                .withSharding()
+                .withStartupAttempts(3)
+                .withStartupTimeout(Duration.ofMinutes(2));
     }
 
     @Bean

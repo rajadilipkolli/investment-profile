@@ -7,7 +7,7 @@ import lombok.Getter;
 public enum EInvestmentType {
     STOCK("Stock"),
     MUTUAL_FUND("Mutual Fund"),
-    FIXED_DEPOSIT("Fix Deposit");
+    FIXED_DEPOSIT("Fixed Deposit");
 
     private final String investment;
 
