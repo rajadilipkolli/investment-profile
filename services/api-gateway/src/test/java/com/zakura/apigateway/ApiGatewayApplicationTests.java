@@ -17,16 +17,12 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 @SpringBootTest(
         properties = {"spring.cloud.service-registry.auto-registration.enabled=false"},
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = {ApiGatewayApplication.class, TestContainersConfig.class})
 @AutoConfigureWebTestClient
-class ApiGatewayApplicationTests extends AbstractMongoDBTestContainer {
+class ApiGatewayApplicationTests {
 
     @Autowired private WebTestClient webTestClient;
-
-    @Test
-    void contextLoads() {
-        assertThat(MONGO_DB_CONTAINER.isRunning()).isTrue();
-    }
 
     @Test
     void testSignUp() {

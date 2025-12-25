@@ -1,3 +1,4 @@
+/* Licensed under Apache-2.0 2025 */
 package com.zakura.stockservice.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("health-check")
 public class HealthCheckController {
 
-	@GetMapping("/status")
-	public String healthCheck() {
-		return "Stock Service is UP!";
-	}
+    @GetMapping("/status")
+    public String healthCheck() {
+        return "Stock Service is UP!";
+    }
 }
