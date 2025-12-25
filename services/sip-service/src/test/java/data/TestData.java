@@ -1,13 +1,13 @@
 package data;
 
 import com.example.sipservice.models.SipVO;
-import tools.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 public class TestData {
 
@@ -21,10 +21,7 @@ public class TestData {
     }
 
     public static String getSipVoString()
-            throws JsonSyntaxException,
-                    JsonIOException,
-                    JacksonException,
-                    FileNotFoundException {
+            throws JsonSyntaxException, JsonIOException, JacksonException, FileNotFoundException {
         return mapper.writeValueAsString(getSipVo());
     }
 }
