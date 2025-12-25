@@ -12,14 +12,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let stockEl of stocks; let i = index">
-            <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
-                {{ stockEl.name }} </a></td>
-            <td>{{ stockEl.investmentType }}</td>
-            <td>{{ stockEl.currentPrice }}</td>
-            <td>{{ stockEl.anticipatedGrowth }}</td>
-            <td>{{ stockEl.term }}</td>
-          </tr>
+          @for (stockEl of stocks; track stockEl; let i = $index) {
+            <tr>
+              <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
+              {{ stockEl.name }} </a></td>
+              <td>{{ stockEl.investmentType }}</td>
+              <td>{{ stockEl.currentPrice }}</td>
+              <td>{{ stockEl.anticipatedGrowth }}</td>
+              <td>{{ stockEl.term }}</td>
+            </tr>
+          }
         </tbody>
       </table>
     </div>
