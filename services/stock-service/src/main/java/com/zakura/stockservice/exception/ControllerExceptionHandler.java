@@ -32,7 +32,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({RuntimeException.class})
     private ResponseEntity<StockError> handleUnexpectedException(
-            RestControllerException e, WebRequest request) {
+            RuntimeException e, WebRequest request) {
         log.error(UNEXPECTED_ERROR_MESSAGE, e);
         return errorResponse(
                 new RestControllerException(

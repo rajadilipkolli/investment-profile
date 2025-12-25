@@ -14,11 +14,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class PortfolioServiceApplication implements CommandLineRunner {
 
+    @Autowired PortfolioRepository portfolioRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(PortfolioServiceApplication.class, args);
     }
-
-    @Autowired PortfolioRepository portfolioRepository;
 
     @Override
     public void run(String... args) {

@@ -17,7 +17,7 @@ import org.testcontainers.utility.DockerImageName;
 @TestConfiguration(proxyBeanMethods = false)
 public class TestStockServiceApplication {
 
-    @Bean
+    @Bean(destroyMethod = "close")
     Network network() {
         return Network.newNetwork();
     }
