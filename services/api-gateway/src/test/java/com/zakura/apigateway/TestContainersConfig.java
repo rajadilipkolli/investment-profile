@@ -14,7 +14,7 @@ public class TestContainersConfig {
     @Bean
     @ServiceConnection
     public MongoDBContainer mongoDBContainer() {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.2.4"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("8.3.1"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2))
