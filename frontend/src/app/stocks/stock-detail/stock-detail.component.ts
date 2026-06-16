@@ -78,6 +78,7 @@ export class StockDetailComponent implements OnInit {
         console.log('here is response of save stock');
         console.log(resData);
         this.isLoading = false;
+        this.stockForm.reset();
         this.router.navigate(['/portfolio']);
       },
       error: errorMessage => {
@@ -87,6 +88,6 @@ export class StockDetailComponent implements OnInit {
       }
     });
 
-    this.stockForm.reset();
+
   }
 }

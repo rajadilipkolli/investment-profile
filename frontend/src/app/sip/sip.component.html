@@ -60,7 +60,7 @@
                   <button class="btn btn-primary" type="submit" [disabled]="!sipForm.valid">
                     {{'Calculate'}}
                   </button> |
-                  <button class="btn btn-secondary" type="reset">Clear</button>
+                  <button class="btn btn-secondary" type="reset" (click)="onClear()">Clear</button>
                 </div>
               </form>
             }

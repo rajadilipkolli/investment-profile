@@ -49,7 +49,7 @@
                 <div class="form-group">
                   <label for="confirmPassword">Confirm Password*</label>
                   <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" required
-                    minlength="6" [class.isValid]="f.confirmPassword.touched && f.confirmPassword.invalid" />
+                    minlength="6" [class.is-invalid]="f.confirmPassword.touched && f.confirmPassword.invalid" />
                     @if (registerForm.errors?.['mustMatch'] && (f.confirmPassword.touched || f.password.touched)) {
                       <span class="help-block">Password does not match</span>
                     }

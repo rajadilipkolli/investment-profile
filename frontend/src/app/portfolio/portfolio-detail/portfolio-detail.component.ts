@@ -68,15 +68,16 @@ export class PortfolioDetailComponent implements OnInit {
             console.log(resData);
             if ('SUCCESS' === resData.status && this.portfolio) {
               this.portfolioService.deletePortfolio(this.id);
+              this.router.navigate(['/portfolio']);
             }
           },
           error: errorMessage => {
             this.isLoading = false;
+            this.error = errorMessage;
             console.log(errorMessage);
           }
         });
       }
-      this.router.navigate(['/portfolio']);
     } else {
       if (this.portfolio) {
         this.portfolio.quantity = this.portfolioForm.value.quantity!;

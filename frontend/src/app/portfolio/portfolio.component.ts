@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { InvestmentService } from '../shared/investment.service';
 import { RouterOutlet } from '@angular/router';
 import { PortfolioListComponent } from './portfolio-list/portfolio-list.component';

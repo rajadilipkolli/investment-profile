@@ -134,7 +134,13 @@ export class AuthService {
 
   autoLogin() {
     const userDataStr = localStorage.getItem('userData');
-    const userData: { email: string, id: string, _token: string, _tokenExpirationDate: string } | null = userDataStr ? JSON.parse(userDataStr) : null;
+    let userData: { email: string, id: string, _token: string, _tokenExpirationDate: string } | null;
+    try {
+      userData = userDataStr ? JSON.parse(userDataStr) : null;
+    } catch (e) {
+      console.warn('Failed to parse userData from localStorage', e);
+      userData = null;
+    }
     if (!userData) {
       return;
     }

@@ -25,11 +25,11 @@ export class StockService {
   }
 
   setStocks(stocks: Stock[]) {
-    this.stocksChanged.set(stocks);
+    this.stocksChanged.set([...stocks]);
   }
 
   getStocks() {
-    return this.stocksChanged();
+    return [...this.stocksChanged()];
   }
 
   getStock(index: number) {

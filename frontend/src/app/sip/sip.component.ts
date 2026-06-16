@@ -62,4 +62,9 @@ export class SipComponent {
       }
     });
   }
+
+  onClear() {
+    this.investment = 0;
+    this.predictedReturn = 0;
+  }
 }

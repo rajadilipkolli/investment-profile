@@ -11,11 +11,11 @@ export class PortfolioService {
   private investmentService = inject(InvestmentService);
 
   setinvestments(investments: Portfolio[]) {
-    this.investmentsChanged.set(investments);
+    this.investmentsChanged.set([...investments]);
   }
 
   getInvestments() {
-    return this.investmentsChanged();
+    return [...this.investmentsChanged()];
   }
 
   loadUserInvestments() {

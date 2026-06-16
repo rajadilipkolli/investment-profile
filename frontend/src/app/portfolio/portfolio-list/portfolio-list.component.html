@@ -27,9 +27,13 @@
                 <td>{{ portfolioEl.quantity }}</td>
                 <td>{{ portfolioEl.costPrice }}</td>
                 <td>{{ portfolioEl.currentPrice }}</td>
-                <td>@if (!portfolioEl.profit) {
-                  <span>-</span>
-                }{{ portfolioEl.profitLossPercent }}%</td>
+                <td>
+                  @if (!portfolioEl.profit) {
+                    <span>-</span>
+                  } @else {
+                    {{ portfolioEl.profitLossPercent }}%
+                  }
+                </td>
               </tr>
             }
           </tbody>
