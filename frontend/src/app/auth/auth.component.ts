@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
     templateUrl: './auth.component.html',
     imports: [RegisterComponent, LoginComponent]
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
   error: string | null = null;
 
   private authService = inject(AuthService);

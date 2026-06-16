@@ -67,7 +67,7 @@ export class PortfolioDetailComponent implements OnInit {
             console.log('delete response');
             console.log(resData);
             if ('SUCCESS' === resData.status && this.portfolio) {
-              this.portfolioService.deletePortfolio(this.id, this.portfolio);
+              this.portfolioService.deletePortfolio(this.id);
             }
           },
           error: errorMessage => {

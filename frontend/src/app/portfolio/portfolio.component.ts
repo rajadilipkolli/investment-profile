@@ -9,7 +9,7 @@ import { PortfolioListComponent } from './portfolio-list/portfolio-list.componen
     styleUrls: ['./portfolio.component.css'],
     imports: [RouterOutlet, PortfolioListComponent]
 })
-export class PortfolioComponent implements OnInit {
+export class PortfolioComponent {
   isLoading = false;
   error: string | null = null;
 
