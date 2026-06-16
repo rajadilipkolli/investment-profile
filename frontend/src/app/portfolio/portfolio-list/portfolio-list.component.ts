@@ -1,47 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Data } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Portfolio } from 'src/app/shared/portfolio.model';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, ActivatedRoute, RouterLinkActive, RouterLink } from '@angular/router';
 import { PortfolioService } from '../portfolio.service';
 
 @Component({
     selector: 'app-portfolio-list',
     templateUrl: './portfolio-list.component.html',
     styleUrls: ['./portfolio-list.component.css'],
-    standalone: false
+    imports: [RouterLinkActive, RouterLink]
 })
-export class PortfolioListComponent implements OnInit, OnDestroy {
-  investments: Portfolio[];
-  subscription: Subscription;
+export class PortfolioListComponent implements OnInit {
+  private portfolioService = inject(PortfolioService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
-  constructor(private portfolioService: PortfolioService, private router: Router, private route: ActivatedRoute) {
-  }
+  investments = this.portfolioService.investmentsChanged;
 
   ngOnInit() {
-    this.subscription = this.callInvestmentChangedSubject();
-
-    // this.route.data.subscribe(
-    //   (data: Data)=> {
-    //     this.investments = data['portfolioList'];
-    //   }
-    // );
-
-    if (this.investments === undefined || this.investments.length === 0) {
+    if (this.investments().length === 0) {
       this.portfolioService.loadUserInvestments();
-      this.subscription = this.callInvestmentChangedSubject();
     }
-  }
-
-  callInvestmentChangedSubject(): Subscription {
-    return this.portfolioService.investmentsChanged
-      .subscribe(
-        (investments: Portfolio[]) => {
-          this.investments = investments;
-        }
-      );
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

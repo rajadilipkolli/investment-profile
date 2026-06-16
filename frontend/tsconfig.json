@@ -2,7 +2,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "paths": {
+      "src/*": ["./src/*"]
+    },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "esModuleInterop": true,
@@ -12,6 +14,8 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2022",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false
   }
 }

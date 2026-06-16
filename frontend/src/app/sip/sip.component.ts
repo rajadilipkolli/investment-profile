@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { InvestmentService } from '../shared/investment.service';
+import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-sip',
     templateUrl: './sip.component.html',
     styleUrls: ['./sip.component.css'],
-    standalone: false
+    imports: [LoadingSpinnerComponent, ReactiveFormsModule]
 })
-export class SipComponent implements OnInit {
+export class SipComponent {
   isLoading: boolean;
-  error: string = null;
+  error: string | null = null;
   defaultDuration = '1 year';
   durationList: string[] = ['1 year', '2 year', '3 year', '4 year', '5 year', '6 year', '7 year', '8 year', '9 year', '10 year'];
 
@@ -22,44 +23,48 @@ export class SipComponent implements OnInit {
   duration: number;
   investment: number;
   predictedReturn: number;
-  constructor(private investmentService: InvestmentService, private router: Router) { }
 
-  onCalculate(form: NgForm) {
-    if (!form.valid) {
+  private investmentService = inject(InvestmentService);
+  private router = inject(Router);
+
+  sipForm = new FormGroup({
+    amount: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
+    duration: new FormControl<string>('1 year', Validators.required),
+    ror: new FormControl<number | null>(null, [Validators.required, Validators.min(1)])
+  });
+
+  onCalculate() {
+    if (!this.sipForm.valid) {
       return;
     }
-    this.amount = form.value.amount;
-    this.ror = form.value.ror;
-    this.durationString = form.value.duration;
+    this.amount = this.sipForm.value.amount!;
+    this.ror = this.sipForm.value.ror!;
+    this.durationString = this.sipForm.value.duration!;
 
-    this.defaultDuration = form.value.duration;
-
-
-    let predictedSipReturnObs: Observable<number>;
+    this.defaultDuration = this.sipForm.value.duration!;
 
     this.isLoading = true;
 
     this.duration = +this.durationString.replace(' year', '');
-    this.investment = 12 * this.duration * form.value.amount;
-    predictedSipReturnObs = this.investmentService.calculateSip(this.amount, this.ror, this.duration, this.investment);
+    this.investment = 12 * this.duration * this.amount;
+    const predictedSipReturnObs: Observable<number> = this.investmentService.calculateSip(this.amount, this.ror, this.duration, this.investment);
 
-    predictedSipReturnObs.subscribe(
-      resData => {
+    predictedSipReturnObs.subscribe({
+      next: (resData) => {
         console.log(resData);
         this.isLoading = false;
         this.predictedReturn = resData;
-        // this.router.navigate(['/portfolio']);
       },
-      errorMessage => {
+      error: (errorMessage) => {
         console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
       }
-    );
-
-    // form.reset();
+    });
   }
 
-  ngOnInit(): void { }
-
+  onClear() {
+    this.investment = 0;
+    this.predictedReturn = 0;
+  }
 }

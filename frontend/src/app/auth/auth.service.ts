@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { Service, signal, inject } from '@angular/core';
+import { throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
@@ -24,13 +24,13 @@ export interface SignInResponseData {
   expiresIn: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
-  token: string = null;
+  user = signal<User | null>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
   signup(email: string, password: string, firstName: string, lastName: string, pan: string, phone: number) {
     return this.http.post<SignInResponseData>(
@@ -83,7 +83,7 @@ export class AuthService {
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(email, userId, token, expirationDate);
-    this.user.next(user);
+    this.user.set(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user))
   }
@@ -91,7 +91,7 @@ export class AuthService {
   private handleSignInAuthentication(username: string, email: string, tokenType: string, accessToken: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn);
     const user = new User(email, username, accessToken, expirationDate);
-    this.user.next(user);
+    this.user.set(user);
     this.autoLogout(expiresIn);
     localStorage.setItem('userData', JSON.stringify(user));
     localStorage.setItem('authToken', tokenType + ' ' + accessToken);
@@ -122,7 +122,7 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    this.user.set(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     localStorage.removeItem('authToken');
@@ -133,14 +133,21 @@ export class AuthService {
   }
 
   autoLogin() {
-    const userData: { email: string, id: string, _token: string, _tokenExpirationDate: string } = JSON.parse(localStorage.getItem('userData'));
+    const userDataStr = localStorage.getItem('userData');
+    let userData: { email: string, id: string, _token: string, _tokenExpirationDate: string } | null;
+    try {
+      userData = userDataStr ? JSON.parse(userDataStr) : null;
+    } catch (e) {
+      console.warn('Failed to parse userData from localStorage', e);
+      userData = null;
+    }
     if (!userData) {
       return;
     }
     const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
 
     if (loadedUser.token) {
-      this.user.next(loadedUser);
+      this.user.set(loadedUser);
       const expirationDuration = new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
       this.autoLogout(expirationDuration);

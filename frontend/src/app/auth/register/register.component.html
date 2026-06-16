@@ -12,55 +12,50 @@
       </div>
     }
     @if (!isLoading) {
-      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)"
-        [mustMatch]="['password','confirmPassword']">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="firstName">First name*</label>
-          <input type="text" id="firstName" class="form-control" ngModel name="firstName" required minlength="2"
+          <input type="text" id="firstName" class="form-control" formControlName="firstName" required minlength="2"
             maxlength="20" />
           </div>
           <div class="form-group">
             <label for="lastName">Last name*</label>
-            <input type="text" id="lastName" class="form-control" ngModel name="lastName" required minlength="2"
+            <input type="text" id="lastName" class="form-control" formControlName="lastName" required minlength="2"
               maxlength="20" />
             </div>
             <div class="form-group">
               <label for="email">Email ID*</label>
-              <input type="email" id="email" class="form-control" ngModel name="email" required email #email="ngModel" />
-              @if (!email.valid && email.touched) {
+              <input type="email" id="email" class="form-control" formControlName="email" required />
+              @if (f.email.invalid && f.email.touched) {
                 <span class="help-block">Please Enter Valid Email</span>
               }
             </div>
             <div class="form-group">
               <label for="pan">PAN#*</label>
-              <input type="text" id="pan" class="form-control" ngModel name="pan" required minlength="10" maxlength="10" />
+              <input type="text" id="pan" class="form-control" formControlName="pan" required minlength="10" maxlength="10" />
             </div>
             <div class="form-group">
               <label for="phone">Phone Number*</label>
-              <input type="text" id="phone" class="form-control" ngModel name="phone" required pattern="\d*" minlength="10"
+              <input type="text" id="phone" class="form-control" formControlName="phone" required minlength="10"
                 maxlength="10" />
               </div>
               <div class="form-group">
                 <label for="password">Password*</label>
-                <input type="password" id="password" class="form-control" ngModel name="password" required minlength="6"
-                  #password="ngModel" />
-                  @if (!password.valid && password.touched) {
+                <input type="password" id="password" class="form-control" formControlName="password" required minlength="6" />
+                  @if (f.password.invalid && f.password.touched) {
                     <span class="help-block">Minimum length for password is 6</span>
                   }
                 </div>
                 <div class="form-group">
                   <label for="confirmPassword">Confirm Password*</label>
-                  <input type="password" id="confirmPassword" class="form-control" ngModel name="confirmPassword" required
-                    minlength="6" #confirmPassword="ngModel"
-                    [ngClass]="{ 'isValid': confirmPassword.touched && confirmPassword.invalid }" />
-                    @if (confirmPassword.value != password.value && (confirmPassword.touched || password.touched)) {
-                      <span class="help-block"
-                        >Password does
-                      not match</span>
+                  <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" required
+                    minlength="6" [class.is-invalid]="f.confirmPassword.touched && f.confirmPassword.invalid" />
+                    @if (registerForm.errors?.['mustMatch'] && (f.confirmPassword.touched || f.password.touched)) {
+                      <span class="help-block">Password does not match</span>
                     }
                   </div>
                   <div>
-                    <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">
+                    <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">
                       {{'Register'}}
                     </button> |
                     <button class="btn btn-secondary" type="reset">Cancel</button>

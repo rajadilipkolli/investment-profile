@@ -13,8 +13,7 @@ describe('PortfolioDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [PortfolioDetailComponent, LoadingSpinnerComponent],
-    imports: [RouterTestingModule, FormsModule],
+    imports: [RouterTestingModule, FormsModule, PortfolioDetailComponent, LoadingSpinnerComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

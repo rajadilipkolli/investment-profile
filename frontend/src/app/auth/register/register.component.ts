@@ -1,53 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthResponseData, AuthService, SignInResponseData } from '../auth.service';
+import { AuthService, SignInResponseData } from '../auth.service';
+import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { MustMatch } from './must-match.validator';
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css'],
-    standalone: false
+    imports: [LoadingSpinnerComponent, ReactiveFormsModule]
 })
-export class RegisterComponent implements OnInit {
-  isLoading: boolean = false;
-  error: string = null;
+export class RegisterComponent {
+  isLoading = false;
+  error: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
+  registerForm = new FormGroup({
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    pan: new FormControl('', Validators.required),
+    phone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    confirmPassword: new FormControl('', Validators.required)
+  }, { validators: MustMatch('password', 'confirmPassword') });
+
+  get f() { return this.registerForm.controls; }
+
+  onSubmit() {
+    if (!this.registerForm.valid) {
       return;
     }
-    const email = form.value.email;
-    const password = form.value.password;
-    const firstName = form.value.firstName;
-    const lastName = form.value.lastName;
-    const pan = form.value.pan;
-    const phone = form.value.phone;
-
-    let authObs: Observable<SignInResponseData>;
+    const { email, password, firstName, lastName, pan, phone } = this.registerForm.value;
 
     this.isLoading = true;
-    authObs = this.authService.signup(email, password, firstName, lastName, pan, phone);
+    const authObs: Observable<SignInResponseData> = this.authService.signup(email!, password!, firstName!, lastName!, pan!, +phone!);
 
-    authObs.subscribe(
-      resData => {
+    authObs.subscribe({
+      next: (resData) => {
         console.log(resData);
         this.isLoading = false;
         this.router.navigate(['/portfolio']);
       },
-      errorMessage => {
+      error: (errorMessage) => {
         console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
       }
-    );
+    });
 
-    form.reset();
+    this.registerForm.reset();
   }
-
-  ngOnInit(): void { }
-
 }

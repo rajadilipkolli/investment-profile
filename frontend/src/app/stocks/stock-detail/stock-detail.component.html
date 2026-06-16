@@ -12,39 +12,35 @@
       </div>
     }
     @if (!isLoading) {
-      <form #stockForm="ngForm" (ngSubmit)="onBuy(stockForm)">
+      <form [formGroup]="stockForm" (ngSubmit)="onBuy()">
         <div class="form-group row">
           <label for="name" class="col-sm-6 col-form-label">Name: </label>
           <div class="col-sm-4">
-            <input type="text" [disabled]=true id="name" class="form-control" [ngModel]="stock.name"
-              name="name" />
+            <input type="text" id="name" class="form-control" formControlName="name" />
             </div>
           </div>
           <div class="form-group row">
             <label for="investmentType" class="col-sm-6 col-form-label">Investment Type: </label>
             <div class="col-sm-4">
-              <input type="text" [disabled]=true id="investmentType" class="form-control"
-                [ngModel]="stock.investmentType" name="investmentType" />
+              <input type="text" id="investmentType" class="form-control" formControlName="investmentType" />
               </div>
             </div>
             <div class="form-group row">
               <label for="currentPrice" class="col-sm-6 col-form-label">Current Price: </label>
               <div class="col-sm-4">
-                <input type="number" [disabled]=true id="currentPrice" class="form-control"
-                  [ngModel]="stock.currentPrice" name="currentPrice" />
+                <input type="number" id="currentPrice" class="form-control" formControlName="currentPrice" />
                 </div>
               </div>
               <div class="form-group row">
                 <label for="anticipatedGrowth" class="col-sm-6 col-form-label">Anticipated Growth: </label>
                 <div class="col-sm-4">
-                  <input type="number" [disabled]=true id="anticipatedGrowth" class="form-control"
-                    [ngModel]="stock.anticipatedGrowth" name="anticipatedGrowth" />
+                  <input type="number" id="anticipatedGrowth" class="form-control" formControlName="anticipatedGrowth" />
                   </div>
                 </div>
                 <div class="form-group row">
                   <label for="quantity" class="col-sm-6 col-form-label">Quantity*: </label>
                   <div class="col-sm-4">
-                    <input type="number" id="quantity" class="form-control" ngModel name="quantity" required
+                    <input type="number" id="quantity" class="form-control" formControlName="quantity" required
                       min="1" max="20" />
                     </div>
                   </div>

@@ -11,49 +11,46 @@
         <app-loading-spinner></app-loading-spinner>
       </div>
     }
-    @if (!isLoading) {
-      <form #myStocksForm="ngForm" (ngSubmit)="onPorfolioSubmit(myStocksForm)">
+    @if (!isLoading && portfolio) {
+      <form [formGroup]="portfolioForm" (ngSubmit)="onPorfolioSubmit()">
         <div class="form-group row">
           <label for="name" class="col-sm-6 col-form-label">Name: </label>
           <div class="col-sm-4">
-            <input type="text" [disabled]=true id="name" class="form-control" [ngModel]="portfolio.name" name="name" />
+            <input type="text" id="name" class="form-control" formControlName="name" />
           </div>
         </div>
         <div class="form-group row">
           <label for="type" class="col-sm-6 col-form-label">Type: </label>
           <div class="col-sm-4">
-            <input type="text" [disabled]=true id="type" class="form-control" [ngModel]="portfolio.type" name="type" />
+            <input type="text" id="type" class="form-control" formControlName="type" />
           </div>
         </div>
         <div class="form-group row">
           <label for="costPrice" class="col-sm-6 col-form-label">Cost Price: </label>
           <div class="col-sm-4">
-            <input type="number" [disabled]=true id="costPrice" class="form-control" [ngModel]="portfolio.costPrice"
-              name="costPrice" />
+            <input type="number" id="costPrice" class="form-control" formControlName="costPrice" />
             </div>
           </div>
           <div class="form-group row">
             <label for="currentPrice" class="col-sm-6 col-form-label">Current Price: </label>
             <div class="col-sm-4">
-              <input type="number" [disabled]=true id="currentPrice" class="form-control" [ngModel]="portfolio.currentPrice"
-                name="currentPrice" />
+              <input type="number" id="currentPrice" class="form-control" formControlName="currentPrice" />
               </div>
             </div>
             <div class="form-group row">
               <label for="quantity" class="col-sm-6 col-form-label">Quantity: </label>
               <div class="col-sm-4">
-                <input type="number" id="quantity" class="form-control" [ngModel]="portfolio.quantity" name="quantity"
+                <input type="number" id="quantity" class="form-control" formControlName="quantity"
                   required min="1" oninput="validity.valid||(value='');" />
                 </div>
               </div>
               <div>
-                <button class="btn btn-primary" type="submit" (click)="onUpdateClick()" [disabled]="!myStocksForm.valid">
+                <button class="btn btn-primary" type="submit" (click)="onUpdateClick()" [disabled]="!portfolioForm.valid">
                   {{'UPDATE'}}
-                </button> | <button class="btn btn-primary" type="button" (click)="onDeleteClick()"
-                [disabled]="!myStocksForm.valid">
+                </button> | <button class="btn btn-primary" type="submit" (click)="onDeleteClick()"
+                [disabled]="!portfolioForm.valid">
                 {{'DELETE'}}
               </button>
-              <!-- <button class="btn btn-secondary" type="reset">Clear</button> -->
             </div>
           </form>
         }

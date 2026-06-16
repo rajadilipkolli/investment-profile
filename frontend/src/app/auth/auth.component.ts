@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
-    standalone: false
+    imports: [RegisterComponent, LoginComponent]
 })
 export class AuthComponent {
-  error: string = null;
+  error: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  private authService = inject(AuthService);
+  private router = inject(Router);
 }

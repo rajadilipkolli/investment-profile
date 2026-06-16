@@ -1,50 +1,56 @@
-import { Component } from '@angular/core';
-import { AuthService, AuthResponseData, SignInResponseData } from '../auth.service';
-import { NgForm } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { AuthService, SignInResponseData } from '../auth.service';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PortfolioService } from 'src/app/portfolio/portfolio.service';
 import { StockService } from 'src/app/stocks/stock.service';
+import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
-    standalone: false
+    imports: [LoadingSpinnerComponent, ReactiveFormsModule]
 })
 export class LoginComponent {
   isLoading = false;
-  error: string = null;
+  error: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router,
-    private portfolioService: PortfolioService, private stockService: StockService) { }
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private portfolioService = inject(PortfolioService);
+  private stockService = inject(StockService);
 
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
+  });
+
+  onSubmit() {
+    if (!this.loginForm.valid) {
       return;
     }
-    const email = form.value.email;
-    const password = form.value.password;
-
-    let authObs: Observable<SignInResponseData>;
+    const email = this.loginForm.value.email!;
+    const password = this.loginForm.value.password!;
 
     this.isLoading = true;
-    authObs = this.authService.login(email, password);
+    const authObs: Observable<SignInResponseData> = this.authService.login(email, password);
 
-    authObs.subscribe(
-      resData => {
+    authObs.subscribe({
+      next: (resData) => {
         console.log(resData);
         this.isLoading = false;
         this.portfolioService.loadUserInvestments();
         this.stockService.loadStocks();
         this.router.navigate(['/portfolio']);
       },
-      errorMessage => {
+      error: (errorMessage) => {
         console.log(errorMessage);
         this.error = errorMessage;
         this.isLoading = false;
       }
-    );
-    form.reset();
+    });
+    this.loginForm.reset();
   }
 }

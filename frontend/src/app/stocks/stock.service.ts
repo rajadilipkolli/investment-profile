@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, signal, inject } from '@angular/core';
 import { InvestmentService } from '../shared/investment.service';
 import { Stock } from '../shared/stock.model';
 
@@ -7,11 +6,9 @@ import { Stock } from '../shared/stock.model';
   providedIn: 'root'
 })
 export class StockService {
-  stocksChanged = new Subject<Stock[]>();
+  stocksChanged = signal<Stock[]>([]);
 
-  private stocks: Stock[] = [];
-
-  constructor(private investmentService: InvestmentService) { }
+  private investmentService = inject(InvestmentService);
 
   loadStocks() {
     this.investmentService.getAvailableStocks()
@@ -28,30 +25,34 @@ export class StockService {
   }
 
   setStocks(stocks: Stock[]) {
-    this.stocks = stocks;
-    this.stocksChanged.next(this.stocks.slice());
+    this.stocksChanged.set([...stocks]);
   }
 
   getStocks() {
-    return this.stocks.slice();
+    return [...this.stocksChanged()];
   }
 
   getStock(index: number) {
-    return this.stocks[index];
+    return this.stocksChanged()[index];
   }
 
   addStock(stock: Stock) {
-    this.stocks.push(stock);
-    this.stocksChanged.next(this.stocks.slice());
+    this.stocksChanged.update(stocks => [...stocks, stock]);
   }
 
   updateStock(index: number, newStock: Stock) {
-    this.stocks[index] = newStock;
-    this.stocksChanged.next(this.stocks.slice());
+    this.stocksChanged.update(stocks => {
+      const updated = [...stocks];
+      updated[index] = newStock;
+      return updated;
+    });
   }
 
   deleteStock(index: number) {
-    this.stocks.splice(index, 1);
-    this.stocksChanged.next(this.stocks.slice());
+    this.stocksChanged.update(stocks => {
+      const updated = [...stocks];
+      updated.splice(index, 1);
+      return updated;
+    });
   }
 }

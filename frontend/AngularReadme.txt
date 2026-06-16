@@ -1,12 +1,12 @@
-Steps to start the application and open webpage(Please setup mongodb and beckend services before): -
+Steps to start the application and open webpage(Please setup mongodb and backend services before): -
 =================================================================================================
 Step 1: - use below command in cmd: -
 	>> npm install
 	>> ng serve
 
-Step 2: - Open Google chrome and hit localhost:4200
+Step 2: - Open Google Chrome and hit localhost:4200
 
-step 3: - For convinience, I have already setup a test user to login. you can also create your own profile(signup) and start using application.
+Step 3: - For convenience, I have already setup a test user to login. you can also create your own profile(signup) and start using application.
 
 Test User Details: -
 ==================

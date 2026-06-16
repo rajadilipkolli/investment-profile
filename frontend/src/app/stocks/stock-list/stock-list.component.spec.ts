@@ -11,8 +11,7 @@ describe('StockListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [StockListComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, StockListComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
     .compileComponents();
