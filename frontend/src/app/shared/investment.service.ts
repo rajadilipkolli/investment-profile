@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -19,7 +19,7 @@ export class InvestmentService {
       'http://localhost:8085/api-gateway/restservices/buy/stock',
       stockToBuy,
       {
-        headers: new HttpHeaders({ Authorization: authToken })
+        headers: new HttpHeaders({ Authorization: authToken || '' })
       }
     ).pipe(
       catchError(this.handleError)
@@ -27,9 +27,10 @@ export class InvestmentService {
 
   }
 
-  predictedSipRetun: number = 2000;
+  predictedSipRetun = 2000;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  private http = inject(HttpClient);
+  private router = inject(Router);
 
   calculateSip(amount: any, ror: any, duration: number, investment: any) {
     const authToken = localStorage.getItem('authToken');
@@ -42,7 +43,7 @@ export class InvestmentService {
         investedAmount: investment
       },
       {
-        headers: new HttpHeaders({ 'Authorization': authToken })
+        headers: new HttpHeaders({ 'Authorization': authToken || '' })
       }
     ).pipe(
       catchError(this.handleError)
@@ -54,7 +55,7 @@ export class InvestmentService {
     return this.http.get<Stock[]>(
       'http://localhost:8085/api-gateway/stock/view/all',
       {
-        headers: new HttpHeaders({ 'Authorization': authToken })
+        headers: new HttpHeaders({ 'Authorization': authToken || '' })
       }
     ).pipe(
       catchError(this.handleError)
@@ -66,7 +67,7 @@ export class InvestmentService {
     return this.http.get<Portfolio[]>(
       'http://localhost:8085/api-gateway/restservices/investments/all',
       {
-        headers: new HttpHeaders({ 'Authorization': authToken })
+        headers: new HttpHeaders({ 'Authorization': authToken || '' })
       }
     ).pipe(
       // delay(10000),
@@ -80,7 +81,7 @@ export class InvestmentService {
       'http://localhost:8085/api-gateway/restservices/investments/update',
       newPortfolio,
       {
-        headers: new HttpHeaders({ 'Authorization': authToken })
+        headers: new HttpHeaders({ 'Authorization': authToken || '' })
       }
     ).pipe(
       catchError(this.handleError)
@@ -93,7 +94,7 @@ export class InvestmentService {
       'http://localhost:8085/api-gateway/restservices/investments/delete',
       portfolioToDelete,
       {
-        headers: new HttpHeaders({ 'Authorization': authToken })
+        headers: new HttpHeaders({ 'Authorization': authToken || '' })
       }
     ).pipe(
       catchError(this.handleError)

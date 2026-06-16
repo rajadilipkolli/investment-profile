@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, signal, inject } from '@angular/core';
 import { InvestmentService } from '../shared/investment.service';
 import { Portfolio } from '../shared/portfolio.model';
 
@@ -7,19 +6,16 @@ import { Portfolio } from '../shared/portfolio.model';
   providedIn: 'root'
 })
 export class PortfolioService {
-  investmentsChanged = new Subject<Portfolio[]>();
+  investmentsChanged = signal<Portfolio[]>([]);
 
-  private investments: Portfolio[] = [];
-
-  constructor(private investmentService: InvestmentService) { }
+  private investmentService = inject(InvestmentService);
 
   setinvestments(investments: Portfolio[]) {
-    this.investments = investments;
-    this.investmentsChanged.next(this.investments.slice());
+    this.investmentsChanged.set(investments);
   }
 
   getInvestments() {
-    return this.investments.slice();
+    return this.investmentsChanged();
   }
 
   loadUserInvestments() {
@@ -37,21 +33,26 @@ export class PortfolioService {
   }
 
   getPortfolio(index: number) {
-    return this.investments[index];
+    return this.investmentsChanged()[index];
   }
 
   addPortfolio(portfolio: Portfolio) {
-    this.investments.push(portfolio);
-    this.investmentsChanged.next(this.investments.slice());
+    this.investmentsChanged.update(investments => [...investments, portfolio]);
   }
 
   updatePortfolio(index: number, newPortfolio: Portfolio) {
-    this.investments[index] = newPortfolio;
-    this.investmentsChanged.next(this.investments.slice());
+    this.investmentsChanged.update(investments => {
+      const updated = [...investments];
+      updated[index] = newPortfolio;
+      return updated;
+    });
   }
 
-  deletePortfolio(index: number, portfolioToDelete: Portfolio) {
-    this.investments.splice(index, 1);
-    this.investmentsChanged.next(this.investments.slice());
+  deletePortfolio(index: number) {
+    this.investmentsChanged.update(investments => {
+      const updated = [...investments];
+      updated.splice(index, 1);
+      return updated;
+    });
   }
 }

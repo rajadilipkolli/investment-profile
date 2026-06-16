@@ -1,9 +1,9 @@
-@if (investments && investments.length == 0) {
+@if (investments().length === 0) {
   <div class= "alert alert-info" style=" text-align: center;">
     <h6> Your investment bucket is empty! Want to buy some? please visit Stocks tab!</h6>
   </div>
 }
-@if (investments && investments.length !=0) {
+@if (investments().length !== 0) {
   <div class="table" style="width: 40rem; align-self: auto;">
     <div class="col-md-12">
       <div class="container">
@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (portfolioEl of investments; track portfolioEl; let i = $index) {
+            @for (portfolioEl of investments(); track portfolioEl; let i = $index) {
               <tr>
                 <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
                 {{ portfolioEl.name }} </a></td>

@@ -12,9 +12,8 @@ describe('SipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [SipComponent],
     imports: [RouterTestingModule,
-        FormsModule],
+        FormsModule, SipComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
     .compileComponents();

@@ -7,26 +7,26 @@
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      @if (!isAuthenticated) {
+      @if (!isAuthenticated()) {
         <a class="nav-item nav-link active" href="#">Home<span
         class="sr-only">(current)</span></a>
       }
-      @if (isAuthenticated) {
+      @if (isAuthenticated()) {
         <a class="nav-item nav-link" routerLinkActive="active" routerLink="/portfolio"
         >Portfolio</a>
       }
-      @if (isAuthenticated) {
+      @if (isAuthenticated()) {
         <a class="nav-item nav-link" routerLinkActive="active" routerLink="/sip-calculator">SIP
         Calculator</a>
       }
-      @if (isAuthenticated) {
+      @if (isAuthenticated()) {
         <a class="nav-item nav-link" routerLinkActive="active" routerLink="/stocks">Stocks</a>
       }
     </div>
 
-    @if (isAuthenticated) {
+    @if (isAuthenticated()) {
       <div class="nav ml-auto justify-content-end">
-        <a style="cursor: pointer; color: white;" (click)="onLogout()">logout</a>
+            <li><a style="cursor: pointer; color: white;" tabindex="0" (click)="onLogout()" (keyup.enter)="onLogout()">Logout</a></li>
       </div>
     }
   </div>

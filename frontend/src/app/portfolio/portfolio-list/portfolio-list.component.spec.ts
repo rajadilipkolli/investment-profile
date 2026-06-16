@@ -11,8 +11,7 @@ describe('PortfolioListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [PortfolioListComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, PortfolioListComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 })
     .compileComponents();

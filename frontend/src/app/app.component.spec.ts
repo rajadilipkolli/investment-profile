@@ -10,12 +10,8 @@ import { HeaderComponent } from './header/header.component';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
-        AppComponent,
-        HeaderComponent
-    ],
     imports: [RouterTestingModule,
-        FormsModule],
+        FormsModule, HeaderComponent, AppComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 }).compileComponents();

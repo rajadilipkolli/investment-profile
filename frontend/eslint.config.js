@@ -1,43 +1,46 @@
 import eslint from '@eslint/js';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import angularPlugin from '@angular-eslint/eslint-plugin';
-import angularTemplatePlugin from '@angular-eslint/eslint-plugin-template';
+import tseslint from 'typescript-eslint';
+import angular from 'angular-eslint';
 
-export default [
+export default tseslint.config(
   {
-    ignores: ['node_modules', 'dist']
+    ignores: ['node_modules/', 'dist/']
   },
   {
     files: ['**/*.ts'],
-    languageOptions: {
-      parser: tsParser,
-      parserOptions: {
-        project: ['tsconfig.app.json', 'tsconfig.spec.json'],
-        sourceType: 'module'
-      }
-    },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
-      '@angular-eslint': angularPlugin
-    },
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.stylistic,
+      ...angular.configs.tsRecommended,
+    ],
+    processor: angular.processInlineTemplates,
     rules: {
-      ...eslint.configs.recommended.rules,
-      ...tsPlugin.configs.recommended.rules,
-      ...angularPlugin.configs.recommended.rules,
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'app',
+          style: 'camelCase',
+        },
+      ],
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'app',
+          style: 'kebab-case',
+        },
+      ],
       '@typescript-eslint/no-explicit-any': 'off'
-    }
+    },
   },
   {
     files: ['**/*.html'],
-    languageOptions: {
-      parser: angularTemplatePlugin.parser
-    },
-    plugins: {
-      '@angular-eslint/template': angularTemplatePlugin
-    },
-    rules: {
-      ...angularTemplatePlugin.configs.recommended.rules
-    }
+    extends: [
+      ...angular.configs.templateRecommended,
+      ...angular.configs.templateAccessibility,
+    ],
+    rules: {},
   }
-];
+);

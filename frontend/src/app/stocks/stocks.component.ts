@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { StockListComponent } from './stock-list/stock-list.component';
 
 export interface PeriodicElement {
   name: string;
@@ -12,14 +14,7 @@ export interface PeriodicElement {
     selector: 'app-stocks',
     templateUrl: './stocks.component.html',
     styleUrls: ['./stocks.component.css'],
-    standalone: false
+    imports: [RouterOutlet, StockListComponent]
 })
-export class StocksComponent implements OnInit {
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
-
+export class StocksComponent {
 }

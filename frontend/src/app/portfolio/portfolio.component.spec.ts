@@ -12,8 +12,7 @@ describe('PortfolioComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [PortfolioComponent, PortfolioListComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, PortfolioComponent, PortfolioListComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

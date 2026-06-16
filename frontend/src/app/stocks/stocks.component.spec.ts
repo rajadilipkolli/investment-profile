@@ -12,11 +12,10 @@ describe('StocksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StocksComponent, StockListComponent ],
-      imports: [ RouterTestingModule ],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
-    })
+    imports: [RouterTestingModule, StocksComponent, StockListComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   });
 

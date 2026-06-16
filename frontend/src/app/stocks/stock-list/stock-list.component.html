@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (stockEl of stocks; track stockEl; let i = $index) {
+          @for (stockEl of stocks(); track stockEl; let i = $index) {
             <tr>
               <td><a style="cursor: pointer;" [routerLink]="[i]" routerLinkActive="active">
               {{ stockEl.name }} </a></td>

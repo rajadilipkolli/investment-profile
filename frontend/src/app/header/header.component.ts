@@ -1,31 +1,17 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Component, computed, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-// import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
-    standalone: false
+    imports: [RouterLink, RouterLinkActive]
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent {
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  isAuthenticated = false;
-  private userSub: Subscription | null = null;
-
-  constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit(): void {
-    this.userSub = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
-    });
-  }
-  ngOnDestroy(): void {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
-  }
+  isAuthenticated = computed(() => !!this.authService.user());
 
   onLogout() {
     this.authService.logout();
