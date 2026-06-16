@@ -16,10 +16,10 @@ export class PortfolioDetailComponent implements OnInit {
 
   isLoading: boolean = false;
   deleteClicked: boolean = false;
-  portfolio: Portfolio;
-  id: number;
-  error: string = null;
-  subscription: Subscription;
+  portfolio: Portfolio | null = null;
+  id: number | null = null;
+  error: string | null = null;
+  subscription: Subscription | null = null;
 
   constructor(private portfolioService: PortfolioService,
     private investmentService: InvestmentService,

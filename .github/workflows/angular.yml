@@ -37,6 +37,8 @@ jobs:
           node-version: ${{ matrix.node }}
       
       - name: npm ci and npm run build
+        env:
+          PUPPETEER_SKIP_DOWNLOAD: 'true'
         run: |
           npm ci
           npm run build:ci

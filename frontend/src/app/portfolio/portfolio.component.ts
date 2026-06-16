@@ -9,7 +9,7 @@ import { InvestmentService } from '../shared/investment.service';
 })
 export class PortfolioComponent implements OnInit {
   isLoading: boolean = false;
-  error: string = null;
+  error: string | null = null;
 
   constructor(private investmentService: InvestmentService) { }
 

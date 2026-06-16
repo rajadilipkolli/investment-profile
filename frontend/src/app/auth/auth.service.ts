@@ -26,8 +26,8 @@ export interface SignInResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
-  token: string = null;
+  user = new BehaviorSubject<User | null>(null);
+  token: string | null = null;
   private tokenExpirationTimer: any;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -123,6 +123,7 @@ export class AuthService {
 
   logout() {
     this.user.next(null);
+    this.token = null;
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
     localStorage.removeItem('authToken');

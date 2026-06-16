@@ -1,11 +1,9 @@
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/rajadilipkolli/investment-profile)
-
 # investment-profile
 This repository is the sample microservices based end to end solutions which demonstrates key microservices architecture patterns
 
 ## Tools Required
- * JDK 17+
- * Node 18+
+ * JDK 21+
+ * Node 20+
  * IDE(IntelliJ Or VSCode or STS)
 
 ## Steps to start backend application

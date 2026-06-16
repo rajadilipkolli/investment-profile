@@ -11,8 +11,8 @@ import { PortfolioService } from '../portfolio.service';
     standalone: false
 })
 export class PortfolioListComponent implements OnInit, OnDestroy {
-  investments: Portfolio[];
-  subscription: Subscription;
+  investments: Portfolio[] = [];
+  subscription: Subscription | null = null;
 
   constructor(private portfolioService: PortfolioService, private router: Router, private route: ActivatedRoute) {
   }
