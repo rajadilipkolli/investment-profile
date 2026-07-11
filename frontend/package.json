@@ -43,7 +43,7 @@
     "@eslint/js": "^10.0.1",
     "@types/jasmine": "6.0.0",
     "@types/jasminewd2": "2.0.13",
-    "@types/node": "24.13.2",
+    "@types/node": "24.13.3",
     "@typescript-eslint/eslint-plugin": "8.62.1",
     "@typescript-eslint/parser": "8.62.1",
     "angular-eslint": "^22.0.0",
