@@ -25,7 +25,7 @@ public class TestStockServiceApplication {
     @Bean
     @ServiceConnection
     MongoDBContainer mongoDbContainer(Network network) {
-        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("9.0.2"))
+        return new MongoDBContainer(DockerImageName.parse("mongo").withTag("9.0.8"))
                 .withSharding()
                 .withStartupAttempts(3)
                 .withStartupTimeout(Duration.ofMinutes(2))
@@ -36,7 +36,7 @@ public class TestStockServiceApplication {
     @Bean
     @ServiceConnection
     LgtmStackContainer lgtmContainer(Network network) {
-        return new LgtmStackContainer(DockerImageName.parse("grafana/otel-lgtm:0.13.0"))
+        return new LgtmStackContainer(DockerImageName.parse("grafana/otel-lgtm:0.41.1"))
                 .withStartupTimeout(Duration.ofMinutes(2))
                 .withNetwork(network)
                 .withNetworkAliases("grafana-lgtm");
